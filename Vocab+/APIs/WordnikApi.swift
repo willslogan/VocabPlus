@@ -91,6 +91,9 @@ public func getFoundWordsFromApi(searchTerm: String) {
                     //Process synonyms
                     synonyms = getSynonymFromApi(searchTerm: searchTerm)
                     
+                    //Process picture info
+                    
+                    
                     //Create Word Struct
                     var foundWord = WordStruct(word: word,
                                                definition: definition,
@@ -155,13 +158,60 @@ public func getAudioFileFromApi(searchTerm: String) -> String {
 
 //All Example information is put into array and individual components will be extracted in the main getFoundWordsFromApi
 public func getExamplesFromApi(searchTerm: String) -> [String] {
-    let apiUrlString = ""
+    let apiUrlString = "https://api.wordnik.com/v4/word.json/\(searchTerm)/examples?includeDuplicates=false&useCanonical=false&limit=5&api_key=\(wordnikApiKey)"
     
     var exampleInfo = [String]()
     
-    /********************
-    NOT FINISHED YET
-    * *********************** */
+    var jsonDataFromApi: Data
+    
+    let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: wordnikApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
+    
+    if let jsonData = jsonDataFetchedFromApi {
+        jsonDataFromApi = jsonData
+    } else {
+        return exampleInfo
+    }
+    
+    do {
+        let jsonResponse = try JSONSerialization.jsonObject(with: jsonDataFromApi,
+                                                            options: JSONSerialization.ReadingOptions.mutableContainers)
+        
+        if let examplesDictionary = jsonResponse as? [String: Any] {
+            if let examplesArr = examplesDictionary["examples"] as? [Any] {
+                for anExample in examplesArr {
+                    //To catch edge cases where maybe some data is missing
+                    var exampleText = ""
+                    var exampleAuthor = ""
+                    var exampleUrl = ""
+                    
+                    if let currExampleInfo = anExample as? [String: Any] {
+                        
+                        //process url of example
+                        if let currUrl = currExampleInfo["url"] as? String {
+                            exampleUrl = currUrl
+                        }
+                        
+                        //process text of example
+                        if let currText = currExampleInfo["text"] as? String {
+                            exampleText = currText
+                        }
+                        
+                        //process author of example
+                        if let currAuthor = currExampleInfo["author"] as? String {
+                            exampleAuthor = currAuthor
+                        }
+                    }
+                    
+                    exampleInfo.append(exampleText)
+                    exampleInfo.append(exampleAuthor)
+                    exampleInfo.append(exampleUrl)
+                }
+            }
+        }
+    } catch {
+        return exampleInfo
+    }
+    
     return exampleInfo
     
 }
