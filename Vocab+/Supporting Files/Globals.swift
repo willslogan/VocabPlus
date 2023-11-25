@@ -7,3 +7,8 @@
 //
 
 import Foundation
+
+var alertTitle = ""
+var alertMessage = ""
+
+

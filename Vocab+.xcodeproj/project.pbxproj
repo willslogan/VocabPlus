@@ -14,12 +14,13 @@
 		2D32CB002B0C01CE007FBFB8 /* DatabaseClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CAFF2B0C01CE007FBFB8 /* DatabaseClasses.swift */; };
 		2D32CB022B0C0411007FBFB8 /* WordStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB012B0C0411007FBFB8 /* WordStruct.swift */; };
 		2D32CB042B0C05F7007FBFB8 /* GetJsonDataFromApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB032B0C05F7007FBFB8 /* GetJsonDataFromApi.swift */; };
-		2D32CB062B0C09D4007FBFB8 /* WordnikApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB052B0C09D4007FBFB8 /* WordnikApi.swift */; };
+		2D32CB062B0C09D4007FBFB8 /* ApiDataFetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB052B0C09D4007FBFB8 /* ApiDataFetch.swift */; };
 		2D32CB082B0D4D9F007FBFB8 /* SearchVocab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB072B0D4D9F007FBFB8 /* SearchVocab.swift */; };
 		2D32CB0A2B0D557C007FBFB8 /* WordOfTheDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB092B0D557C007FBFB8 /* WordOfTheDay.swift */; };
 		2D32CB0C2B0D5586007FBFB8 /* VocabList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB0B2B0D5586007FBFB8 /* VocabList.swift */; };
 		2D32CB0E2B0D559B007FBFB8 /* VocabQuiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB0D2B0D559B007FBFB8 /* VocabQuiz.swift */; };
 		2D32CB102B0D55AD007FBFB8 /* RandomWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB0F2B0D55AD007FBFB8 /* RandomWord.swift */; };
+		2D32CB122B12AD59007FBFB8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB112B12AD59007FBFB8 /* Globals.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,12 +32,13 @@
 		2D32CAFF2B0C01CE007FBFB8 /* DatabaseClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseClasses.swift; sourceTree = "<group>"; };
 		2D32CB012B0C0411007FBFB8 /* WordStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordStruct.swift; sourceTree = "<group>"; };
 		2D32CB032B0C05F7007FBFB8 /* GetJsonDataFromApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetJsonDataFromApi.swift; sourceTree = "<group>"; };
-		2D32CB052B0C09D4007FBFB8 /* WordnikApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordnikApi.swift; sourceTree = "<group>"; };
+		2D32CB052B0C09D4007FBFB8 /* ApiDataFetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiDataFetch.swift; sourceTree = "<group>"; };
 		2D32CB072B0D4D9F007FBFB8 /* SearchVocab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVocab.swift; sourceTree = "<group>"; };
 		2D32CB092B0D557C007FBFB8 /* WordOfTheDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordOfTheDay.swift; sourceTree = "<group>"; };
 		2D32CB0B2B0D5586007FBFB8 /* VocabList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabList.swift; sourceTree = "<group>"; };
 		2D32CB0D2B0D559B007FBFB8 /* VocabQuiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabQuiz.swift; sourceTree = "<group>"; };
 		2D32CB0F2B0D55AD007FBFB8 /* RandomWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomWord.swift; sourceTree = "<group>"; };
+		2D32CB112B12AD59007FBFB8 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				2D32CB032B0C05F7007FBFB8 /* GetJsonDataFromApi.swift */,
-				2D32CB052B0C09D4007FBFB8 /* WordnikApi.swift */,
+				2D32CB052B0C09D4007FBFB8 /* ApiDataFetch.swift */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -101,6 +103,7 @@
 		2D32CAF62B0C0002007FBFB8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2D32CB112B12AD59007FBFB8 /* Globals.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -252,7 +255,8 @@
 				2D32CB0C2B0D5586007FBFB8 /* VocabList.swift in Sources */,
 				2D32CB022B0C0411007FBFB8 /* WordStruct.swift in Sources */,
 				2D32CB102B0D55AD007FBFB8 /* RandomWord.swift in Sources */,
-				2D32CB062B0C09D4007FBFB8 /* WordnikApi.swift in Sources */,
+				2D32CB062B0C09D4007FBFB8 /* ApiDataFetch.swift in Sources */,
+				2D32CB122B12AD59007FBFB8 /* Globals.swift in Sources */,
 				2D32CB0A2B0D557C007FBFB8 /* WordOfTheDay.swift in Sources */,
 				2D32CB002B0C01CE007FBFB8 /* DatabaseClasses.swift in Sources */,
 				2D32CAE62B0682C9007FBFB8 /* Vocab_App.swift in Sources */,

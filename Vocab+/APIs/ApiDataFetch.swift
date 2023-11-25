@@ -1,5 +1,5 @@
 //
-//  WordnikApi.swift
+//  ApiDataFetch.swift
 //  Vocab+
 //
 //  Created by William Logan on 11/20/23.
@@ -10,6 +10,10 @@ import SwiftUI
 
 var foundWordsList = [WordStruct]()
 
+let wordnikApiKey = "h92eq8jsnaitg1hid9navzros55w8o43n77lcbide02qh88jz"
+
+let pexelsApiKey = "FTASW5mja3KwydYI7MCmGLVUFYcNKg0ygLdiHiXOyGGLAlyzL5aLjG9B"
+
 let wordnikApiHeaders = [
         "accept": "application/json",
         "cache-control": "no-cache",
@@ -17,16 +21,28 @@ let wordnikApiHeaders = [
         "host": "api.wordnik.com"
     ]
 
-let linguaRobotApiHeaders = [
+let pexelsApiHeaders = [
         "accept": "application/json",
         "cache-control": "no-cache",
-        "X-RapidAPI-Key": "96ab1aa338mshdcd4ce184c23e06p167659jsn0e94ce040ac3",
-        "X-RapidAPI-Host": "lingua-robot.p.rapidapi.com",
+        "Authorization" : "\(pexelsApiKey)",
         "connection": "keep-alive",
-        "host": "api.wordnik.com"
+        "host": "api.pexels.com/v1/"
     ]
 
-let wordnikApiKey = "h92eq8jsnaitg1hid9navzros55w8o43n77lcbide02qh88jz"
+
+// ************************
+// Currently Not being used
+// ************************
+//let linguaRobotApiHeaders = [
+//        "accept": "application/json",
+//        "cache-control": "no-cache",
+//        "X-RapidAPI-Key": "96ab1aa338mshdcd4ce184c23e06p167659jsn0e94ce040ac3",
+//        "X-RapidAPI-Host": "lingua-robot.p.rapidapi.com",
+//        "connection": "keep-alive",
+//        "host": "api.wordnik.com"
+//    ]
+
+
 
 public func getFoundWordsFromApi(searchTerm: String) {
     let apiUrlDefString = "https://api.wordnik.com/v4/word.json/\(searchTerm)/definitions?limit=5&includeRelated=false&useCanonical=false&includeTags=false&api_key=\(wordnikApiKey)"
@@ -88,11 +104,20 @@ public func getFoundWordsFromApi(searchTerm: String) {
                     
                     //Process examples
                     
+                    /*
+                     Process examples returns an array of atmost 5 examples with their corresponding author and source
+                     but I'm not sure how to implement it with our current set up of word information
+                     */
+                    
                     //Process synonyms
                     synonyms = getSynonymFromApi(searchTerm: searchTerm)
                     
                     //Process picture info
+                    let photoInfo = getImageInfoFromApi(searchTerm: searchTerm)
                     
+                    imageUrl = photoInfo[0]
+                    imageAuthor = photoInfo[1]
+                    imageAuthorUrl = photoInfo[2]
                     
                     //Create Word Struct
                     var foundWord = WordStruct(word: word,
@@ -258,4 +283,81 @@ public func getSynonymFromApi(searchTerm: String) -> String {
     
     
     return synonyms
+}
+
+public func getImageInfoFromApi(searchTerm: String) -> [String] {
+    //Photo info array will have 3 items
+    var photoInfo = [String]()
+    
+    //The items below will go into index 0,1,2 respectivily
+    var imageUrl = "Not Found"
+    var imageAuthor = "Not Found"
+    var imageAuthorUrl = "Not Found"
+    
+    //I'm doing returning photoInfo as array cause it was the only way I could think of to return multiple bits of information from one
+    //function at the same time
+    
+    let apiUrlString = "https://api.pexels.com/v1/search?query=\(searchTerm)&per_page=1"
+    
+    
+    
+    var jsonDataFromApi: Data
+    
+    let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: pexelsApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
+    
+    if let jsonData = jsonDataFetchedFromApi {
+        jsonDataFromApi = jsonData
+    } else {
+        print("Failure At Location: 1")
+        return photoInfo
+    }
+    
+    do {
+        let jsonResponse = try JSONSerialization.jsonObject(with: jsonDataFromApi,
+                                                            options: JSONSerialization.ReadingOptions.mutableContainers)
+        print("Made it here")
+        
+        if let searchResults = jsonResponse as? [String : Any] {
+            print("Succuesfully Converted to Dictionary: searchResults")
+            if let photosList = searchResults["photos"] as? [Any] {
+                print("Succuesfully Converted to array: photosList")
+                for aPhoto in photosList {
+                    if let photoInfoJson = aPhoto as? [String : Any] {
+                        print("Succuesfully Converted to Dictionary: photoInfo")
+                        //Process image author
+                        if let author = photoInfoJson["photographer"] as? String {
+                            print("Succuesfully found author")
+                            imageAuthor = author
+                        }
+                        
+                        //Process image author website
+                        if let authorWebsite = photoInfoJson["photographer_url"] as? String {
+                            print("Succuesfully found author website")
+                            imageAuthorUrl = authorWebsite
+                        }
+                        
+                        //Process image url
+                        if let imageOptions = photoInfoJson["src"] as? [String: Any] {
+                            print("Succuesfully Converted to Dictionary: imageOptions")
+                            if let imageUrlFromJson = imageOptions["original"] as? String {
+                                print("Succuesfully found image url")
+                                imageUrl = imageUrlFromJson
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+    } catch {
+        print("Failure At Location 2")
+        return photoInfo
+    }
+    
+    //Add relevent image info to the photoInfo array
+    photoInfo.append(imageUrl)
+    photoInfo.append(imageAuthor)
+    photoInfo.append(imageAuthorUrl)
+    
+    return photoInfo
 }
