@@ -21,6 +21,7 @@
 		2D32CB0E2B0D559B007FBFB8 /* VocabQuiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB0D2B0D559B007FBFB8 /* VocabQuiz.swift */; };
 		2D32CB102B0D55AD007FBFB8 /* RandomWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB0F2B0D55AD007FBFB8 /* RandomWord.swift */; };
 		2D32CB122B12AD59007FBFB8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB112B12AD59007FBFB8 /* Globals.swift */; };
+		2D32CB152B14034F007FBFB8 /* FirstTimeUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB142B14034F007FBFB8 /* FirstTimeUser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		2D32CB0D2B0D559B007FBFB8 /* VocabQuiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabQuiz.swift; sourceTree = "<group>"; };
 		2D32CB0F2B0D55AD007FBFB8 /* RandomWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomWord.swift; sourceTree = "<group>"; };
 		2D32CB112B12AD59007FBFB8 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		2D32CB132B13F46F007FBFB8 /* Vocab--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Vocab--Info.plist"; sourceTree = SOURCE_ROOT; };
+		2D32CB142B14034F007FBFB8 /* FirstTimeUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTimeUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +81,7 @@
 				2D32CAF52B0BFFF6007FBFB8 /* APIs */,
 				2D32CAF72B0C0019007FBFB8 /* Tab View Items */,
 				2D32CAEB2B0682CB007FBFB8 /* Assets.xcassets */,
+				2D32CB132B13F46F007FBFB8 /* Vocab--Info.plist */,
 				2D32CAED2B0682CB007FBFB8 /* Preview Content */,
 			);
 			path = "Vocab+";
@@ -173,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				2D32CAE72B0682C9007FBFB8 /* ContentView.swift */,
+				2D32CB142B14034F007FBFB8 /* FirstTimeUser.swift */,
 			);
 			path = "Starting View";
 			sourceTree = "<group>";
@@ -250,6 +255,7 @@
 			files = (
 				2D32CB0E2B0D559B007FBFB8 /* VocabQuiz.swift in Sources */,
 				2D32CB082B0D4D9F007FBFB8 /* SearchVocab.swift in Sources */,
+				2D32CB152B14034F007FBFB8 /* FirstTimeUser.swift in Sources */,
 				2D32CAE82B0682C9007FBFB8 /* ContentView.swift in Sources */,
 				2D32CB042B0C05F7007FBFB8 /* GetJsonDataFromApi.swift in Sources */,
 				2D32CB0C2B0D5586007FBFB8 /* VocabList.swift in Sources */,
@@ -395,9 +401,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Vocab+/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Vocab--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -423,9 +429,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Vocab+/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Vocab--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
