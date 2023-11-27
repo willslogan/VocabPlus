@@ -12,7 +12,7 @@ struct ContentView: View {
 
     var body: some View {
         TabView {
-            WordOfTheDay()
+            WordOfTheDay(firstName: "name")
                 .tabItem {
                     Label("WOTD", systemImage: "sun.max")
                 }
