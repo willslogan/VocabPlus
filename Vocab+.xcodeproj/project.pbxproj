@@ -106,7 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				2D32CB112B12AD59007FBFB8 /* Globals.swift */,
-				1234C9C82B14530600719411 /* GetImageFromUrl.swift */,
+        1234C9C82B14530600719411 /* GetImageFromUrl.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
