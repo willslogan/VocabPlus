@@ -18,6 +18,38 @@
             endingLineNumber = "36"
             landmarkName = "body"
             landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "93174FAC-E365-4C7A-9463-7B6A63790700 - 771d0f714466ba6f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Vocab_.FirstTimeUser.body.getter : some"
+                  moduleName = "Vocab+"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/williamlogan/Desktop/CS3714/Vocab+/Vocab+/Starting%20View/FirstTimeUser.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "584">
+               </Location>
+               <Location
+                  uuid = "93174FAC-E365-4C7A-9463-7B6A63790700 - 9c3b3e4562042b9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Text, &lt;&lt;opaque return type of SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, &lt;&lt;opaque return type of SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.Button&lt;&lt;&lt;opaque return type of SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0&gt;, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.padding(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0&gt;, &lt;&lt;opaque return type of SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -&gt; ()) -&gt; some&gt;&gt;.0)&gt;&gt;, SwiftUI.Spacer)&gt; in Vocab_.FirstTimeUser.body.getter : some"
+                  moduleName = "Vocab+"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/williamlogan/Desktop/CS3714/Vocab+/Vocab+/Starting%20View/FirstTimeUser.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "668">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
