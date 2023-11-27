@@ -23,6 +23,10 @@
 		2D32CB122B12AD59007FBFB8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB112B12AD59007FBFB8 /* Globals.swift */; };
 		2D32CB152B14034F007FBFB8 /* FirstTimeUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB142B14034F007FBFB8 /* FirstTimeUser.swift */; };
 		2D32CB172B14344E007FBFB8 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB162B14344E007FBFB8 /* ImagePicker.swift */; };
+		2D32CB192B1523A4007FBFB8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB182B1523A4007FBFB8 /* MainView.swift */; };
+		2D32CB1B2B152457007FBFB8 /* DatabaseCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB1A2B152457007FBFB8 /* DatabaseCreation.swift */; };
+		2D32CB1D2B1545E7007FBFB8 /* userUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB1C2B1545E7007FBFB8 /* userUtilities.swift */; };
+		2D32CB1F2B1549BD007FBFB8 /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB1E2B1549BD007FBFB8 /* UtilityFunctions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +48,10 @@
 		2D32CB132B13F46F007FBFB8 /* Vocab--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Vocab--Info.plist"; sourceTree = SOURCE_ROOT; };
 		2D32CB142B14034F007FBFB8 /* FirstTimeUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTimeUser.swift; sourceTree = "<group>"; };
 		2D32CB162B14344E007FBFB8 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		2D32CB182B1523A4007FBFB8 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		2D32CB1A2B152457007FBFB8 /* DatabaseCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseCreation.swift; sourceTree = "<group>"; };
+		2D32CB1C2B1545E7007FBFB8 /* userUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userUtilities.swift; sourceTree = "<group>"; };
+		2D32CB1E2B1549BD007FBFB8 /* UtilityFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +119,7 @@
 			children = (
 				2D32CB112B12AD59007FBFB8 /* Globals.swift */,
 				2D32CB162B14344E007FBFB8 /* ImagePicker.swift */,
+				2D32CB1E2B1549BD007FBFB8 /* UtilityFunctions.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -131,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				2D32CAFF2B0C01CE007FBFB8 /* DatabaseClasses.swift */,
+				2D32CB1A2B152457007FBFB8 /* DatabaseCreation.swift */,
 				2D32CB012B0C0411007FBFB8 /* WordStruct.swift */,
 			);
 			path = Database;
@@ -181,6 +191,8 @@
 			children = (
 				2D32CAE72B0682C9007FBFB8 /* ContentView.swift */,
 				2D32CB142B14034F007FBFB8 /* FirstTimeUser.swift */,
+				2D32CB182B1523A4007FBFB8 /* MainView.swift */,
+				2D32CB1C2B1545E7007FBFB8 /* userUtilities.swift */,
 			);
 			path = "Starting View";
 			sourceTree = "<group>";
@@ -256,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D32CB1F2B1549BD007FBFB8 /* UtilityFunctions.swift in Sources */,
 				2D32CB0E2B0D559B007FBFB8 /* VocabQuiz.swift in Sources */,
 				2D32CB082B0D4D9F007FBFB8 /* SearchVocab.swift in Sources */,
 				2D32CB152B14034F007FBFB8 /* FirstTimeUser.swift in Sources */,
@@ -267,9 +280,12 @@
 				2D32CB102B0D55AD007FBFB8 /* RandomWord.swift in Sources */,
 				2D32CB062B0C09D4007FBFB8 /* ApiDataFetch.swift in Sources */,
 				2D32CB122B12AD59007FBFB8 /* Globals.swift in Sources */,
+				2D32CB1B2B152457007FBFB8 /* DatabaseCreation.swift in Sources */,
 				2D32CB0A2B0D557C007FBFB8 /* WordOfTheDay.swift in Sources */,
 				2D32CB002B0C01CE007FBFB8 /* DatabaseClasses.swift in Sources */,
+				2D32CB192B1523A4007FBFB8 /* MainView.swift in Sources */,
 				2D32CAE62B0682C9007FBFB8 /* Vocab_App.swift in Sources */,
+				2D32CB1D2B1545E7007FBFB8 /* userUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

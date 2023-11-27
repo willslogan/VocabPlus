@@ -11,9 +11,14 @@ import SwiftData
 @main
 struct Vocab_App: App {
     
+//    init() {
+//        createVocabPlusDB()
+//    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+//                .modelContainer(for: [Word.self, User.self], isUndoEnabled: true)
         }
     }
 }
