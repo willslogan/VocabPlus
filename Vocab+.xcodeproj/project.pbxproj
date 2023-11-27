@@ -22,6 +22,7 @@
 		2D32CB102B0D55AD007FBFB8 /* RandomWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB0F2B0D55AD007FBFB8 /* RandomWord.swift */; };
 		2D32CB122B12AD59007FBFB8 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB112B12AD59007FBFB8 /* Globals.swift */; };
 		2D32CB152B14034F007FBFB8 /* FirstTimeUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB142B14034F007FBFB8 /* FirstTimeUser.swift */; };
+		2D32CB172B14344E007FBFB8 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB162B14344E007FBFB8 /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		2D32CB112B12AD59007FBFB8 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		2D32CB132B13F46F007FBFB8 /* Vocab--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Vocab--Info.plist"; sourceTree = SOURCE_ROOT; };
 		2D32CB142B14034F007FBFB8 /* FirstTimeUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstTimeUser.swift; sourceTree = "<group>"; };
+		2D32CB162B14344E007FBFB8 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				2D32CB112B12AD59007FBFB8 /* Globals.swift */,
+				2D32CB162B14344E007FBFB8 /* ImagePicker.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 				2D32CB0E2B0D559B007FBFB8 /* VocabQuiz.swift in Sources */,
 				2D32CB082B0D4D9F007FBFB8 /* SearchVocab.swift in Sources */,
 				2D32CB152B14034F007FBFB8 /* FirstTimeUser.swift in Sources */,
+				2D32CB172B14344E007FBFB8 /* ImagePicker.swift in Sources */,
 				2D32CAE82B0682C9007FBFB8 /* ContentView.swift in Sources */,
 				2D32CB042B0C05F7007FBFB8 /* GetJsonDataFromApi.swift in Sources */,
 				2D32CB0C2B0D5586007FBFB8 /* VocabList.swift in Sources */,
