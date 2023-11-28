@@ -1,0 +1,30 @@
+[
+    {
+        "word": "Ephemeral",
+        "definition": "Lasting for a very short time",
+        "partOfSpeech": "adjective",
+        "sourceName": "Oxford Dictionary",
+        "audioUrl": "https://example.com/ephemeral.mp3",
+        "imageUrl": "https://example.com/ephemeral.jpg",
+        "imageAuthor": "John Doe",
+        "imageAuthorUrl": "https://example.com/johndoe",
+        "example": "Fashions are ephemeral: new ones regularly replace the old.",
+        "exampleAuthor": "Jane Smith",
+        "exampleAuthorUrl": "https://example.com/janesmith",
+        "synonyms": "transient, fleeting, passing, short-lived"
+    },
+    {
+        "word": "Serenity",
+        "definition": "The state of being calm, peaceful, and untroubled",
+        "partOfSpeech": "noun",
+        "sourceName": "Merriam-Webster",
+        "audioUrl": "https://example.com/serenity.mp3",
+        "imageUrl": "https://example.com/serenity.jpg",
+        "imageAuthor": "Alice Johnson",
+        "imageAuthorUrl": "https://example.com/alicejohnson",
+        "example": "The serenity of the quiet countryside was a great comfort.",
+        "exampleAuthor": "Robert Brown",
+        "exampleAuthorUrl": "https://example.com/robertbrown",
+        "synonyms": "calmness, peace, tranquility, repose"
+    }
+]

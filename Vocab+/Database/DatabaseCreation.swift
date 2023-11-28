@@ -24,22 +24,34 @@ public func createVocabPlusDB() {
     let modelContext = ModelContext(modelContainer)
 
     // Check to see if the Vocab+ database has already been created or not
-    let userFetchDescriptor = FetchDescriptor<User>()
+    let wordFetchDescriptor = FetchDescriptor<Word>()
     
-    var listOfUsers = [User]()
+//    var listOfUsers = [User]()
+//    
+//    do {
+//        // Obtain all of the drink objects from the database
+//        listOfUsers = try modelContext.fetch(userFetchDescriptor)
+//    } catch {
+//        fatalError("Unable to fetch Drink objects from the database")
+//    }
+//    
+//    if !listOfUsers.isEmpty {
+//        print("DB has been Created")
+//        return
+//    }
+        var listOfWords = [Word]()
     
-    do {
-        // Obtain all of the drink objects from the database
-        listOfUsers = try modelContext.fetch(userFetchDescriptor)
-    } catch {
-        fatalError("Unable to fetch Drink objects from the database")
-    }
+        do {
+            // Obtain all of the drink objects from the database
+            listOfWords = try modelContext.fetch(wordFetchDescriptor)
+        } catch {
+            fatalError("Unable to fetch Drink objects from the database")
+        }
     
-    if !listOfUsers.isEmpty {
-        print("DB has been Created")
-        return
-    }
-    
+        if !listOfWords.isEmpty {
+            print("DB has been Created")
+            return
+        }
     print("Creating DB now")
     // ************************************************************
     // Learned Words and Favorite Words NEED TO BE IMPLEMENTED HERE
@@ -53,12 +65,56 @@ public func createVocabPlusDB() {
                     learnedWords: [],
                     favoriteWords: []
     )
-    
-    
-    
     modelContext.insert(user)
     
+    /*
+     ----------------------------------------------------------
+     | *** The app is being launched for the first time ***   |
+     |   Database needs to be created and populated with      |
+     |   the initial content in DatabaseInitialContent.json   |
+     ----------------------------------------------------------
+     */
+    
+    var arrayOfWordStructs = [WordStruct]()
+        arrayOfWordStructs = decodeJsonFileIntoArrayOfStructs(fullFilename: "DatabaseInitialContent.json", fileLocation: "Main Bundle")
+        
+        for aWordStruct in arrayOfWordStructs {
+            
+            // Create a new Word object from aWordStruct
+            // Assigning default values for properties not present in the JSON
+            let newWord = Word(
+                word: aWordStruct.word,
+                definition: aWordStruct.definition,
+                partOfSpeech: aWordStruct.partOfSpeech,
+                sourceName: aWordStruct.sourceName,
+                audioUrl: aWordStruct.audioUrl,
+                imageUrl: aWordStruct.imageUrl,
+                imageAuthor: aWordStruct.imageAuthor,
+                imageAuthorUrl: aWordStruct.imageAuthorUrl,
+                example: aWordStruct.example,
+                exampleAuthor: aWordStruct.exampleAuthor,
+                exampleAuthorUrl: aWordStruct.exampleAuthorUrl,
+                synonyms: aWordStruct.synonyms,
+                pointsUntilLearned: 0
+            )
+
+            // Insert it into the database context
+            modelContext.insert(newWord)
+            
+            // Debug statement to print the word being added
+            print("Added word to DB: \(newWord.word)")
+        }
+    
+    /*
+     =================================
+     |   Save All Database Changes   |
+     =================================
+     */
+    do {
+        try modelContext.save()
+    } catch {
+        fatalError("Unable to save database changes")
+    }
+    
     print("DB is now Created")
-    
-    
 }

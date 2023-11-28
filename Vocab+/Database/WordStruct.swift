@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WordStruct {
+struct WordStruct : Hashable, Decodable {
     var word: String
     var definition: String
     var partOfSpeech: String
