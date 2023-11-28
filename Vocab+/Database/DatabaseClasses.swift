@@ -51,7 +51,7 @@ final class User {
     @Relationship(deleteRule: .nullify) var learnedWords: [Word]?
     @Relationship(deleteRule: .nullify) var favoriteWords: [Word]?
     
-    init(firstName: String, lastName: String, profileImageName: String, level: Int, learnedWords: [Word]? = nil, favoriteWords: [Word]? = nil) {
+    init(firstName: String, lastName: String, profileImageName: String, level: Int, learnedWords: [Word], favoriteWords: [Word]) {
         self.firstName = firstName
         self.lastName = lastName
         self.profileImageName = profileImageName
