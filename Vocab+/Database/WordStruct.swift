@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WordStruct {
+struct WordStruct : Hashable, Decodable {
     var word: String
     var definitions: [DefinitionStruct] // List of definitions associated with the word
     var audioUrl: String
