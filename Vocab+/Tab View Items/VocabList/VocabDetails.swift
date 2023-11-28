@@ -16,8 +16,29 @@ struct VocabDetails: View {
     var body: some View {
         Form {
             // TODO: fill out Details screen
-            Section(header: Text("Example")) {
-                Text(word.example)
+            Section(header: Text("Word")) {
+                Text(word.word)
+            }
+            Section(header: Text("Definition")) {
+                Text(word.definition)
+            }
+            Section(header: Text("Part of Speech")) {
+                Text(word.partOfSpeech)
+            }
+            Section(header: Text("Source")) {
+                Text(word.sourceName)
+            }
+            Section(header: Text("Audio")) {
+                Text("Coming Soon...")
+            }
+            Section(header: Text("Image")) {
+                Text("Coming Soon...")
+            }
+            Section(header: Text("Synonyms")) {
+                Text("Coming Soon...")
+            }
+            Section(header: Text("Points Until Learned")) {
+                Text("\(word.pointsUntilLearned)")
             }
         }   // End of Form
             .font(.system(size: 14))

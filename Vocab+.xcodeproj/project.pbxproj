@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1234C9C92B14530600719411 /* GetImageFromUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1234C9C82B14530600719411 /* GetImageFromUrl.swift */; };
+		12E430912B158E82000C4ABD /* DatabaseInitialContent.json in Resources */ = {isa = PBXBuildFile; fileRef = 12E430902B158E82000C4ABD /* DatabaseInitialContent.json */; };
 		2D32CAE62B0682C9007FBFB8 /* Vocab_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CAE52B0682C9007FBFB8 /* Vocab_App.swift */; };
 		2D32CAE82B0682C9007FBFB8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CAE72B0682C9007FBFB8 /* ContentView.swift */; };
 		2D32CAEC2B0682CB007FBFB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D32CAEB2B0682CB007FBFB8 /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		1234C9C82B14530600719411 /* GetImageFromUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetImageFromUrl.swift; sourceTree = "<group>"; };
+		12E430902B158E82000C4ABD /* DatabaseInitialContent.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DatabaseInitialContent.json; sourceTree = "<group>"; };
 		2D32CAE22B0682C9007FBFB8 /* Vocab+.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vocab+.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D32CAE52B0682C9007FBFB8 /* Vocab_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocab_App.swift; sourceTree = "<group>"; };
 		2D32CAE72B0682C9007FBFB8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -93,8 +95,8 @@
 				2D32CAE52B0682C9007FBFB8 /* Vocab_App.swift */,
 				2D32CAFE2B0C013D007FBFB8 /* Starting View */,
 				2D32CAF82B0C0028007FBFB8 /* Database */,
-				2D32CAF62B0C0002007FBFB8 /* Supporting Files */,
 				2D32CAF52B0BFFF6007FBFB8 /* APIs */,
+				2D32CAF62B0C0002007FBFB8 /* Supporting Files */,
 				2D32CAF72B0C0019007FBFB8 /* Tab View Items */,
 				2D32CAEB2B0682CB007FBFB8 /* Assets.xcassets */,
 				2D32CB132B13F46F007FBFB8 /* Vocab--Info.plist */,
@@ -149,6 +151,7 @@
 				2D32CAFF2B0C01CE007FBFB8 /* DatabaseClasses.swift */,
 				2D32CB1A2B152457007FBFB8 /* DatabaseCreation.swift */,
 				2D32CB012B0C0411007FBFB8 /* WordStruct.swift */,
+				12E430902B158E82000C4ABD /* DatabaseInitialContent.json */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12E430912B158E82000C4ABD /* DatabaseInitialContent.json in Resources */,
 				2D32CAEF2B0682CB007FBFB8 /* Preview Assets.xcassets in Resources */,
 				2D32CAEC2B0682CB007FBFB8 /* Assets.xcassets in Resources */,
 			);
