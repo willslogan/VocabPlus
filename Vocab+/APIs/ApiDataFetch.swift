@@ -361,6 +361,83 @@ public func getImageInfoFromApi(searchTerm: String) -> [String] {
     return photoInfo
 }
 
+func getRandomWordFromApi() -> WordStruct {
+    //
+    let apiUrlString = "https://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=\(wordnikApiKey)"
+    
+    var word = ""
+    var definition = ""
+    var partOfSpeech = ""
+    var sourceName = ""
+    var audioUrl = ""
+    var imageUrl = ""
+    var imageAuthor = ""
+    var imageAuthorUrl = ""
+    var example = ""
+    var exampleAuthor = ""
+    var exampleAuthorUrl = ""
+    var synonyms = ""
+    
+    var randomWord = WordStruct(word: word,
+                          definition: definition,
+                          partOfSpeech: partOfSpeech,
+                          sourceName: sourceName,
+                          audioUrl: audioUrl,
+                          imageUrl: imageUrl,
+                          imageAuthor: imageAuthor,
+                          imageAuthorUrl: imageAuthorUrl,
+                          example: example,
+                          exampleAuthor: exampleAuthor,
+                          exampleAuthorUrl: exampleAuthorUrl,
+                          synonyms: synonyms)
+    
+    var jsonDataFromApi: Data
+    
+    let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: wordnikApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
+    
+    if let jsonData = jsonDataFetchedFromApi {
+        jsonDataFromApi = jsonData
+    } else {
+        print("Failure Here 1")
+        return randomWord
+    }
+    
+    do {
+        let jsonResponse = try JSONSerialization.jsonObject(with: jsonDataFromApi,
+                                                            options: JSONSerialization.ReadingOptions.mutableContainers)
+        
+        print("Responce Obtained")
+        
+        if let randomWordDictionary = jsonResponse as? [String: Any] {
+            print("Dictionary conversion completed")
+            //Process word
+            if let randomWordObtained = randomWordDictionary["word"] as? String {
+                print("Random Word Found")
+                word = randomWordObtained
+            }
+        }
+        
+        randomWord = WordStruct(word: word,
+                              definition: definition,
+                              partOfSpeech: partOfSpeech,
+                              sourceName: sourceName,
+                              audioUrl: audioUrl,
+                              imageUrl: imageUrl,
+                              imageAuthor: imageAuthor,
+                              imageAuthorUrl: imageAuthorUrl,
+                              example: example,
+                              exampleAuthor: exampleAuthor,
+                              exampleAuthorUrl: exampleAuthorUrl,
+                              synonyms: synonyms)
+        
+    } catch {
+        print("Failure Here 2")
+        return randomWord
+    }
+    
+    return randomWord
+}
+
 func fetchImageFromPexels(word: String, completion: @escaping (PexelsPhoto?) -> Void) {
     var toReturn: PexelsPhoto?
     

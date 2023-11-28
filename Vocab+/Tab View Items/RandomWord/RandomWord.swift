@@ -9,9 +9,51 @@
 import SwiftUI
 
 struct RandomWord: View {
+    
+    @State private var currWord = getRandomWordFromApi()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            VStack {
+                Image(systemName: "shuffle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 200, alignment: .center)
+                    .padding(100)
+                
+                HStack {
+                    Button(action: {
+                        currWord = getRandomWordFromApi()
+                    }) {
+                        VStack {
+                            Image(systemName: "arrow.clockwise")
+                        }
+                        .frame(width: 50, height: 100.0)
+                        .foregroundStyle(Color.white)
+                        .background(Color.blue.opacity(0.5))
+                        .cornerRadius(10)
+                    }
+                    
+                    NavigationLink(destination: displayRandomWord(word: currWord)){
+                        VStack {
+                            Text("Random Word")
+                                .font(.system(size: 30))
+                        }
+                        .frame(width: 300.0, height: 100.0)
+                        .foregroundStyle(Color.white)
+                        .background(Color.blue.opacity(0.5))
+                        .cornerRadius(10)
+                    }
+                }
+                Spacer()
+            }
+            .navigationTitle("Random Word")
+            .toolbarTitleDisplayMode(.inline)
+        }
     }
+    
+    
+    
 }
 
 #Preview {

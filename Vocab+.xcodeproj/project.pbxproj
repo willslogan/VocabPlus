@@ -29,6 +29,7 @@
 		2D32CB1B2B152457007FBFB8 /* DatabaseCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB1A2B152457007FBFB8 /* DatabaseCreation.swift */; };
 		2D32CB1D2B1545E7007FBFB8 /* userUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB1C2B1545E7007FBFB8 /* userUtilities.swift */; };
 		2D32CB1F2B1549BD007FBFB8 /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB1E2B1549BD007FBFB8 /* UtilityFunctions.swift */; };
+		2D32CB232B15828B007FBFB8 /* displayRandomWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB222B15828B007FBFB8 /* displayRandomWord.swift */; };
 		D3B8AF0B2B1545EA00D24283 /* VocabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B8AF0A2B1545EA00D24283 /* VocabItem.swift */; };
 		D3B8AF0D2B1545F100D24283 /* VocabDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B8AF0C2B1545F100D24283 /* VocabDetails.swift */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,7 @@
 		2D32CB1A2B152457007FBFB8 /* DatabaseCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseCreation.swift; sourceTree = "<group>"; };
 		2D32CB1C2B1545E7007FBFB8 /* userUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userUtilities.swift; sourceTree = "<group>"; };
 		2D32CB1E2B1549BD007FBFB8 /* UtilityFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctions.swift; sourceTree = "<group>"; };
+		2D32CB222B15828B007FBFB8 /* displayRandomWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = displayRandomWord.swift; sourceTree = "<group>"; };
 		D3B8AF0A2B1545EA00D24283 /* VocabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabItem.swift; sourceTree = "<group>"; };
 		D3B8AF0C2B1545F100D24283 /* VocabDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				2D32CB0F2B0D55AD007FBFB8 /* RandomWord.swift */,
+				2D32CB222B15828B007FBFB8 /* displayRandomWord.swift */,
 			);
 			path = RandomWord;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				2D32CB0A2B0D557C007FBFB8 /* WordOfTheDay.swift in Sources */,
 				2D32CB002B0C01CE007FBFB8 /* DatabaseClasses.swift in Sources */,
 				2D32CB192B1523A4007FBFB8 /* MainView.swift in Sources */,
+				2D32CB232B15828B007FBFB8 /* displayRandomWord.swift in Sources */,
 				2D32CAE62B0682C9007FBFB8 /* Vocab_App.swift in Sources */,
 				2D32CB1D2B1545E7007FBFB8 /* userUtilities.swift in Sources */,
 			);
