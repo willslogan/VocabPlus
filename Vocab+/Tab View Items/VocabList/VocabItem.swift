@@ -18,8 +18,12 @@ struct VocabItem: View {
             VStack(alignment: .leading) {
                 Text(word.word)
                     .font(.system(size: 22))
-                Text(word.partOfSpeech)
-                    .font(.system(size: 14))
+                if let definitions = word.definitions {
+                    if definitions.count > 0 {
+                        Text(definitions[0].partOfSpeech)
+                            .font(.system(size: 14))
+                    }
+                }
             }
         }
     }

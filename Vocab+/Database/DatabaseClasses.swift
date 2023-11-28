@@ -11,33 +11,44 @@ import SwiftData
 @Model
 final class Word {
     var word: String
-    var definition: String
-    var partOfSpeech: String
-    var sourceName: String
     var audioUrl: String
     var imageUrl: String
     var imageAuthor: String
     var imageAuthorUrl: String
-    var example: String
-    var exampleAuthor: String
-    var exampleAuthorUrl: String
-    var synonyms: String
+    var synonyms: [String]
     var pointsUntilLearned: Int
     
-    init(word: String, definition: String, partOfSpeech: String, sourceName: String, audioUrl: String, imageUrl: String, imageAuthor: String, imageAuthorUrl: String, example: String, exampleAuthor: String, exampleAuthorUrl: String, synonyms: String, pointsUntilLearned: Int) {
+    // If Word is deleted, cascade that deletion for all definitions too
+    @Relationship(deleteRule: .cascade) var definitions: [Definition]?
+    // One-to-Many Relationship: ONE Word can belong to MANY Definitions
+    
+    init(word: String, audioUrl: String, imageUrl: String, imageAuthor: String, imageAuthorUrl: String, synonyms: [String], pointsUntilLearned: Int, definitions: [Definition]? = nil) {
         self.word = word
-        self.definition = definition
-        self.partOfSpeech = partOfSpeech
-        self.sourceName = sourceName
         self.audioUrl = audioUrl
         self.imageUrl = imageUrl
         self.imageAuthor = imageAuthor
         self.imageAuthorUrl = imageAuthorUrl
-        self.example = example
-        self.exampleAuthor = exampleAuthor
-        self.exampleAuthorUrl = exampleAuthorUrl
         self.synonyms = synonyms
         self.pointsUntilLearned = pointsUntilLearned
+        self.definitions = definitions
+    }
+}
+
+@Model
+final class Definition {
+    var definition: String
+    var partOfSpeech: String
+    var example: String
+    
+    // If Word is deleted, nullify Word
+    @Relationship(deleteRule: .nullify) var word: Word?
+    // One-to-One Relationship: ONE Definition can belong to ONE Word
+    
+    init(definition: String, partOfSpeech: String, example: String, word: Word? = nil) {
+        self.definition = definition
+        self.partOfSpeech = partOfSpeech
+        self.example = example
+        self.word = word
     }
 }
 

@@ -7,17 +7,18 @@
 
 import SwiftUI
 
-struct WordStruct : Hashable, Decodable {
+struct WordStruct: Decodable {
     var word: String
-    var definition: String
-    var partOfSpeech: String
-    var sourceName: String
+    var definitions: [DefinitionStruct] // List of definitions associated with the word
     var audioUrl: String
     var imageUrl: String
     var imageAuthor: String
     var imageAuthorUrl: String
+    var synonyms: [String]
+}
+
+struct DefinitionStruct: Decodable {
+    var definition: String
+    var partOfSpeech: String
     var example: String
-    var exampleAuthor: String
-    var exampleAuthorUrl: String
-    var synonyms: String
 }

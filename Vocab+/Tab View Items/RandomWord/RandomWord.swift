@@ -34,15 +34,17 @@ struct RandomWord: View {
                         .cornerRadius(10)
                     }
                     
-                    NavigationLink(destination: displayRandomWord(word: currWord)){
-                        VStack {
-                            Text("Random Word")
-                                .font(.system(size: 30))
+                    if let unwrappedWord = currWord {
+                        NavigationLink(destination: displayRandomWord(word: unwrappedWord)){
+                            VStack {
+                                Text("Random Word")
+                                    .font(.system(size: 30))
+                            }
+                            .frame(width: 300.0, height: 100.0)
+                            .foregroundStyle(Color.white)
+                            .background(Color.blue.opacity(0.5))
+                            .cornerRadius(10)
                         }
-                        .frame(width: 300.0, height: 100.0)
-                        .foregroundStyle(Color.white)
-                        .background(Color.blue.opacity(0.5))
-                        .cornerRadius(10)
                     }
                 }
                 Spacer()

@@ -12,7 +12,6 @@ struct SearchVocab: View {
     
     @State private var searchTerm = ""
     @State private var searchCompleted = false
-    @State private var imageInfo = [String]()
     
     //Alert
     @State private var showAlertMessage = false
@@ -72,17 +71,23 @@ struct SearchVocab: View {
                 }
                 
                 if searchCompleted {
-                    Section(header: Text("Test: Image Info retrieval")){
-                        if imageInfo.count == 3 {
-                            Text(imageInfo[0])
-                            Text(imageInfo[1])
-                            Text(imageInfo[2])
-                        } else {
-                            Text("Error Occured Retreiving Image Info")
-                        }
+                    Section(header: Text("Word")) {
+                        Text(foundWord.word)
+                    }
+                    
+//                    if let unwrappedDefinitions = foundWord.definitions {
+//                        if unwrappedDefinitions.count > 0 {
+//                            Section(header: Text("Definition")) {
+//                                Text(unwrappedDefinitions[0].definition)
+//                            }
+//                        }
+//                    }
+                    
+                    Section(header: Text("Image")) {
+                        GetImageFromUrl(stringUrl: foundWord.imageUrl, maxWidth: 300)
                     }
                 }
-            }
+            } // End of form
             .font(.system(size: 14))
             .navigationTitle("Search Word")
             .toolbarTitleDisplayMode(.inline)
@@ -98,16 +103,15 @@ struct SearchVocab: View {
         }
         
         return true
-    }
+    } // end of inputDataValidated
 
     func formatAndSearchAPI() {
         let searchTermTrimmed = searchTerm.trimmingCharacters(in: .whitespacesAndNewlines)
+        getFoundWordFromApi(searchTerm: searchTermTrimmed)
+        print(foundWord.word)
         
-        imageInfo = getImageInfoFromApi(searchTerm: searchTermTrimmed)
-        
-        
-    }
-}
+    } // end of formatAndSearchAPI
+} // End of SearchVocab
 
 #Preview {
     SearchVocab()
