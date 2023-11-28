@@ -73,25 +73,24 @@ struct SearchVocab: View {
                 
                 if searchCompleted {
                     Section(header: Text("Word")) {
-                        Text(foundWordsList[0].word)
+                        Text(searchTerm)
+                    }
+                    Section(header: Text("Definition")) {
+                        Text("Coming soon...")
                     }
                     
-                    Section(header: Text("Definitions")) {
-                        Text(foundWordsList[0].definition)
-                    }
-                    
-                    Section(header: Text("Test: Image Info retrieval")){
-                        if let photo = image {
-                            Text(photo.authorName)
-                            Text(photo.authorUrl)
-                            Text(photo.imageUrl)
-                        }
-                        else {
-                            Text("nope")
-                        }
-                    }
+//                    let definitions = foundWord.definitions ?? []
+//                    if definitions.count > 0 {
+//                        Section(header: Text("Definitions")) {
+//                            Text(definitions[0].definition)
+//                        }
+//                    }
+//                    
+//                    Section(header: Text("Test: Image Info retrieval")) {
+//                        Text(foundWord.authorName)
+//                    }
                 }
-            }
+            } // End of form
             .font(.system(size: 14))
             .navigationTitle("Search Word")
             .toolbarTitleDisplayMode(.inline)
@@ -111,8 +110,8 @@ struct SearchVocab: View {
 
     func formatAndSearchAPI() {
         let searchTermTrimmed = searchTerm.trimmingCharacters(in: .whitespacesAndNewlines)
+        getFoundWordFromApi(searchTerm: searchTermTrimmed)
         
-        getFoundWordsFromApi(searchTerm: searchTermTrimmed)
     } // end of formatAndSearchAPI
 } // End of SearchVocab
 

@@ -46,7 +46,7 @@ public func getFoundWordFromApi(searchTerm: String) {
         let audioUrl = getAudioFileFromApi(searchTerm: searchTerm)
                 
         // Retrieve synonyms
-        let synonyms = getSynonymFromApi(searchTerm: searchTerm)
+        let synonyms = getSynonymsFromApi(searchTerm: searchTerm)
         
         //Create Word Struct
         var foundWord = Word(word: searchTerm,
@@ -283,114 +283,15 @@ public func getSynonymsFromApi(searchTerm: String) -> [String] {
     return synonyms
 }
 
-public func getImageInfoFromApi(searchTerm: String) -> [String] {
-    //Photo info array will have 3 items
-    var photoInfo = [String]()
-    
-    //The items below will go into index 0,1,2 respectivily
-    var imageUrl = "Not Found"
-    var imageAuthor = "Not Found"
-    var imageAuthorUrl = "Not Found"
-    
-    //I'm doing returning photoInfo as array cause it was the only way I could think of to return multiple bits of information from one
-    //function at the same time
-    
-    let apiUrlString = "https://api.pexels.com/v1/search?query=\(searchTerm)&per_page=1"
-    
-    
-    
+/*
+ Function to retrieve a random word from the wordnik api
+ */
+func getRandomWordFromApi() -> Word? {
     var jsonDataFromApi: Data
     
-    let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: pexelsApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
-    
-    if let jsonData = jsonDataFetchedFromApi {
-        jsonDataFromApi = jsonData
-    } else {
-        print("Failure At Location: 1")
-        return photoInfo
-    }
-    
-    do {
-        let jsonResponse = try JSONSerialization.jsonObject(with: jsonDataFromApi,
-                                                            options: JSONSerialization.ReadingOptions.mutableContainers)
-        print("Made it here")
-        
-        if let searchResults = jsonResponse as? [String : Any] {
-            print("Succuesfully Converted to Dictionary: searchResults")
-            if let photosList = searchResults["photos"] as? [Any] {
-                print("Succuesfully Converted to array: photosList")
-                for aPhoto in photosList {
-                    if let photoInfoJson = aPhoto as? [String : Any] {
-                        print("Succuesfully Converted to Dictionary: photoInfo")
-                        //Process image author
-                        if let author = photoInfoJson["photographer"] as? String {
-                            print("Succuesfully found author")
-                            imageAuthor = author
-                        }
-                        
-                        //Process image author website
-                        if let authorWebsite = photoInfoJson["photographer_url"] as? String {
-                            print("Succuesfully found author website")
-                            imageAuthorUrl = authorWebsite
-                        }
-                        
-                        //Process image url
-                        if let imageOptions = photoInfoJson["src"] as? [String: Any] {
-                            print("Succuesfully Converted to Dictionary: imageOptions")
-                            if let imageUrlFromJson = imageOptions["original"] as? String {
-                                print("Succuesfully found image url")
-                                imageUrl = imageUrlFromJson
-                            }
-                        }
-                        
-                    }
-                }
-            }
-        }
-    } catch {
-        print("Failure At Location 2")
-        return photoInfo
-    }
-    
-    //Add relevent image info to the photoInfo array
-    photoInfo.append(imageUrl)
-    photoInfo.append(imageAuthor)
-    photoInfo.append(imageAuthorUrl)
-    
-    return photoInfo
-}
+    var randomWord = ""
 
-func getRandomWordFromApi() -> WordStruct {
-    //
-    let apiUrlString = "https://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=\(wordnikApiKey)"
-    
-    var word = ""
-    var definition = ""
-    var partOfSpeech = ""
-    var sourceName = ""
-    var audioUrl = ""
-    var imageUrl = ""
-    var imageAuthor = ""
-    var imageAuthorUrl = ""
-    var example = ""
-    var exampleAuthor = ""
-    var exampleAuthorUrl = ""
-    var synonyms = ""
-    
-    var randomWord = WordStruct(word: word,
-                          definition: definition,
-                          partOfSpeech: partOfSpeech,
-                          sourceName: sourceName,
-                          audioUrl: audioUrl,
-                          imageUrl: imageUrl,
-                          imageAuthor: imageAuthor,
-                          imageAuthorUrl: imageAuthorUrl,
-                          example: example,
-                          exampleAuthor: exampleAuthor,
-                          exampleAuthorUrl: exampleAuthorUrl,
-                          synonyms: synonyms)
-    
-    var jsonDataFromApi: Data
+    var apiUrlString = "https://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=\(wordnikApiKey)"
     
     let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: wordnikApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
     
@@ -398,43 +299,65 @@ func getRandomWordFromApi() -> WordStruct {
         jsonDataFromApi = jsonData
     } else {
         print("Failure Here 1")
-        return randomWord
+        return nil
     }
     
     do {
         let jsonResponse = try JSONSerialization.jsonObject(with: jsonDataFromApi,
                                                             options: JSONSerialization.ReadingOptions.mutableContainers)
         
-        print("Responce Obtained")
+        print("Response Obtained")
         
         if let randomWordDictionary = jsonResponse as? [String: Any] {
             print("Dictionary conversion completed")
             //Process word
             if let randomWordObtained = randomWordDictionary["word"] as? String {
                 print("Random Word Found")
-                word = randomWordObtained
+                // Set random word
+                randomWord = randomWordObtained
             }
         }
         
-        randomWord = WordStruct(word: word,
-                              definition: definition,
-                              partOfSpeech: partOfSpeech,
-                              sourceName: sourceName,
-                              audioUrl: audioUrl,
-                              imageUrl: imageUrl,
-                              imageAuthor: imageAuthor,
-                              imageAuthorUrl: imageAuthorUrl,
-                              example: example,
-                              exampleAuthor: exampleAuthor,
-                              exampleAuthorUrl: exampleAuthorUrl,
-                              synonyms: synonyms)
+        if randomWord == "" {
+            return nil
+        }
+        
+        // Retrieve definitions of the random word
+        let definitions = getDefinitionsFromApi(searchTerm: randomWord)
+        
+        // Retrieve audio URL
+        let audioUrl = getAudioFileFromApi(searchTerm: randomWord)
+                
+        // Retrieve synonyms
+        let synonyms = getSynonymsFromApi(searchTerm: randomWord)
+        
+        //Create Word Struct
+        var randomWordToReturn = Word(word: randomWord,
+                             audioUrl: audioUrl,
+                             imageUrl: "",
+                             imageAuthor: "",
+                             imageAuthorUrl: "",
+                             synonyms: synonyms,
+                             pointsUntilLearned: 10, // TODO: Good starting value?
+                             definitions: definitions)
+                
+        // Retrieve pexels image
+        fetchImageFromPexels(word: randomWord) { pexelsPhoto in
+            if let pexelsPhoto = pexelsPhoto {
+                randomWordToReturn.imageUrl = pexelsPhoto.imageUrl
+                randomWordToReturn.imageAuthor = pexelsPhoto.authorName
+                randomWordToReturn.imageAuthorUrl = pexelsPhoto.authorUrl
+            } else {
+                print("Failed to fetch image from Pexels")
+            }
+        }
+        
+        return randomWordToReturn
         
     } catch {
-        print("Failure Here 2")
-        return randomWord
+        return nil
     }
     
-    return randomWord
 }
 
 /*

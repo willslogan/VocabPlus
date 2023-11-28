@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct displayRandomWord: View {
-    let word: WordStruct
+    let word: Word
     
     @State private var wordOfTheDay: String = "Loading..."
     @State private var photo: PexelsPhoto?
@@ -67,6 +67,3 @@ struct displayRandomWord: View {
     }
 }
 
-#Preview {
-    displayRandomWord(word: getRandomWordFromApi())
-}

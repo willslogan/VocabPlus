@@ -77,26 +77,23 @@ public func createVocabPlusDB() {
     
     var arrayOfWordStructs = [WordStruct]()
         arrayOfWordStructs = decodeJsonFileIntoArrayOfStructs(fullFilename: "DatabaseInitialContent.json", fileLocation: "Main Bundle")
-        
+    
         for aWordStruct in arrayOfWordStructs {
+            
+            var definitions = [Definition]()
+            var newDefinition = Definition(definition: aWordStruct.definitions[0].definition, partOfSpeech: aWordStruct.definitions[0].partOfSpeech, example: aWordStruct.definitions[0].example)
+            definitions.append(newDefinition)
             
             // Create a new Word object from aWordStruct
             // Assigning default values for properties not present in the JSON
-            let newWord = Word(
-                word: aWordStruct.word,
-                definition: aWordStruct.definition,
-                partOfSpeech: aWordStruct.partOfSpeech,
-                sourceName: aWordStruct.sourceName,
-                audioUrl: aWordStruct.audioUrl,
-                imageUrl: aWordStruct.imageUrl,
-                imageAuthor: aWordStruct.imageAuthor,
-                imageAuthorUrl: aWordStruct.imageAuthorUrl,
-                example: aWordStruct.example,
-                exampleAuthor: aWordStruct.exampleAuthor,
-                exampleAuthorUrl: aWordStruct.exampleAuthorUrl,
-                synonyms: aWordStruct.synonyms,
-                pointsUntilLearned: 0
-            )
+            let newWord = Word(word: aWordStruct.word,
+                               audioUrl: aWordStruct.audioUrl,
+                               imageUrl: aWordStruct.imageUrl,
+                               imageAuthor: aWordStruct.imageAuthor,
+                               imageAuthorUrl: aWordStruct.imageAuthorUrl,
+                               synonyms: aWordStruct.synonyms,
+                               pointsUntilLearned: 10, 
+                               definitions: definitions)
 
             // Insert it into the database context
             modelContext.insert(newWord)
