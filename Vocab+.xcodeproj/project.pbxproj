@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1234C9C92B14530600719411 /* GetImageFromUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1234C9C82B14530600719411 /* GetImageFromUrl.swift */; };
 		2D32CAE62B0682C9007FBFB8 /* Vocab_App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CAE52B0682C9007FBFB8 /* Vocab_App.swift */; };
 		2D32CAE82B0682C9007FBFB8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CAE72B0682C9007FBFB8 /* ContentView.swift */; };
 		2D32CAEC2B0682CB007FBFB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D32CAEB2B0682CB007FBFB8 /* Assets.xcassets */; };
@@ -27,9 +28,12 @@
 		2D32CB1B2B152457007FBFB8 /* DatabaseCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB1A2B152457007FBFB8 /* DatabaseCreation.swift */; };
 		2D32CB1D2B1545E7007FBFB8 /* userUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB1C2B1545E7007FBFB8 /* userUtilities.swift */; };
 		2D32CB1F2B1549BD007FBFB8 /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB1E2B1549BD007FBFB8 /* UtilityFunctions.swift */; };
+		D3B8AF0B2B1545EA00D24283 /* VocabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B8AF0A2B1545EA00D24283 /* VocabItem.swift */; };
+		D3B8AF0D2B1545F100D24283 /* VocabDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B8AF0C2B1545F100D24283 /* VocabDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1234C9C82B14530600719411 /* GetImageFromUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetImageFromUrl.swift; sourceTree = "<group>"; };
 		2D32CAE22B0682C9007FBFB8 /* Vocab+.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vocab+.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D32CAE52B0682C9007FBFB8 /* Vocab_App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocab_App.swift; sourceTree = "<group>"; };
 		2D32CAE72B0682C9007FBFB8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -52,6 +56,8 @@
 		2D32CB1A2B152457007FBFB8 /* DatabaseCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseCreation.swift; sourceTree = "<group>"; };
 		2D32CB1C2B1545E7007FBFB8 /* userUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userUtilities.swift; sourceTree = "<group>"; };
 		2D32CB1E2B1549BD007FBFB8 /* UtilityFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctions.swift; sourceTree = "<group>"; };
+		D3B8AF0A2B1545EA00D24283 /* VocabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabItem.swift; sourceTree = "<group>"; };
+		D3B8AF0C2B1545F100D24283 /* VocabDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +126,7 @@
 				2D32CB112B12AD59007FBFB8 /* Globals.swift */,
 				2D32CB162B14344E007FBFB8 /* ImagePicker.swift */,
 				2D32CB1E2B1549BD007FBFB8 /* UtilityFunctions.swift */,
+				1234C9C82B14530600719411 /* GetImageFromUrl.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -182,6 +189,8 @@
 			isa = PBXGroup;
 			children = (
 				2D32CB0B2B0D5586007FBFB8 /* VocabList.swift */,
+				D3B8AF0A2B1545EA00D24283 /* VocabItem.swift */,
+				D3B8AF0C2B1545F100D24283 /* VocabDetails.swift */,
 			);
 			path = VocabList;
 			sourceTree = "<group>";
@@ -277,6 +286,9 @@
 				2D32CB042B0C05F7007FBFB8 /* GetJsonDataFromApi.swift in Sources */,
 				2D32CB0C2B0D5586007FBFB8 /* VocabList.swift in Sources */,
 				2D32CB022B0C0411007FBFB8 /* WordStruct.swift in Sources */,
+				D3B8AF0D2B1545F100D24283 /* VocabDetails.swift in Sources */,
+				D3B8AF0B2B1545EA00D24283 /* VocabItem.swift in Sources */,
+				1234C9C92B14530600719411 /* GetImageFromUrl.swift in Sources */,
 				2D32CB102B0D55AD007FBFB8 /* RandomWord.swift in Sources */,
 				2D32CB062B0C09D4007FBFB8 /* ApiDataFetch.swift in Sources */,
 				2D32CB122B12AD59007FBFB8 /* Globals.swift in Sources */,
