@@ -38,40 +38,36 @@ let wordnikApiHeaders = [
  This function first makes multiple API calls to build a Word object
  */
 public func getFoundWordFromApi(searchTerm: String) {
-    do {
-        // Retrieve definitions
-        let definitions = getDefinitionsFromApi(searchTerm: searchTerm)
-        
-        // Retrieve audio URL
-        let audioUrl = getAudioFileFromApi(searchTerm: searchTerm)
-                
-        // Retrieve synonyms
-        let synonyms = getSynonymsFromApi(searchTerm: searchTerm)
-        
-        //Create Word Struct
-        var foundWord = Word(word: searchTerm,
-                             audioUrl: audioUrl,
-                             imageUrl: "",
-                             imageAuthor: "",
-                             imageAuthorUrl: "",
-                             synonyms: synonyms,
-                             pointsUntilLearned: 10, // TODO: Good starting value?
-                             definitions: definitions)
-                
-        // Retrieve pexels image
-        fetchImageFromPexels(word: searchTerm) { pexelsPhoto in
-            if let pexelsPhoto = pexelsPhoto {
-                foundWord.imageUrl = pexelsPhoto.imageUrl
-                foundWord.imageAuthor = pexelsPhoto.authorName
-                foundWord.imageAuthorUrl = pexelsPhoto.authorUrl
-            } else {
-                print("Failed to fetch image from Pexels")
-            }
+    // Retrieve definitions
+    let definitions = getDefinitionsFromApi(searchTerm: searchTerm)
+    
+    // Retrieve audio URL
+    let audioUrl = getAudioFileFromApi(searchTerm: searchTerm)
+            
+    // Retrieve synonyms
+    let synonyms = getSynonymsFromApi(searchTerm: searchTerm)
+    print("HERE\n")
+    //Create Word Struct
+    foundWord = Word(word: searchTerm,
+                     audioUrl: audioUrl,
+                     imageUrl: "",
+                     imageAuthor: "",
+                     imageAuthorUrl: "",
+                     synonyms: synonyms,
+                     pointsUntilLearned: 10, // TODO: Good starting value?
+                     definitions: definitions)
+            
+    // Retrieve pexels image
+    fetchImageFromPexels(word: searchTerm) { pexelsPhoto in
+        if let pexelsPhoto = pexelsPhoto {
+            foundWord.imageUrl = pexelsPhoto.imageUrl
+            foundWord.imageAuthor = pexelsPhoto.authorName
+            foundWord.imageAuthorUrl = pexelsPhoto.authorUrl
+        } else {
+            print("Failed to fetch image from Pexels")
         }
-        // Now the foundWord variable should be set.
-    } catch {
-        return
     }
+    // Now the foundWord variable should be set.
 }
 
 /*

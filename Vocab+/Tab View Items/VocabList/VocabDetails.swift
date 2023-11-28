@@ -21,27 +21,28 @@ struct VocabDetails: View {
                 
                 Section(header: Text("Definition")) {
                     Text("Coming Soon...")
-                    
-                    Section(header: Text("Audio")) {
-                        Text("Coming Soon...")
-                    }
-                    
-                    Section(header: Text("Image")) {
-                        Text("Coming Soon...")
-                    }
-                    
-                    Section(header: Text("Synonyms")) {
-                        Text("Coming Soon...")
-                    }
-                    
-                    Section(header: Text("Points Until Learned")) {
-                        Text("\(word.pointsUntilLearned)")
-                    }
-                }   // End of Form
-                .font(.system(size: 14))
-                .navigationTitle(word.word)
-                .toolbarTitleDisplayMode(.inline)
-            } // End of navigation stack
-        }   // End of body var
-    }
+                }
+                
+                Section(header: Text("Audio")) {
+                    Text("Coming Soon...")
+                }
+                
+                Section(header: Text("Image")) {
+                    Text("Coming Soon...")
+                }
+                
+                Section(header: Text("Synonyms")) {
+                    Text("Coming Soon...")
+                }
+                
+                Section(header: Text("Points Until Learned")) {
+                    Text("\(word.pointsUntilLearned)")
+                }
+            }   // End of Form
+            .font(.system(size: 14))
+            .navigationTitle(word.word)
+            .toolbarTitleDisplayMode(.inline)
+        } // End of navigation stack
+    }   // End of body var
 }
+

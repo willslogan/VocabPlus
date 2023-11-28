@@ -12,7 +12,6 @@ struct SearchVocab: View {
     
     @State private var searchTerm = ""
     @State private var searchCompleted = false
-    @State private var image: PexelsPhoto?
     
     //Alert
     @State private var showAlertMessage = false
@@ -73,22 +72,20 @@ struct SearchVocab: View {
                 
                 if searchCompleted {
                     Section(header: Text("Word")) {
-                        Text(searchTerm)
-                    }
-                    Section(header: Text("Definition")) {
-                        Text("Coming soon...")
+                        Text(foundWord.word)
                     }
                     
-//                    let definitions = foundWord.definitions ?? []
-//                    if definitions.count > 0 {
-//                        Section(header: Text("Definitions")) {
-//                            Text(definitions[0].definition)
+//                    if let unwrappedDefinitions = foundWord.definitions {
+//                        if unwrappedDefinitions.count > 0 {
+//                            Section(header: Text("Definition")) {
+//                                Text(unwrappedDefinitions[0].definition)
+//                            }
 //                        }
 //                    }
-//                    
-//                    Section(header: Text("Test: Image Info retrieval")) {
-//                        Text(foundWord.authorName)
-//                    }
+                    
+                    Section(header: Text("Image")) {
+                        GetImageFromUrl(stringUrl: foundWord.imageUrl, maxWidth: 300)
+                    }
                 }
             } // End of form
             .font(.system(size: 14))
@@ -111,6 +108,7 @@ struct SearchVocab: View {
     func formatAndSearchAPI() {
         let searchTermTrimmed = searchTerm.trimmingCharacters(in: .whitespacesAndNewlines)
         getFoundWordFromApi(searchTerm: searchTermTrimmed)
+        print(foundWord.word)
         
     } // end of formatAndSearchAPI
 } // End of SearchVocab
