@@ -11,7 +11,8 @@ import SwiftUI
 struct MainView: View {
     var body: some View {
         TabView {
-            WordOfTheDay()
+            // TODO: When we implement profiles, the WOD should be able to get the current user's name without us passing it in
+            WordOfTheDay(firstName: "name")
                 .tabItem {
                     Label("WOTD", systemImage: "sun.max")
                 }

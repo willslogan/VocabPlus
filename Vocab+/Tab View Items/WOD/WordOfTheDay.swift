@@ -19,7 +19,7 @@ struct WordOfTheDay: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    Text("Welcome Back \(firstName),\nReady to improve your vocab?")
+                    Text("Welcome \(firstName),\nReady to improve your vocab?")
                         .multilineTextAlignment(.center)
                         .frame(width: 300, height: 100, alignment: .center)
                         .background(Color.white)
@@ -39,22 +39,19 @@ struct WordOfTheDay: View {
                             }
                         }
                         else {
-                            Text("Unfortunately, we couldn't find an image corresponding to the word: \(wordOfTheDay)")
+                            Text("Sorry!\nNo image associated with\n\(wordOfTheDay)")
                                 .multilineTextAlignment(.center)
                                 .frame(width: 300, height: 100, alignment: .center)
                                 .background(Color.white)
                                 .border(Color.black, width: 2)
                         }
                     }
-                    Text("Word Of the Day")
+                    Text("Word Of the Day\n\(wordOfTheDay)")
                         .multilineTextAlignment(.center)
-                        .frame(width: 300, height: 50, alignment: .center)
+                        .frame(width: 300, height: 100, alignment: .center)
                         .background(Color.white)
                         .border(Color.black, width: 2)
                         .font(.title)
-                    Text(wordOfTheDay)
-                        .font(.title2)
-                        .padding()
                     
                     Spacer()
                     Spacer()
@@ -91,15 +88,15 @@ struct WordOfTheDay: View {
                 .toolbarTitleDisplayMode(.inline)
                 .onAppear {
                     fetchWordOfTheDay()
-                    // TODO: Remove the apple line
-                    self.wordOfTheDay = "apple"
-                    fetchImageFromPexels(word: wordOfTheDay) { pexelsPhoto in
-                        if let pexelsPhoto = pexelsPhoto {
-                            self.photo = pexelsPhoto
-                        } else {
-                            print("Failed to fetch image from Pexels")
-                        }
-                    }
+//                    // Note: image already displays a not found message without this feature
+//                    self.wordOfTheDay = "apple"
+//                    fetchImageFromPexels(word: wordOfTheDay) { pexelsPhoto in
+//                        if let pexelsPhoto = pexelsPhoto {
+//                            self.photo = pexelsPhoto
+//                        } else {
+//                            print("Failed to fetch image from Pexels")
+//                        }
+//                    }
                 }
             }
         }
@@ -119,16 +116,18 @@ struct WordOfTheDay: View {
     
     var authorAlert: Alert {
         Alert(
-            title: Text("Photo Info"),
-            message: Text(photo?.authorUrl ?? "No author information available"),
+            title: Text("Photo Author"),
+            message: Text(photo?.authorName ?? "No author information available"),
             primaryButton: .default(Text("Author Website"), action: {
-                if let photo = photo, let url = URL(string: photo.authorUrl) {
+                if let authorUrl = photo?.authorUrl, let url = URL(string: authorUrl) {
                     UIApplication.shared.open(url)
                 }
             }),
             secondaryButton: .cancel()
         )
     }
+
+    
     struct WordOfTheDayResponse: Decodable {
         var word: String
     }
