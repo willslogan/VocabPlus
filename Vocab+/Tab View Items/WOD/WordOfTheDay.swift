@@ -12,9 +12,7 @@ struct WordOfTheDay: View {
     
     var firstName: String
     @State private var wordOfTheDay: String = "Loading..."
-    @State private var imageUrl: String?
-    @State private var authorName: String?
-    @State private var authorUrl: String?
+    @State private var photo: PexelsPhoto?
     @State private var showingAuthorAlert = false
     
     var body: some View {
@@ -28,8 +26,8 @@ struct WordOfTheDay: View {
                         .border(Color.black, width: 2)
                     
                     ZStack(alignment: .topTrailing) {
-                        if let imageUrl = imageUrl {
-                            GetImageFromUrl(stringUrl: imageUrl, maxWidth: 300)
+                        if let photo = photo {
+                            GetImageFromUrl(stringUrl: photo.imageUrl, maxWidth: 300)
                             
                             Button(action: { showingAuthorAlert.toggle() }) {
                                 Image(systemName: "info.circle")
@@ -93,9 +91,15 @@ struct WordOfTheDay: View {
                 .toolbarTitleDisplayMode(.inline)
                 .onAppear {
                     fetchWordOfTheDay()
-                    // below are for testing purposes
-//                    self.wordOfTheDay = "apple"
-//                    fetchImageFromPexels()
+                    // TODO: Remove the apple line
+                    self.wordOfTheDay = "apple"
+                    fetchImageFromPexels(word: wordOfTheDay) { pexelsPhoto in
+                        if let pexelsPhoto = pexelsPhoto {
+                            self.photo = pexelsPhoto
+                        } else {
+                            print("Failed to fetch image from Pexels")
+                        }
+                    }
                 }
             }
         }
@@ -113,51 +117,12 @@ struct WordOfTheDay: View {
         }.resume()
     }
     
-    func fetchImageFromPexels() {
-        let query = wordOfTheDay.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let urlString = "https://api.pexels.com/v1/search?query=\(query)&per_page=1"
-        
-        guard let url = URL(string: urlString) else {
-            print("Invalid URL")
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.addValue(pexelsApiKey, forHTTPHeaderField: "Authorization")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Error fetching image: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let data = data else {
-                print("No data received from Pexels API")
-                return
-            }
-            
-            if let decodedResponse = try? JSONDecoder().decode(PexelsResponse.self, from: data) {
-                if let firstPhoto = decodedResponse.photos.first {
-                    DispatchQueue.main.async {
-                        self.imageUrl = firstPhoto.src.medium
-                        self.authorName = firstPhoto.photographer
-                        self.authorUrl = firstPhoto.photographer_url
-                    }
-                } else {
-                    print("No photos found in response")
-                }
-            } else {
-                print("Failed to decode response from Pexels API")
-            }
-        }.resume()
-    }
-    
     var authorAlert: Alert {
         Alert(
             title: Text("Photo Info"),
-            message: Text(authorName ?? "No author information available"),
+            message: Text(photo?.authorUrl ?? "No author information available"),
             primaryButton: .default(Text("Author Website"), action: {
-                if let authorUrl = authorUrl, let url = URL(string: authorUrl) {
+                if let photo = photo, let url = URL(string: photo.authorUrl) {
                     UIApplication.shared.open(url)
                 }
             }),
@@ -166,19 +131,6 @@ struct WordOfTheDay: View {
     }
     struct WordOfTheDayResponse: Decodable {
         var word: String
-    }
-    struct PexelsResponse: Codable {
-        var photos: [Photo]
-    }
-    
-    struct Photo: Codable {
-        var src: Source
-        var photographer: String
-        var photographer_url: String
-    }
-    
-    struct Source: Codable {
-        var medium: String
     }
 }
 
