@@ -10,7 +10,7 @@ import SwiftData
 
 struct ContentView: View {
     
-    @State private var userFirstTimeCompleted = false
+    @State private var userFirstTimeCompleted = userHasBeenCreated()
     
     var body: some View {
         if userFirstTimeCompleted {
