@@ -12,7 +12,7 @@ struct SearchVocab: View {
     
     @State private var searchTerm = ""
     @State private var searchCompleted = false
-    @State private var imageInfo = [String]()
+    @State private var image: PexelsPhoto?
     
     //Alert
     @State private var showAlertMessage = false
@@ -72,13 +72,22 @@ struct SearchVocab: View {
                 }
                 
                 if searchCompleted {
+                    Section(header: Text("Word")) {
+                        Text(foundWordsList[0].word)
+                    }
+                    
+                    Section(header: Text("Definitions")) {
+                        Text(foundWordsList[0].definition)
+                    }
+                    
                     Section(header: Text("Test: Image Info retrieval")){
-                        if imageInfo.count == 3 {
-                            Text(imageInfo[0])
-                            Text(imageInfo[1])
-                            Text(imageInfo[2])
-                        } else {
-                            Text("Error Occured Retreiving Image Info")
+                        if let photo = image {
+                            Text(photo.authorName)
+                            Text(photo.authorUrl)
+                            Text(photo.imageUrl)
+                        }
+                        else {
+                            Text("nope")
                         }
                     }
                 }
@@ -98,16 +107,14 @@ struct SearchVocab: View {
         }
         
         return true
-    }
+    } // end of inputDataValidated
 
     func formatAndSearchAPI() {
         let searchTermTrimmed = searchTerm.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        imageInfo = getImageInfoFromApi(searchTerm: searchTermTrimmed)
-        
-        
-    }
-}
+        getFoundWordsFromApi(searchTerm: searchTermTrimmed)
+    } // end of formatAndSearchAPI
+} // End of SearchVocab
 
 #Preview {
     SearchVocab()

@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-var foundWordsList = [WordStruct]()
+var foundWord = Word(word: "", audioUrl: "", imageUrl: "", imageAuthor: "", imageAuthorUrl: "", synonyms: [], pointsUntilLearned: 10, definitions: [])
 
 let wordnikApiKey = "h92eq8jsnaitg1hid9navzros55w8o43n77lcbide02qh88jz"
 
@@ -20,15 +20,6 @@ let wordnikApiHeaders = [
         "connection": "keep-alive",
         "host": "api.wordnik.com"
     ]
-
-let pexelsApiHeaders = [
-        "accept": "application/json",
-        "cache-control": "no-cache",
-        "Authorization" : "\(pexelsApiKey)",
-        "connection": "keep-alive",
-        "host": "api.pexels.com/v1/"
-    ]
-
 
 // ************************
 // Currently Not being used
@@ -43,108 +34,117 @@ let pexelsApiHeaders = [
 //    ]
 
 
-
-public func getFoundWordsFromApi(searchTerm: String) {
-    let apiUrlDefString = "https://api.wordnik.com/v4/word.json/\(searchTerm)/definitions?limit=5&includeRelated=false&useCanonical=false&includeTags=false&api_key=\(wordnikApiKey)"
-    
-    //var apiUrlExamples = ""
-    print(apiUrlDefString)
-    
-    var jsonDataFromApi: Data
-    
-    let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: wordnikApiHeaders, apiUrl: apiUrlDefString, timeout: 20.0)
-    
-    if let jsonData = jsonDataFetchedFromApi {
-        jsonDataFromApi = jsonData
-    } else {
-        return
-    }
-    
+/*
+ This function first makes multiple API calls to build a Word object
+ */
+public func getFoundWordFromApi(searchTerm: String) {
     do {
-        let jsonResponse = try JSONSerialization.jsonObject(with: jsonDataFromApi,
-                                                            options: JSONSerialization.ReadingOptions.mutableContainers)
+        // Retrieve definitions
+        let definitions = getDefinitionsFromApi(searchTerm: searchTerm)
         
-        if let wordsList = jsonResponse as? [Any] {
-            for anIndividualWordJson in wordsList {
-                //Initialize All word attributes from definition search
-                var word = searchTerm
-                var definition = ""
-                var partOfSpeech = ""
-                var sourceName = ""
-                var audioUrl = ""
-                var imageUrl = ""
-                var imageAuthor = ""
-                var imageAuthorUrl = ""
-                var example = ""
-                var exampleAuthor = ""
-                var exampleAuthorUrl = ""
-                var synonyms = ""
+        // Retrieve audio URL
+        let audioUrl = getAudioFileFromApi(searchTerm: searchTerm)
                 
-                if let wordDictionary = anIndividualWordJson as? [String: Any] {
-                    
-                    //Process the definition
-                    if let theDefinition = wordDictionary["text"] as? String {
-                        definition = theDefinition
-                    } else {
-                        continue
-                    }
-                    
-                    //Process part of speech
-                    if let thePartOfSpeech = wordDictionary["partOfSpeech"] as? String {
-                        partOfSpeech = thePartOfSpeech
-                    }
-                    
-                    //Process source name
-                    if let theSourceName = wordDictionary["attributionText"] as? String {
-                        sourceName = theSourceName
-                    }
-                    
-                    //Process audio url
-                    audioUrl = getAudioFileFromApi(searchTerm: searchTerm)
-                    
-                    //Process examples
-                    
-                    /*
-                     Process examples returns an array of atmost 5 examples with their corresponding author and source
-                     but I'm not sure how to implement it with our current set up of word information
-                     */
-                    
-                    //Process synonyms
-                    synonyms = getSynonymFromApi(searchTerm: searchTerm)
-                    
-                    //Process picture info
-                    let photoInfo = getImageInfoFromApi(searchTerm: searchTerm)
-                    
-                    imageUrl = photoInfo[0]
-                    imageAuthor = photoInfo[1]
-                    imageAuthorUrl = photoInfo[2]
-                    
-                    //Create Word Struct
-                    var foundWord = WordStruct(word: word,
-                                               definition: definition,
-                                               partOfSpeech: partOfSpeech,
-                                               sourceName: sourceName,
-                                               audioUrl: audioUrl,
-                                               imageUrl: imageUrl,
-                                               imageAuthor: imageAuthor,
-                                               imageAuthorUrl: imageAuthorUrl,
-                                               example: example,
-                                               exampleAuthor: exampleAuthor,
-                                               exampleAuthorUrl: exampleAuthorUrl,
-                                               synonyms: synonyms)
-                    
-                    //Add word to Found word lists
-                    foundWordsList.append(foundWord)
-                }
+        // Retrieve synonyms
+        let synonyms = getSynonymFromApi(searchTerm: searchTerm)
+        
+        //Create Word Struct
+        var foundWord = Word(word: searchTerm,
+                             audioUrl: audioUrl,
+                             imageUrl: "",
+                             imageAuthor: "",
+                             imageAuthorUrl: "",
+                             synonyms: synonyms,
+                             pointsUntilLearned: 10, // TODO: Good starting value?
+                             definitions: definitions)
+                
+        // Retrieve pexels image
+        fetchImageFromPexels(word: searchTerm) { pexelsPhoto in
+            if let pexelsPhoto = pexelsPhoto {
+                foundWord.imageUrl = pexelsPhoto.imageUrl
+                foundWord.imageAuthor = pexelsPhoto.authorName
+                foundWord.imageAuthorUrl = pexelsPhoto.authorUrl
+            } else {
+                print("Failed to fetch image from Pexels")
             }
-        } else {
-            return
         }
+        // Now the foundWord variable should be set.
     } catch {
         return
     }
 }
 
+/*
+ Function to retrieve definition list from the API
+ */
+private func getDefinitionsFromApi(searchTerm: String) -> [Definition] {
+    // Get a list of definitions
+    let apiUrlDefString = "https://api.wordnik.com/v4/word.json/\(searchTerm)/definitions?limit=5&includeRelated=false&useCanonical=false&includeTags=false&api_key=\(wordnikApiKey)"
+        
+    var jsonDataFromApi: Data
+    
+    // Make API call for list of definitions
+    let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: wordnikApiHeaders, apiUrl: apiUrlDefString, timeout: 20.0)
+    
+    if let jsonData = jsonDataFetchedFromApi {
+        jsonDataFromApi = jsonData
+    } else {
+        return []
+    }
+    
+    // Parse json response
+    do {
+        let jsonResponse = try JSONSerialization.jsonObject(with: jsonDataFromApi,
+                                                            options: JSONSerialization.ReadingOptions.mutableContainers)
+        
+        var definitions = [Definition]()
+        
+        if let definitionsList = jsonResponse as? [Any] {
+            for anIndividualDefinition in definitionsList {
+                //Initialize All definition attributes from definition search
+                var definition = ""
+                var partOfSpeech = ""
+                var example = ""
+                
+                if let definitionDictionary = anIndividualDefinition as? [String: Any] {
+                    
+                    //Process the definition
+                    if let theDefinition = definitionDictionary["text"] as? String {
+                        
+                    } else {
+                        // If the definition does not have "text" then it is invalid and we skip it.
+                        continue
+                    }
+                    
+                    //Process part of speech
+                    if let thePartOfSpeech = definitionDictionary["partOfSpeech"] as? String {
+                        partOfSpeech = thePartOfSpeech
+                    }
+                    
+                    //Process source name
+                    if let examples = definitionDictionary["exampleUses"] as? [String] {
+                        if examples.count > 0 {
+                            example = examples[0]
+                        }
+                    }
+                    
+                    // Add the definition to the definitions list
+                    definitions.append(Definition(definition: definition, partOfSpeech: partOfSpeech, example: example))
+                    
+                }
+            }
+            return definitions
+        } else {
+            return []
+        }
+    } catch {
+        return []
+    }
+}
+
+/*
+ Function to retreive audio file url as a string from wordnik api
+ */
 public func getAudioFileFromApi(searchTerm: String) -> String {
     let apiUrlString = "https://api.wordnik.com/v4/word.json/\(searchTerm)/audio?useCanonical=false&limit=1&api_key=\(wordnikApiKey)"
     
@@ -181,7 +181,9 @@ public func getAudioFileFromApi(searchTerm: String) -> String {
     return audioFileUrl
 }
 
-//All Example information is put into array and individual components will be extracted in the main getFoundWordsFromApi
+/*
+ Currently not in use, but we could maybe use it in the future. Some definitions have examples, which we already fetch - we can double down on them with this endpoint if we need to.
+ */
 public func getExamplesFromApi(searchTerm: String) -> [String] {
     let apiUrlString = "https://api.wordnik.com/v4/word.json/\(searchTerm)/examples?includeDuplicates=false&useCanonical=false&limit=5&api_key=\(wordnikApiKey)"
     
@@ -241,10 +243,14 @@ public func getExamplesFromApi(searchTerm: String) -> [String] {
     
 }
 
-public func getSynonymFromApi(searchTerm: String) -> String {
-    let apiUrlString = "https://api.wordnik.com/v4/word.json/\(searchTerm)/relatedWords?useCanonical=true&relationshipTypes=synonym&limitPerRelationshipType=1&api_key=\(wordnikApiKey)"
+/*
+ Function to retrieve a list of synonyms as strings from the wordnik api
+ Currently we look for 10 synonyms max, and they will be received in alphabetical order.
+ */
+public func getSynonymsFromApi(searchTerm: String) -> [String] {
+    let apiUrlString = "https://api.wordnik.com/v4/word.json/\(searchTerm)/relatedWords?useCanonical=true&relationshipTypes=synonym&limitPerRelationshipType=10&api_key=\(wordnikApiKey)"
     
-    var synonyms = "Not Found"
+    var synonyms = [String]()
     
     var jsonDataFromApi: Data
     
@@ -264,15 +270,8 @@ public func getSynonymFromApi(searchTerm: String) -> String {
             for aSynonymGroup in synonymsList {
                 if let synonymGroupInfo = aSynonymGroup as? [String: Any] {
                     if let theSynonyms = synonymGroupInfo["words"] as? [String] {
-                        synonyms = ""
-                        for aSynonym in theSynonyms {
-                            synonyms.append("\(aSynonym), ")
-                        }
-                        
-                        //Remove the extra ", "
-                        if synonyms.count > 2 {
-                            synonyms = String(synonyms.dropLast(2))
-                        }
+                        // Return list of synonyms
+                        return theSynonyms
                     }
                 }
             }
@@ -281,87 +280,12 @@ public func getSynonymFromApi(searchTerm: String) -> String {
         return synonyms
     }
     
-    
     return synonyms
 }
 
-public func getImageInfoFromApi(searchTerm: String) -> [String] {
-    //Photo info array will have 3 items
-    var photoInfo = [String]()
-    
-    //The items below will go into index 0,1,2 respectivily
-    var imageUrl = "Not Found"
-    var imageAuthor = "Not Found"
-    var imageAuthorUrl = "Not Found"
-    
-    //I'm doing returning photoInfo as array cause it was the only way I could think of to return multiple bits of information from one
-    //function at the same time
-    
-    let apiUrlString = "https://api.pexels.com/v1/search?query=\(searchTerm)&per_page=1"
-    
-    
-    
-    var jsonDataFromApi: Data
-    
-    let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: pexelsApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
-    
-    if let jsonData = jsonDataFetchedFromApi {
-        jsonDataFromApi = jsonData
-    } else {
-        print("Failure At Location: 1")
-        return photoInfo
-    }
-    
-    do {
-        let jsonResponse = try JSONSerialization.jsonObject(with: jsonDataFromApi,
-                                                            options: JSONSerialization.ReadingOptions.mutableContainers)
-        print("Made it here")
-        
-        if let searchResults = jsonResponse as? [String : Any] {
-            print("Succuesfully Converted to Dictionary: searchResults")
-            if let photosList = searchResults["photos"] as? [Any] {
-                print("Succuesfully Converted to array: photosList")
-                for aPhoto in photosList {
-                    if let photoInfoJson = aPhoto as? [String : Any] {
-                        print("Succuesfully Converted to Dictionary: photoInfo")
-                        //Process image author
-                        if let author = photoInfoJson["photographer"] as? String {
-                            print("Succuesfully found author")
-                            imageAuthor = author
-                        }
-                        
-                        //Process image author website
-                        if let authorWebsite = photoInfoJson["photographer_url"] as? String {
-                            print("Succuesfully found author website")
-                            imageAuthorUrl = authorWebsite
-                        }
-                        
-                        //Process image url
-                        if let imageOptions = photoInfoJson["src"] as? [String: Any] {
-                            print("Succuesfully Converted to Dictionary: imageOptions")
-                            if let imageUrlFromJson = imageOptions["original"] as? String {
-                                print("Succuesfully found image url")
-                                imageUrl = imageUrlFromJson
-                            }
-                        }
-                        
-                    }
-                }
-            }
-        }
-    } catch {
-        print("Failure At Location 2")
-        return photoInfo
-    }
-    
-    //Add relevent image info to the photoInfo array
-    photoInfo.append(imageUrl)
-    photoInfo.append(imageAuthor)
-    photoInfo.append(imageAuthorUrl)
-    
-    return photoInfo
-}
-
+/*
+ Function to retrieve pexels image
+ */
 func fetchImageFromPexels(word: String, completion: @escaping (PexelsPhoto?) -> Void) {
     var toReturn: PexelsPhoto?
 

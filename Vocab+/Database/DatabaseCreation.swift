@@ -53,12 +53,8 @@ public func createVocabPlusDB() {
                     learnedWords: [],
                     favoriteWords: []
     )
-    
-    
-    
     modelContext.insert(user)
     
     print("DB is now Created")
-    
     
 }
