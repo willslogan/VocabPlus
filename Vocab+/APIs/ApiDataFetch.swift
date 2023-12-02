@@ -46,7 +46,7 @@ public func getFoundWordFromApi(searchTerm: String) {
             
     // Retrieve synonyms
     let synonyms = getSynonymsFromApi(searchTerm: searchTerm)
-    print("HERE\n")
+
     //Create Word Struct
     foundWord = Word(word: searchTerm,
                      audioUrl: audioUrl,
@@ -106,7 +106,7 @@ private func getDefinitionsFromApi(searchTerm: String) -> [Definition] {
                     
                     //Process the definition
                     if let theDefinition = definitionDictionary["text"] as? String {
-                        
+                        definition = theDefinition
                     } else {
                         // If the definition does not have "text" then it is invalid and we skip it.
                         continue
@@ -246,7 +246,7 @@ public func getExamplesFromApi(searchTerm: String) -> [String] {
 public func getSynonymsFromApi(searchTerm: String) -> [String] {
     let apiUrlString = "https://api.wordnik.com/v4/word.json/\(searchTerm)/relatedWords?useCanonical=true&relationshipTypes=synonym&limitPerRelationshipType=10&api_key=\(wordnikApiKey)"
     
-    var synonyms = [String]()
+    let synonyms = [String]()
     
     var jsonDataFromApi: Data
     
@@ -287,14 +287,13 @@ func getRandomWordFromApi() -> Word? {
     
     var randomWord = ""
 
-    var apiUrlString = "https://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=\(wordnikApiKey)"
+    let apiUrlString = "https://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=\(wordnikApiKey)"
     
     let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: wordnikApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
     
     if let jsonData = jsonDataFetchedFromApi {
         jsonDataFromApi = jsonData
     } else {
-        print("Failure Here 1")
         return nil
     }
     
@@ -328,7 +327,7 @@ func getRandomWordFromApi() -> Word? {
         let synonyms = getSynonymsFromApi(searchTerm: randomWord)
         
         //Create Word Struct
-        var randomWordToReturn = Word(word: randomWord,
+        let randomWordToReturn = Word(word: randomWord,
                              audioUrl: audioUrl,
                              imageUrl: "",
                              imageAuthor: "",

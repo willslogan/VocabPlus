@@ -9,9 +9,9 @@
          }
       ],
       "audioUrl":"https://example.com/ephemeral.mp3",
-      "imageUrl":"https://example.com/ephemeral.jpg",
-      "imageAuthor":"John Doe",
-      "imageAuthorUrl":"https://example.com/johndoe",
+      "imageUrl":"https://images.pexels.com/photos/5984623/pexels-photo-5984623.jpeg?auto=compress&cs=tinysrgb&h=350",
+      "imageAuthor":"Olha Ruskykh",
+      "imageAuthorUrl":"https://www.pexels.com/@olha-ruskykh",
       "synonyms":[
          "transient",
          "fleeting",
@@ -29,9 +29,9 @@
          }
       ],
       "audioUrl":"https://example.com/serenity.mp3",
-      "imageUrl":"https://example.com/serenity.jpg",
-      "imageAuthor":"Alice Johnson",
-      "imageAuthorUrl":"https://example.com/alicejohnson",
+      "imageUrl":"https://images.pexels.com/photos/289586/pexels-photo-289586.jpeg?auto=compress&cs=tinysrgb&h=350",
+      "imageAuthor":"Pixabay",
+      "imageAuthorUrl":"https://www.pexels.com/@pixabay",
       "synonyms":[
          "calmness",
          "peace",

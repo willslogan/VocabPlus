@@ -15,6 +15,7 @@ struct SearchVocab: View {
     
     //Alert
     @State private var showAlertMessage = false
+    @State private var showingAuthorAlert = false
     
     var body: some View {
         NavigationStack {
@@ -71,20 +72,48 @@ struct SearchVocab: View {
                 }
                 
                 if searchCompleted {
-                    Section(header: Text("Word")) {
-                        Text(foundWord.word)
-                    }
-                    
-//                    if let unwrappedDefinitions = foundWord.definitions {
-//                        if unwrappedDefinitions.count > 0 {
-//                            Section(header: Text("Definition")) {
-//                                Text(unwrappedDefinitions[0].definition)
-//                            }
-//                        }
-//                    }
-                    
-                    Section(header: Text("Image")) {
-                        GetImageFromUrl(stringUrl: foundWord.imageUrl, maxWidth: 300)
+                    Group {
+                        Section(header: Text("Word")) {
+                            Text(foundWord.word)
+                        }
+                        
+                        if let unwrappedDefinitions = foundWord.definitions {
+                            ForEach(unwrappedDefinitions, id: \.self) { definition in
+                                Section(header: Text("Definition")) {
+                                    Text("Definition: \(definition.definition)\n\nExample: \(definition.example)\n\nPart of Speech: \(definition.partOfSpeech)")
+                                }
+                            }
+                        }
+                        
+                        Section(header: Text("Image")) {
+                            if foundWord.imageUrl != "" {
+                                GetImageFromUrl(stringUrl: foundWord.imageUrl, maxWidth: 300)
+                                
+                                Button(action: { showingAuthorAlert.toggle() }) {
+                                    Image(systemName: "info.circle")
+                                        .font(.system(size: 20))
+                                        .padding(10)
+                                }
+                                .alert(isPresented: $showingAuthorAlert) {
+                                    authorAlert
+                                }
+                            }
+                            else {
+                                Text("Sorry!\nNo image associated with\n\(foundWord.word)")
+                                    .multilineTextAlignment(.center)
+                                    .frame(width: 300, height: 100, alignment: .center)
+                                    .background(Color.white)
+                                    .border(Color.black, width: 2)
+                            }
+                        }
+                        
+                        Section(header: Text("Synonyms")) {
+                            Text(synonymsArrayToString(synonyms: foundWord.synonyms))
+                        }
+                                
+                        Section(header: Text("Points Until Learned")) {
+                            Text("\(foundWord.pointsUntilLearned)")
+                        }
                     }
                 }
             } // End of form
@@ -111,6 +140,18 @@ struct SearchVocab: View {
         print(foundWord.word)
         
     } // end of formatAndSearchAPI
+    var authorAlert: Alert {
+        Alert(
+            title: Text("Photo Author"),
+            message: Text(foundWord.imageAuthor),
+            primaryButton: .default(Text("Author Website"), action: {
+                if let url = URL(string: foundWord.imageAuthorUrl) {
+                    UIApplication.shared.open(url)
+                }
+            }),
+            secondaryButton: .cancel()
+        )
+    }
 } // End of SearchVocab
 
 #Preview {
