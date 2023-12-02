@@ -134,3 +134,19 @@ public func decodeJsonFileIntoArrayOfStructs<T: Decodable>(fullFilename: String,
     // Return the array of structs of type T
     return arrayOfStructs!
 }
+
+public func synonymsArrayToString(synonyms: [String]) -> String {
+    var toReturn = ""
+    if (synonyms.count == 0) {
+        return toReturn
+    }
+    for i in 1...synonyms.count {
+        if i == synonyms.count {
+            toReturn += synonyms[i - 1]
+        } else {
+            toReturn += synonyms[i - 1]
+            toReturn += ", "
+        }
+    }
+    return toReturn
+}
