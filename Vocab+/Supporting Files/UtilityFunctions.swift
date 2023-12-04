@@ -12,6 +12,47 @@ import SwiftData
 let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
 
 /*
+*****************************************
+MARK: - Get Image from Document Directory
+*****************************************
+*/
+public func getImageFromDocumentDirectory(filename: String, fileExtension: String, defaultFilename: String) -> Image {
+ 
+    var imageData: Data?
+   
+    let urlOfImageInDocDir = documentDirectory.appendingPathComponent("\(filename).\(fileExtension)")
+       
+    do {
+        // Try to get the image data from urlOfImageInDocDir
+        imageData = try Data(contentsOf: urlOfImageInDocDir, options: NSData.ReadingOptions.mappedIfSafe)
+    } catch {
+        imageData = nil
+    }
+   
+    // Unwrap imageData to see if it has a value
+    if let imageDataObtained = imageData {
+       
+        // Create a UIImage object from imageDataObtained
+        let uiImage = UIImage(data: imageDataObtained)
+       
+        // Unwrap uiImage to see if it has a value
+        if let imageObtained = uiImage {
+            // Convert UIImage to Image and return
+            return Image(uiImage: imageObtained)
+        } else {
+            return Image(defaultFilename)
+        }
+    } else {
+        /*
+         Image file with name 'defaultFilename' is returned if the image with 'filename'
+         cannot be obtained. Image file 'defaultFilename' must be given in Assets.xcassets
+         */
+        return Image(defaultFilename)
+    }
+   
+}
+
+/*
 ******************************************************************
 MARK: - Copy Image File from Assets.xcassets to Document Directory
 ******************************************************************

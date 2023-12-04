@@ -9,6 +9,17 @@
 import Foundation
 import SwiftData
 
+let defaultUser = User(firstName: "",
+                lastName: "",
+                profileImageName: "",
+                level: 1,
+                learnedWords: [Word](),
+                favoriteWords: [Word]()
+)
+
+var usersList = [User]()
+var userGlobal = defaultUser
+
 func userHasBeenCreated() -> Bool {
     //Create Model Container and Model Context
     var modelContainer: ModelContainer
@@ -24,18 +35,18 @@ func userHasBeenCreated() -> Bool {
     let modelContext = ModelContext(modelContainer)
     
     // Initialize the variable to hold the database search results
-    var databaseResults = [User]()
+    usersList = [User]()
     
     let userFetchDescriptor = FetchDescriptor<User>()
     
     do {
         // Obtain all objects satisfying the search criterion (Predicate)
-        databaseResults = try modelContext.fetch(userFetchDescriptor)
+        usersList = try modelContext.fetch(userFetchDescriptor)
     } catch {
         fatalError("Unable to fetch data from the database")
     }
     
-    if databaseResults.count == 1 {
+    if usersList.count == 1 {
         print("Gets To First Time User")
         return false
     }

@@ -30,6 +30,7 @@
 		2D32CB1D2B1545E7007FBFB8 /* userUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB1C2B1545E7007FBFB8 /* userUtilities.swift */; };
 		2D32CB1F2B1549BD007FBFB8 /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB1E2B1549BD007FBFB8 /* UtilityFunctions.swift */; };
 		2D32CB232B15828B007FBFB8 /* displayRandomWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB222B15828B007FBFB8 /* displayRandomWord.swift */; };
+		2D32CB252B167154007FBFB8 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB242B167154007FBFB8 /* Profile.swift */; };
 		D3B8AF0B2B1545EA00D24283 /* VocabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B8AF0A2B1545EA00D24283 /* VocabItem.swift */; };
 		D3B8AF0D2B1545F100D24283 /* VocabDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B8AF0C2B1545F100D24283 /* VocabDetails.swift */; };
 		D3B8AF0F2B158E1600D24283 /* SearchWordnikApiByKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B8AF0E2B158E1600D24283 /* SearchWordnikApiByKeyword.swift */; };
@@ -61,6 +62,7 @@
 		2D32CB1C2B1545E7007FBFB8 /* userUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userUtilities.swift; sourceTree = "<group>"; };
 		2D32CB1E2B1549BD007FBFB8 /* UtilityFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityFunctions.swift; sourceTree = "<group>"; };
 		2D32CB222B15828B007FBFB8 /* displayRandomWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = displayRandomWord.swift; sourceTree = "<group>"; };
+		2D32CB242B167154007FBFB8 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		D3B8AF0A2B1545EA00D24283 /* VocabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabItem.swift; sourceTree = "<group>"; };
 		D3B8AF0C2B1545F100D24283 /* VocabDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabDetails.swift; sourceTree = "<group>"; };
 		D3B8AF0E2B158E1600D24283 /* SearchWordnikApiByKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordnikApiByKeyword.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				2D32CB092B0D557C007FBFB8 /* WordOfTheDay.swift */,
+				2D32CB242B167154007FBFB8 /* Profile.swift */,
 			);
 			path = WOD;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D32CB1F2B1549BD007FBFB8 /* UtilityFunctions.swift in Sources */,
+				2D32CB252B167154007FBFB8 /* Profile.swift in Sources */,
 				2D32CB0E2B0D559B007FBFB8 /* VocabQuiz.swift in Sources */,
 				2D32CB082B0D4D9F007FBFB8 /* SearchVocab.swift in Sources */,
 				2D32CB152B14034F007FBFB8 /* FirstTimeUser.swift in Sources */,

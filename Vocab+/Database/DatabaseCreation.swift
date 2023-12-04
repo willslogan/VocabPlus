@@ -45,7 +45,7 @@ public func createVocabPlusDB() {
             // Obtain all of the drink objects from the database
             listOfWords = try modelContext.fetch(wordFetchDescriptor)
         } catch {
-            fatalError("Unable to fetch Drink objects from the database")
+            fatalError("Unable to fetch Word objects from the database")
         }
     
         if !listOfWords.isEmpty {
@@ -58,14 +58,8 @@ public func createVocabPlusDB() {
     // ************************************************************
     
     // ************************************************************
-    let user = User(firstName: "",
-                    lastName: "",
-                    profileImageName: "",
-                    level: 1,
-                    learnedWords: [],
-                    favoriteWords: []
-    )
-    modelContext.insert(user)
+    
+    modelContext.insert(defaultUser)
     
     /*
      ----------------------------------------------------------
