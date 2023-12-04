@@ -152,9 +152,11 @@ struct FirstTimeUser: View {
                                                    lastName: lastName,
                                                    profileImageName: imageFile,
                                                    level: 1,
-                                                   learnedWords: [],
-                                                   favoriteWords: []
+                                                   learnedWords: [Word](),
+                                                   favoriteWords: [Word]()
                                 )
+                                
+                                userGlobal = newUser
         
                                 modelContext.insert(newUser)
         

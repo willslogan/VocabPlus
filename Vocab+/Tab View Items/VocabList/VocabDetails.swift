@@ -12,7 +12,7 @@ import SwiftUI
 struct VocabDetails: View {
     // Input Parameter
     let word: Word
-    
+    @State private var pexelsPhoto: PexelsPhoto?
     @State private var showingAuthorAlert = false
     
     var body: some View {
@@ -21,7 +21,6 @@ struct VocabDetails: View {
                 Section(header: Text("Word")) {
                     Text(word.word)
                 }
-                
                 if let unwrappedDefinitions = word.definitions {
                     ForEach(unwrappedDefinitions, id: \.self) { definition in
                         Section(header: Text("Definition")) {
@@ -29,10 +28,12 @@ struct VocabDetails: View {
                         }
                     }
                 }
-                
                 Section(header: Text("Image")) {
-                    if word.imageUrl != "" {
-                        GetImageFromUrl(stringUrl: word.imageUrl, maxWidth: 300)
+                    if let photo = pexelsPhoto {
+                        GetImageFromUrl(stringUrl: photo.imageUrl, maxWidth: 300)
+                            .frame(width: 300, height: 100, alignment: .center)
+                            .background(Color.white)
+                            .border(Color.black, width: 2)
                         
                         Button(action: { showingAuthorAlert.toggle() }) {
                             Image(systemName: "info.circle")
@@ -55,7 +56,7 @@ struct VocabDetails: View {
                 Section(header: Text("Synonyms")) {
                     Text(synonymsArrayToString(synonyms: word.synonyms))
                 }
-                        
+                
                 Section(header: Text("Points Until Learned")) {
                     Text("\(word.pointsUntilLearned)")
                 }
@@ -65,7 +66,7 @@ struct VocabDetails: View {
             .toolbarTitleDisplayMode(.inline)
         } // End of navigation stack
     }   // End of body var
-                        
+    
     var authorAlert: Alert {
         Alert(
             title: Text("Photo Author"),
