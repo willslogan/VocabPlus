@@ -80,7 +80,7 @@ struct SearchVocab: View {
                         if let unwrappedDefinitions = foundWord.definitions {
                             ForEach(unwrappedDefinitions, id: \.self) { definition in
                                 Section(header: Text("Definition")) {
-                                    Text("Definition: \(definition.definition)\n\nExample: \(definition.example)\n\nPart of Speech: \(definition.partOfSpeech)")
+                                    Text(definitionToString(definition: definition))
                                 }
                             }
                         }
@@ -114,7 +114,7 @@ struct SearchVocab: View {
                         Section(header: Text("Points Until Learned")) {
                             Text("\(foundWord.pointsUntilLearned)")
                         }
-                    }
+                    } // end of group
                 }
             } // End of form
             .font(.system(size: 14))
@@ -152,8 +152,15 @@ struct SearchVocab: View {
             secondaryButton: .cancel()
         )
     }
+    
+    func definitionToString(definition: Definition) -> String {
+        var toReturn = "Definition: \(definition.definition)"
+        if !definition.example.isEmpty {
+            toReturn += "\n\nExample: \(definition.example)"
+        }
+        if !definition.partOfSpeech.isEmpty {
+            toReturn += "\n\nPart of Speech: \(definition.partOfSpeech)"
+        }
+        return toReturn
+    }
 } // End of SearchVocab
-
-#Preview {
-    SearchVocab()
-}

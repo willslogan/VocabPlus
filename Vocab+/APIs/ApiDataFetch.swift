@@ -78,7 +78,7 @@ public func getFoundWordFromApi(searchTerm: String) {
  */
 private func getDefinitionsFromApi(searchTerm: String) -> [Definition] {
     // Get a list of definitions
-    let apiUrlDefString = "https://api.wordnik.com/v4/word.json/\(searchTerm)/definitions?limit=5&includeRelated=false&useCanonical=false&includeTags=false&api_key=\(wordnikApiKey)"
+    let apiUrlDefString = "https://api.wordnik.com/v4/word.json/\(searchTerm)/definitions?limit=5&includeRelated=false&sourceDictionaries=webster&useCanonical=false&includeTags=false&api_key=\(wordnikApiKey)"
         
     var jsonDataFromApi: Data
     
@@ -129,7 +129,6 @@ private func getDefinitionsFromApi(searchTerm: String) -> [Definition] {
                     
                     // Add the definition to the definitions list
                     definitions.append(Definition(definition: definition, partOfSpeech: partOfSpeech, example: example))
-                    
                 }
             }
             return definitions

@@ -25,7 +25,7 @@ struct displayRandomWord: View {
                 if let unwrappedDefinitions = word.definitions {
                     ForEach(unwrappedDefinitions, id: \.self) { definition in
                         Section(header: Text("Definition")) {
-                            Text("Definition: \(definition.definition)\n\nExample: \(definition.example)\n\nPart of Speech: \(definition.partOfSpeech)")
+                            Text(definitionToString(definition: definition))
                         }
                     }
                 }
@@ -77,6 +77,17 @@ struct displayRandomWord: View {
             }),
             secondaryButton: .cancel()
         )
+    }
+    
+    func definitionToString(definition: Definition) -> String {
+        var toReturn = "Definition: \(definition.definition)"
+        if !definition.example.isEmpty {
+            toReturn += "\n\nExample: \(definition.example)"
+        }
+        if !definition.partOfSpeech.isEmpty {
+            toReturn += "\n\nPart of Speech: \(definition.partOfSpeech)"
+        }
+        return toReturn
     }
 }
 

@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 @Model
-final class Word {
+final class Word: Hashable {
     var word: String
     var audioUrl: String
     var imageUrl: String
@@ -35,20 +35,20 @@ final class Word {
 }
 
 @Model
-final class Definition {
+final class Definition: Hashable {
     var definition: String
     var partOfSpeech: String
     var example: String
     
-    // If Word is deleted, nullify Word
-    @Relationship(deleteRule: .nullify) var word: Word?
-    // One-to-One Relationship: ONE Definition can belong to ONE Word
+//    // If Word is deleted, nullify Word
+//    @Relationship(deleteRule: .nullify) var word: Word?
+//    // One-to-One Relationship: ONE Definition can belong to ONE Word
     
-    init(definition: String, partOfSpeech: String, example: String, word: Word? = nil) {
+    init(definition: String, partOfSpeech: String, example: String) {
         self.definition = definition
         self.partOfSpeech = partOfSpeech
         self.example = example
-        self.word = word
+//        self.word = word
     }
 }
 
