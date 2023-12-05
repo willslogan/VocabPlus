@@ -15,7 +15,7 @@ public func createVocabPlusDB() {
     var modelContainer: ModelContainer
     
     do {
-        modelContainer = try ModelContainer(for: Word.self, User.self)
+        modelContainer = try ModelContainer(for: Word.self, User.self, Definition.self)
     } catch {
         fatalError("Unable to create ModelContainer")
     }
@@ -75,8 +75,9 @@ public func createVocabPlusDB() {
         for aWordStruct in arrayOfWordStructs {
             
             var definitions = [Definition]()
-            var newDefinition = Definition(definition: aWordStruct.definitions[0].definition, partOfSpeech: aWordStruct.definitions[0].partOfSpeech, example: aWordStruct.definitions[0].example)
+            let newDefinition = Definition(definition: aWordStruct.definitions[0].definition, partOfSpeech: aWordStruct.definitions[0].partOfSpeech, example: aWordStruct.definitions[0].example)
             definitions.append(newDefinition)
+            modelContext.insert(newDefinition)
             
             // Create a new Word object from aWordStruct
             // Assigning default values for properties not present in the JSON

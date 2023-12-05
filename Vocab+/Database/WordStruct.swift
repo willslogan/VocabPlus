@@ -17,7 +17,7 @@ struct WordStruct: Decodable {
     var synonyms: [String]
 }
 
-struct DefinitionStruct: Decodable {
+struct DefinitionStruct: Decodable, Hashable {
     var definition: String
     var partOfSpeech: String
     var example: String

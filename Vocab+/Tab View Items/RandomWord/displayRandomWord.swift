@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct displayRandomWord: View {
-    let word: Word
+    let word: WordStruct
     
     @State private var wordOfTheDay: String = "Loading..."
     @State private var photo: PexelsPhoto?
@@ -22,11 +22,9 @@ struct displayRandomWord: View {
                     Text(word.word)
                 }
                 
-                if let unwrappedDefinitions = word.definitions {
-                    ForEach(unwrappedDefinitions, id: \.self) { definition in
-                        Section(header: Text("Definition")) {
-                            Text("Definition: \(definition.definition)\n\nExample: \(definition.example)\n\nPart of Speech: \(definition.partOfSpeech)")
-                        }
+                ForEach(word.definitions, id: \.self) { definition in
+                    Section(header: Text("Definition")) {
+                        Text(definitionToString(definition: definition))
                     }
                 }
                 
@@ -55,10 +53,6 @@ struct displayRandomWord: View {
                 Section(header: Text("Synonyms")) {
                     Text(synonymsArrayToString(synonyms: word.synonyms))
                 }
-                        
-                Section(header: Text("Points Until Learned")) {
-                    Text("\(word.pointsUntilLearned)")
-                }
             }
             .navigationTitle("\(word.word)")
             .toolbarTitleDisplayMode(.inline)
@@ -77,6 +71,19 @@ struct displayRandomWord: View {
             }),
             secondaryButton: .cancel()
         )
+    }
+    
+    func definitionToString(definition: DefinitionStruct) -> String {
+        var toReturn = "Definition: \(definition.definition)"
+        if !definition.example.isEmpty {
+            toReturn += "\n\nExample: \(definition.example)"
+        }
+        if !definition.partOfSpeech.isEmpty {
+            toReturn += "\n\nPart of Speech: \(definition.partOfSpeech)"
+        }
+        toReturn = toReturn.replacingOccurrences(of: "<er>", with: "")
+        toReturn = toReturn.replacingOccurrences(of: "</er>", with: "")
+        return toReturn
     }
 }
 
