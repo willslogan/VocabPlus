@@ -132,6 +132,7 @@
 		2D32CAF62B0C0002007FBFB8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2D32CB1C2B1545E7007FBFB8 /* userUtilities.swift */,
 				2D32CB112B12AD59007FBFB8 /* Globals.swift */,
 				2D32CB162B14344E007FBFB8 /* ImagePicker.swift */,
 				2D32CB1E2B1549BD007FBFB8 /* UtilityFunctions.swift */,
@@ -213,7 +214,6 @@
 				2D32CAE72B0682C9007FBFB8 /* ContentView.swift */,
 				2D32CB142B14034F007FBFB8 /* FirstTimeUser.swift */,
 				2D32CB182B1523A4007FBFB8 /* MainView.swift */,
-				2D32CB1C2B1545E7007FBFB8 /* userUtilities.swift */,
 			);
 			path = "Starting View";
 			sourceTree = "<group>";

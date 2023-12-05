@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct FirstTimeUser: View {
     
@@ -153,7 +154,7 @@ struct FirstTimeUser: View {
                                                    profileImageName: imageFile,
                                                    level: 1,
                                                    learnedWords: [Word](),
-                                                   favoriteWords: [Word]()
+                                                   favoriteWords: obtainFavoriteWordsFromDB()
                                 )
                                 
                                 userGlobal = newUser
@@ -215,6 +216,33 @@ struct FirstTimeUser: View {
         return true
     }
     
-    
+    func obtainFavoriteWordsFromDB() -> [Word] {
+        //Create Model Container and Model Context
+        var modelContainer: ModelContainer
+        
+        do {
+            // Create a database container to manage Book and Photo
+            modelContainer = try ModelContainer(for: Word.self, User.self)
+        } catch {
+            fatalError("Unable to create ModelContainer")
+        }
+        
+        // Create the context (workspace) where database objects will be managed
+        let modelContext = ModelContext(modelContainer)
+        
+        // Initialize the variable to hold the database search results
+        var favoriteWordsInDB = [Word]()
+        
+        let wordFetchDescriptor = FetchDescriptor<Word>()
+        
+        do {
+            // Obtain all objects satisfying the search criterion (Predicate)
+            favoriteWordsInDB = try modelContext.fetch(wordFetchDescriptor)
+        } catch {
+            fatalError("Unable to fetch data from the database")
+        }
+        
+        return favoriteWordsInDB
+    }
     
 }

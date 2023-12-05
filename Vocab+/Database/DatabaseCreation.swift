@@ -53,11 +53,6 @@ public func createVocabPlusDB() {
             return
         }
     print("Creating DB now")
-    // ************************************************************
-    // Learned Words and Favorite Words NEED TO BE IMPLEMENTED HERE
-    // ************************************************************
-    
-    // ************************************************************
     
     modelContext.insert(defaultUser)
     
@@ -92,6 +87,7 @@ public func createVocabPlusDB() {
 
             // Insert it into the database context
             modelContext.insert(newWord)
+            
             
             // Debug statement to print the word being added
             print("Added word to DB: \(newWord.word)")

@@ -408,6 +408,46 @@ func fetchImageFromPexels(word: String) -> PexelsPhoto? {
     return toReturn
 }
 
+public func getRandomWordFromApiStringOnly() -> String {
+    var jsonDataFromApi: Data
+    
+    var randomWord = ""
+
+    let apiUrlString = "https://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=\(wordnikApiKey)"
+    
+    let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: wordnikApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
+    
+    if let jsonData = jsonDataFetchedFromApi {
+        jsonDataFromApi = jsonData
+    } else {
+        return ""
+    }
+    
+    do {
+        let jsonResponse = try JSONSerialization.jsonObject(with: jsonDataFromApi,
+                                                            options: JSONSerialization.ReadingOptions.mutableContainers)
+        
+        print("Response Obtained")
+        
+        if let randomWordDictionary = jsonResponse as? [String: Any] {
+            print("Dictionary conversion completed")
+            //Process word
+            if let randomWordObtained = randomWordDictionary["word"] as? String {
+                print("Random Word Found")
+                // Set random word
+                randomWord = randomWordObtained
+            }
+        }
+        
+        if randomWord == "" {
+            return ""
+        }
+    } catch {
+        return randomWord
+    }
+    
+    return randomWord
+}
 
 struct PexelsResponse: Codable {
     var photos: [Photo]
