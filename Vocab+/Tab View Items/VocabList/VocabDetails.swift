@@ -87,6 +87,8 @@ struct VocabDetails: View {
         if !definition.partOfSpeech.isEmpty {
             toReturn += "\n\nPart of Speech: \(definition.partOfSpeech)"
         }
+        toReturn = toReturn.replacingOccurrences(of: "<er>", with: "")
+        toReturn = toReturn.replacingOccurrences(of: "</er>", with: "")
         return toReturn
     }
 }

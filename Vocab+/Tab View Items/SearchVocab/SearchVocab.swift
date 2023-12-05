@@ -16,7 +16,7 @@ struct SearchVocab: View {
     //Alert
     @State private var showAlertMessage = false
     @State private var showingAuthorAlert = false
-    
+        
     var body: some View {
         NavigationStack {
             Form {
@@ -55,7 +55,6 @@ struct SearchVocab: View {
                         Button(searchCompleted ? "Search Completed" : "Search") {
                             if inputDataValidated() {
                                 formatAndSearchAPI()
-                                searchCompleted = true
                             } else {
                                 showAlertMessage = true
                                 alertTitle = "Missing Input Data!"
@@ -77,11 +76,9 @@ struct SearchVocab: View {
                             Text(foundWord.word)
                         }
                         
-                        if let unwrappedDefinitions = foundWord.definitions {
-                            ForEach(unwrappedDefinitions, id: \.self) { definition in
-                                Section(header: Text("Definition")) {
-                                    Text(definitionToString(definition: definition))
-                                }
+                        ForEach(foundWord.definitions, id: \.self) { definition in
+                            Section(header: Text("Definition")) {
+                                Text(definitionToString(definition: definition))
                             }
                         }
                         
@@ -110,10 +107,6 @@ struct SearchVocab: View {
                         Section(header: Text("Synonyms")) {
                             Text(synonymsArrayToString(synonyms: foundWord.synonyms))
                         }
-                                
-                        Section(header: Text("Points Until Learned")) {
-                            Text("\(foundWord.pointsUntilLearned)")
-                        }
                     } // end of group
                 }
             } // End of form
@@ -137,9 +130,9 @@ struct SearchVocab: View {
     func formatAndSearchAPI() {
         let searchTermTrimmed = searchTerm.trimmingCharacters(in: .whitespacesAndNewlines)
         getFoundWordFromApi(searchTerm: searchTermTrimmed)
-        print(foundWord.word)
-        
+        searchCompleted = true
     } // end of formatAndSearchAPI
+    
     var authorAlert: Alert {
         Alert(
             title: Text("Photo Author"),
@@ -153,7 +146,7 @@ struct SearchVocab: View {
         )
     }
     
-    func definitionToString(definition: Definition) -> String {
+    func definitionToString(definition: DefinitionStruct) -> String {
         var toReturn = "Definition: \(definition.definition)"
         if !definition.example.isEmpty {
             toReturn += "\n\nExample: \(definition.example)"
@@ -161,6 +154,8 @@ struct SearchVocab: View {
         if !definition.partOfSpeech.isEmpty {
             toReturn += "\n\nPart of Speech: \(definition.partOfSpeech)"
         }
+        toReturn = toReturn.replacingOccurrences(of: "<er>", with: "")
+        toReturn = toReturn.replacingOccurrences(of: "</er>", with: "")
         return toReturn
     }
 } // End of SearchVocab

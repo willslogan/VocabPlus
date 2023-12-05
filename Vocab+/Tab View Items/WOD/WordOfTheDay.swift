@@ -88,14 +88,13 @@ struct WordOfTheDay: View {
                 .onAppear {
                     fetchWordOfTheDay()
 //                    // Note: image already displays a not found message without this feature
-//                    self.wordOfTheDay = "apple"
-//                    fetchImageFromPexels(word: wordOfTheDay) { pexelsPhoto in
-//                        if let pexelsPhoto = pexelsPhoto {
-//                            self.photo = pexelsPhoto
-//                        } else {
-//                            print("Failed to fetch image from Pexels")
-//                        }
-//                    }
+                    if let pexelsPhoto = fetchImageFromPexels(word: wordOfTheDay) {
+                        // Use the fetched PexelsPhoto
+                        self.photo = pexelsPhoto
+                    } else {
+                        // Handle the failure case
+                        print("Failed to fetch image from Pexels")
+                    }
                 }
             }
         }
