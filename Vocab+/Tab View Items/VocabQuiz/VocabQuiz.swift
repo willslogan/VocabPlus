@@ -40,7 +40,8 @@ struct VocabQuiz: View {
     @State private var favoriteWordChosenDefinition = ""
     @State private var pointsToEarn = 50
     @State private var answerChosen = -1
-    
+    @State private var isLoading = false
+
     //Timer Objects
     @State private var timer = Timer.publish(every: .infinity, on: .main, in: .common).autoconnect()
     @State private var timerImages = Timer.publish(every: .infinity, on: .main, in: .common).autoconnect()
@@ -54,56 +55,69 @@ struct VocabQuiz: View {
             Text("Quiz Me!")
                 .font(.largeTitle)
                 .padding(2)
-
+            
             if !beginQuiz {
                 //Start The Quiz
                 Spacer()
                 Button(action:
                         {
-                    if currentUser.favoriteWords == nil {
-                        
-                        // I don't expect to get in here but if we do we have problems
-                        
-                        //Display Alert
-                        showAlertMessage = true
-                        alertTitle = "Issue With the App"
-                        alertMessage = "Favorite Words is Nil"
-                        
-                    } else if currentUser.favoriteWords!.count == 0 {
-                        //This is the case if the user deletes all their favorite words
-                        
-                        //Display Alert
-                        showAlertMessage = true
-                        alertTitle = "No Words in Favorite List"
-                        alertMessage = "You need to have atleast one word in your favorite list"
-                        
-                    } else if checkIfAllWordListDefinitionsNil() {
-                        showAlertMessage = true
-                        alertTitle = "Definitions Not Found"
-                        alertMessage = "You need to have atleast one word in your favorite list with a definition"
-                    } else {
-                        //Choose a favorite word
-                        favoriteWordChosen = chooseRandomFavoriteWord()
-                        //Obtains 3 random words and a random word from favorite and places it into answerChoices
-                        fillWords()
-                        
-                        //Obtain definition and hints
-                        chooseRandomDefinitionAndHints()
-                        beginQuiz = true
-
-                        //Start Timer
-                        
-                        startTimer()
-                    }
+                    Task {
+                        if currentUser.favoriteWords == nil {
+                            
+                            // I don't expect to get in here but if we do we have problems
+                            
+                            //Display Alert
+                            showAlertMessage = true
+                            alertTitle = "Issue With the App"
+                            alertMessage = "Favorite Words is Nil"
+                            
+                        } else if currentUser.favoriteWords!.count == 0 {
+                            //This is the case if the user deletes all their favorite words
+                            
+                            //Display Alert
+                            showAlertMessage = true
+                            alertTitle = "No Words in Favorite List"
+                            alertMessage = "You need to have atleast one word in your favorite list"
+                            
+                        } else if checkIfAllWordListDefinitionsNil() {
+                            showAlertMessage = true
+                            alertTitle = "Definitions Not Found"
+                            alertMessage = "You need to have atleast one word in your favorite list with a definition"
+                        } else {
+                            //Choose a favorite word
+                            favoriteWordChosen = chooseRandomFavoriteWord()
+                            //Obtains 3 random words and a random word from favorite and places it into answerChoices
+                            await fillWords()
+                            //Obtain definition and hints
+                            chooseRandomDefinitionAndHints()
+                            beginQuiz = true
+                            
+                            //Start Timer
+                            
+                            startTimer()
+                        }
+                        }
+                    
                     
                 }) {
-                    Text("Start")
-                        .foregroundStyle(.black)
-                        .font(.system(size: 50))
-                        .padding()
-                        .frame(width: 300, height: 200)
-                        .background(.yellow)
-                        .cornerRadius(5)
+                    if (isLoading) {
+                        Text("Loading...")
+                            .foregroundStyle(.black)
+                            .font(.system(size: 50))
+                            .padding()
+                            .frame(width: 300, height: 200)
+                            .background(.yellow)
+                            .cornerRadius(5)
+                    }
+                    else {
+                        Text("Start")
+                            .foregroundStyle(.black)
+                            .font(.system(size: 50))
+                            .padding()
+                            .frame(width: 300, height: 200)
+                            .background(.yellow)
+                            .cornerRadius(5)
+                    }
                 }
                 Spacer()
             } else { //The Actual quiz
@@ -299,20 +313,39 @@ struct VocabQuiz: View {
     
     
     
-    func fillWords() {
+    func fillWords() async {
+        isLoading = true
         let chosenWordToBeAnswer = Int.random(in: 0..<4)
-        
         answerChoices[chosenWordToBeAnswer] = favoriteWordChosen.word
-        
-        for i in 0..<answerChoices.count {
-            if answerChoices[i].isEmpty {
-                answerChoices[i] = getRandomWordFromApiStringOnly()
-                //answerChoices[i] = "Answer \(i+1)"
+
+        var index = 0
+        let timeoutNanoseconds = UInt64(15 * 1_000_000_000) // 15 seconds in nanoseconds
+        let startTime = DispatchTime.now()
+
+        while answerChoices.contains("") {
+            let currentTime = DispatchTime.now()
+            if currentTime.uptimeNanoseconds - startTime.uptimeNanoseconds > timeoutNanoseconds {
+                showAlertMessage = true
+                alertTitle = "Error"
+                alertMessage = "Problem occured in API, please try again later"
+                break
             }
+
+            if answerChoices[index].isEmpty {
+                let randomWord = await getRandomWordFromApiStringOnly()
+                if !randomWord.isEmpty {
+                    answerChoices[index] = randomWord
+                }
+            }
+
+            index = (index + 1) % 4 // Ensure the index stays within the range of 0 to 3
         }
-        
+
+        isLoading = false
     }
-    
+
+
+
     func populateHints(chosenDefinition: Definition) {
         var synonymsInString = ""
         for i in 0..<favoriteWordChosen.synonyms.count {
@@ -351,6 +384,10 @@ struct VocabQuiz: View {
             alertMessage = "You have officially learned this word!\nIt has now been added to your learned words list"
             if !currentUser.learnedWords!.contains(favoriteWordChosen) {
                 currentUser.learnedWords!.append(favoriteWordChosen)
+            }
+            // Remove word from favorite words list
+            if let index = currentUser.favoriteWords?.firstIndex(of: favoriteWordChosen) {
+                currentUser.favoriteWords?.remove(at: index)
             }
             favoriteWordChosen.pointsUntilLearned = favoriteWordChosen.pointsUntilLearned - pointsToEarn
             print(currentUser.learnedWords!.count)
@@ -436,9 +473,4 @@ struct VocabQuiz: View {
         favoriteWordChosenDefinition = favoriteWordChosen.definitions![random].definition
         populateHints(chosenDefinition: favoriteWordChosen.definitions![random])
     }
-    
-    
 }
-
-
-

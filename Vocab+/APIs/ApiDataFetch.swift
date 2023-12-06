@@ -413,7 +413,7 @@ func fetchImageFromPexels(word: String) -> PexelsPhoto? {
     return toReturn
 }
 
-public func getRandomWordFromApiStringOnly() -> String {
+public func getRandomWordFromApiStringOnly() async -> String {
     var jsonDataFromApi: Data
     
     var randomWord = ""
