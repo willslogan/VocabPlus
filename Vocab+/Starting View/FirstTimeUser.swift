@@ -148,11 +148,14 @@ struct FirstTimeUser: View {
                                     copyImageFileFromAssetsToDocumentDirectory(filename: defaultImages[selectedImageIndex], fileExtension: "jpg")
                                     imageFile = "\(defaultImages[selectedImageIndex]).jpg"
                                 }
-        
+                                
                                 let newUser = User(firstName: firstName,
                                                    lastName: lastName,
                                                    profileImageName: imageFile,
                                                    level: 1,
+                                                   experience: 0,
+                                                   quizzesTaken: 0,
+                                                   quizzesPoints: [Int](),
                                                    learnedWords: [Word](),
                                                    favoriteWords: obtainFavoriteWordsFromDB()
                                 )

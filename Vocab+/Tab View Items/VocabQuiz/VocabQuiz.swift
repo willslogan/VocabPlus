@@ -360,6 +360,16 @@ struct VocabQuiz: View {
             print(currentUser.learnedWords!.count)
         }
         
+        //Add stats
+        currentUser.quizzesTaken = currentUser.quizzesTaken + 1
+        currentUser.quizzesPoints.append(pointsToEarn)
+        currentUser.experience = currentUser.experience + pointsToEarn
+        if(currentUser.experience >= 100 * currentUser.level) {
+            currentUser.level += 1
+            currentUser.experience = 0
+            print("User Gained 1 level")
+        }
+        
         //Reset all values
         
         //Quiz Set up
