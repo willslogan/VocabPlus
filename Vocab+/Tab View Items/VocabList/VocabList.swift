@@ -12,6 +12,7 @@ import SwiftData
 struct VocabList: View {
     
     @Environment(\.modelContext) private var modelContext
+    @Query(FetchDescriptor<Word>(sortBy: [SortDescriptor(\Word.word, order: .forward)])) private var wordsList: [Word]
     private var currentUser = obtainUser()
     @State private var selectedListType = 0  // 0 for learnedWords, 1 for favoriteWords
     
@@ -39,7 +40,7 @@ struct VocabList: View {
                     Spacer()
                 } else {
                     List {
-                        ForEach(currentWords, id: \.self) { word in
+                        ForEach(wordsList, id: \.self) { word in
                             NavigationLink(destination: VocabDetails(word: word)) {
                                 VocabItem(word: word)
                                     .alert(isPresented: $showConfirmation) {

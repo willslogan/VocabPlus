@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-var foundWord = WordStruct(word: "", definitions: [], audioUrl: "", imageUrl: "", imageAuthor: "", imageAuthorUrl: "", synonyms: [])
-
+var foundWord = WordStruct(word: "", audioUrl: "", imageUrl: "", imageAuthor: "", imageAuthorUrl: "", synonyms: ["String"], pointsUntilLearned: 0, definitions: [defs])
+var defs = DefinitionStruct(definition: "", partOfSpeech: "", example: "")
 let wordnikApiKey = "h92eq8jsnaitg1hid9navzros55w8o43n77lcbide02qh88jz"
 
 let pexelsApiKey = "FTASW5mja3KwydYI7MCmGLVUFYcNKg0ygLdiHiXOyGGLAlyzL5aLjG9B"
@@ -70,7 +70,7 @@ public func getFoundWordFromApi(searchTerm: String) {
 
 private func setFoundWord(word: String, definitions: [DefinitionStruct], audioUrl: String, imageUrl: String, imageAuthor: String, imageAuthorUrl: String, synonyms: [String]) {
     print(imageUrl)
-    foundWord = WordStruct(word: word, definitions: definitions, audioUrl: audioUrl, imageUrl: imageUrl, imageAuthor: imageAuthor, imageAuthorUrl: imageAuthorUrl, synonyms: synonyms)
+    foundWord = WordStruct(word: word, audioUrl: audioUrl, imageUrl: imageUrl, imageAuthor: imageAuthor, imageAuthorUrl: imageAuthorUrl, synonyms: synonyms, pointsUntilLearned: 0, definitions: definitions)
 }
 
 /*
@@ -329,13 +329,7 @@ func getRandomWordFromApi() -> WordStruct? {
         let synonyms = getSynonymsFromApi(searchTerm: randomWord)
         
         //Create Word Struct
-        var randomWordToReturn = WordStruct(word: randomWord,
-                                            definitions: definitions,
-                                            audioUrl: audioUrl,
-                                            imageUrl: "",
-                                            imageAuthor: "",
-                                            imageAuthorUrl: "",
-                                            synonyms: synonyms)
+        var randomWordToReturn = WordStruct(word: randomWord, audioUrl: audioUrl, imageUrl: "", imageAuthor: "", imageAuthorUrl: "", synonyms: synonyms, pointsUntilLearned: 0, definitions: definitions)
         
         // Retrieve pexels image
         if let pexelsPhoto = fetchImageFromPexels(word: randomWord) {

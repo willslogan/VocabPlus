@@ -27,6 +27,7 @@ final class Word: Hashable, Equatable {
     }
     
     init(word: String, audioUrl: String, imageUrl: String, imageAuthor: String, imageAuthorUrl: String, synonyms: [String], pointsUntilLearned: Int, definitions: [Definition]? = nil) {
+        print("Initializing Word class")
         self.word = word
         self.audioUrl = audioUrl
         self.imageUrl = imageUrl
@@ -44,44 +45,13 @@ final class Definition: Hashable {
     var partOfSpeech: String
     var example: String
     
-//    // If Word is deleted, nullify Word
-//    @Relationship(deleteRule: .nullify) var word: Word?
-//    // One-to-One Relationship: ONE Definition can belong to ONE Word
-    
     init(definition: String, partOfSpeech: String, example: String) {
+        print("Initializing Definition class")
         self.definition = definition
         self.partOfSpeech = partOfSpeech
         self.example = example
-//        self.word = word
     }
 }
-
-//@Model
-//final class User {
-//    var firstName: String
-//    var lastName: String
-//    var profileImageName: String
-//    var level: Int
-//    var experience: Int
-//    var quizzesTaken: Int
-//    var quizzesPoints: [Int]
-//    
-//    @Relationship(deleteRule: .nullify) var learnedWords: [Word]?
-//    @Relationship(deleteRule: .nullify) var favoriteWords: [Word]?
-//    
-//    init(firstName: String, lastName: String, profileImageName: String, level: Int, experience: Int, quizzesTaken: Int, quizzesPoints: [Int], learnedWords: [Word]? = nil, favoriteWords: [Word]? = nil) {
-//        self.firstName = firstName
-//        self.lastName = lastName
-//        self.profileImageName = profileImageName
-//        self.level = level
-//        self.experience = experience
-//        self.quizzesTaken = quizzesTaken
-//        self.quizzesPoints = quizzesPoints
-//        self.learnedWords = learnedWords
-//        self.favoriteWords = favoriteWords
-//    }
-//    
-//}
 
 @Model
 final class User {
