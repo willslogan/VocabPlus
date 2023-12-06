@@ -167,24 +167,23 @@ struct SearchVocab: View {
                            synonyms: foundWord.synonyms,
                            pointsUntilLearned: foundWord.pointsUntilLearned,
                            definitions: definitionsArray)
-        // Save changes to the database
-        modelContext.insert(newWord)
         print(wordList)
-//        if currentUser.learnedWords!.contains(newWord) {
-//            currentUser.learnedWords!.append(newWord)
-//            alertTitle = "Error!"
-//            alertMessage = "Selected word already exists in your favorite list"
-//            showAlertMessage = true
-//        }
-//        else {
-//            // Update UI
-//            alertTitle = "Word Added!"
-//            alertMessage = "Selected word is added to the favorite list"
-//            showAlertMessage = true
-//        }
-    }
+        if wordList.contains(newWord) {
+            alertTitle = "Error!"
+            alertMessage = "Selected word already exists in your favorite list"
+            showAlertMessage = true
+        }
+        else {
+            // Save changes to the database
+            modelContext.insert(newWord)
+            // Update UI
+            alertTitle = "Word Added!"
+            alertMessage = "Selected word is added to the favorite list"
+            showAlertMessage = true
+        }
+        print(wordList)
 
-    
+    }
     func inputDataValidated() -> Bool {
         
         let searchTermTrimmed = searchTerm.trimmingCharacters(in: .whitespacesAndNewlines)
