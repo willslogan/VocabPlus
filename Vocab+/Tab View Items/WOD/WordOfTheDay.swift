@@ -7,6 +7,9 @@
 //
 
 import SwiftUI
+
+fileprivate let currentUser = obtainUser()
+
 struct WordOfTheDay: View {
     
     var firstName: String
@@ -17,6 +20,42 @@ struct WordOfTheDay: View {
     var body: some View {
         NavigationStack {
             ScrollView {
+                
+                //Profile View
+                VStack(alignment: .leading) {
+                    NavigationLink(destination: Profile()) {
+                        HStack {
+                            let fileName = currentUser.profileImageName.components(separatedBy: ".")[0]
+                            let fileExtension = currentUser.profileImageName.components(separatedBy: ".")[1]
+                            getImageFromDocumentDirectory(filename: fileName, fileExtension: fileExtension, defaultFilename: "ImageUnavailable")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 75, height: 75)
+                            
+                            VStack (alignment: .leading) {
+                                Text("\(currentUser.firstName) \(currentUser.lastName)")
+                                HStack {
+                                    Text("Level: ")
+                                    Text("\(currentUser.level)")
+                                        .font(.system(size: 9))
+                                        .bold()
+                                        .frame(width: 20, height: 20)
+                                        .overlay {
+                                            Circle()
+                                                .stroke(lineWidth: 1.2)
+                                                .foregroundColor(Color(red: 0/255, green: 0/255, blue: 139/255))
+                                        }
+                                    
+                                }
+                            }
+                            Spacer()
+                        }
+                        .frame(width: 200, height: 75)
+                        .background(.black.opacity(0.1))
+                        .cornerRadius(10)
+                    }
+                    .foregroundStyle(.black)
+                }
                 VStack {
                     Text("Welcome \(firstName),\nReady to improve your vocab?")
                         .multilineTextAlignment(.center)
@@ -88,13 +127,13 @@ struct WordOfTheDay: View {
                 .onAppear {
                     fetchWordOfTheDay()
 //                    // Note: image already displays a not found message without this feature
-                    if let pexelsPhoto = fetchImageFromPexels(word: wordOfTheDay) {
-                        // Use the fetched PexelsPhoto
-                        self.photo = pexelsPhoto
-                    } else {
-                        // Handle the failure case
-                        print("Failed to fetch image from Pexels")
-                    }
+//                    if let pexelsPhoto = fetchImageFromPexels(word: wordOfTheDay) {
+//                        // Use the fetched PexelsPhoto
+//                        self.photo = pexelsPhoto
+//                    } else {
+//                        // Handle the failure case
+//                        print("Failed to fetch image from Pexels")
+//                    }
                 }
             }
         }
