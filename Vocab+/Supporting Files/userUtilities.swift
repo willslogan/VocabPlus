@@ -10,11 +10,14 @@ import Foundation
 import SwiftData
 
 let defaultUser = User(firstName: "",
-                lastName: "",
-                profileImageName: "",
-                level: 1,
-                learnedWords: [Word](),
-                favoriteWords: [Word]()
+                       lastName: "",
+                       profileImageName: "",
+                       level: 0,
+                       experience: 0,
+                       quizzesTaken: 0,
+                       quizzesPoints: [Int](),
+                       learnedWords: [Word](),
+                       favoriteWords: [Word]()
 )
 
 var usersList = [User]()

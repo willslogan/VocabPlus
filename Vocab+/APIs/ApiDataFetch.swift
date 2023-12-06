@@ -44,7 +44,7 @@ public func getFoundWordFromApi(searchTerm: String) {
     
     // Retrieve audio URL
     let audioUrl = getAudioFileFromApi(searchTerm: searchTerm)
-            
+    
     // Retrieve synonyms
     let synonyms = getSynonymsFromApi(searchTerm: searchTerm)
     
@@ -69,17 +69,17 @@ public func getFoundWordFromApi(searchTerm: String) {
 }
 
 private func setFoundWord(word: String, definitions: [DefinitionStruct], audioUrl: String, imageUrl: String, imageAuthor: String, imageAuthorUrl: String, synonyms: [String]) {
-        print(imageUrl)
-        foundWord = WordStruct(word: word, definitions: definitions, audioUrl: audioUrl, imageUrl: imageUrl, imageAuthor: imageAuthor, imageAuthorUrl: imageAuthorUrl, synonyms: synonyms)
+    print(imageUrl)
+    foundWord = WordStruct(word: word, definitions: definitions, audioUrl: audioUrl, imageUrl: imageUrl, imageAuthor: imageAuthor, imageAuthorUrl: imageAuthorUrl, synonyms: synonyms)
 }
-          
+
 /*
  Function to retrieve definition list from the API
  */
 private func getDefinitionsFromApi(searchTerm: String) -> [DefinitionStruct] {
     // Get a list of definitions
     let apiUrlDefString = "https://api.wordnik.com/v4/word.json/\(searchTerm)/definitions?limit=5&includeRelated=false&sourceDictionaries=webster&useCanonical=false&includeTags=false&api_key=\(wordnikApiKey)"
-        
+    
     var jsonDataFromApi: Data
     
     // Make API call for list of definitions
@@ -288,7 +288,7 @@ func getRandomWordFromApi() -> WordStruct? {
     var jsonDataFromApi: Data
     
     var randomWord = ""
-
+    
     let apiUrlString = "https://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=\(wordnikApiKey)"
     
     let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: wordnikApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
@@ -324,7 +324,7 @@ func getRandomWordFromApi() -> WordStruct? {
         
         // Retrieve audio URL
         let audioUrl = getAudioFileFromApi(searchTerm: randomWord)
-                
+        
         // Retrieve synonyms
         let synonyms = getSynonymsFromApi(searchTerm: randomWord)
         
@@ -336,7 +336,7 @@ func getRandomWordFromApi() -> WordStruct? {
                                             imageAuthor: "",
                                             imageAuthorUrl: "",
                                             synonyms: synonyms)
-                
+        
         // Retrieve pexels image
         if let pexelsPhoto = fetchImageFromPexels(word: randomWord) {
             // Use the fetched PexelsPhoto
@@ -362,34 +362,39 @@ func getRandomWordFromApi() -> WordStruct? {
 func fetchImageFromPexels(word: String) -> PexelsPhoto? {
     var toReturn: PexelsPhoto?
     let semaphore = DispatchSemaphore(value: 0)
-
+    
     let query = word.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
     let urlString = "https://api.pexels.com/v1/search?query=\(query)&per_page=1"
-
+    
     guard let url = URL(string: urlString) else {
         print("Invalid URL")
         return nil
     }
-
+    
     var request = URLRequest(url: url)
     request.addValue(pexelsApiKey, forHTTPHeaderField: "Authorization")
-
+    
     URLSession.shared.dataTask(with: request) { data, _, error in
         defer { semaphore.signal() }
-
+        
         if let error = error {
             print("Error fetching image: \(error.localizedDescription)")
             return
         }
-
+        
         guard let data = data else {
             print("No data received from Pexels API")
             return
         }
-
+        
+        // Debug print statement for the raw JSON response
+        if let jsonStr = String(data: data, encoding: .utf8) {
+            print("Pexels API JSON Response: \(jsonStr)")
+        }
+        
         do {
             let decodedResponse = try JSONDecoder().decode(PexelsResponse.self, from: data)
-
+            
             if let firstPhoto = decodedResponse.photos.first {
                 toReturn = PexelsPhoto(
                     imageUrl: firstPhoto.src.medium,
@@ -403,7 +408,7 @@ func fetchImageFromPexels(word: String) -> PexelsPhoto? {
             print("Failed to decode response from Pexels API: \(error)")
         }
     }.resume()
-
+    
     _ = semaphore.wait(timeout: .distantFuture)
     return toReturn
 }
@@ -412,7 +417,7 @@ public func getRandomWordFromApiStringOnly() -> String {
     var jsonDataFromApi: Data
     
     var randomWord = ""
-
+    
     let apiUrlString = "https://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=\(wordnikApiKey)"
     
     let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: wordnikApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
@@ -469,4 +474,50 @@ struct PexelsPhoto {
     var imageUrl: String
     var authorName: String
     var authorUrl: String
+}
+
+func fetchImageFromPexels1(word: String, completion: @escaping (PexelsPhoto?) -> Void) {
+    let query = word.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+    let urlString = "https://api.pexels.com/v1/search?query=\(query)&per_page=1"
+    
+    guard let url = URL(string: urlString) else {
+        print("Invalid URL")
+        completion(nil)
+        return
+    }
+    
+    var request = URLRequest(url: url)
+    request.addValue(pexelsApiKey, forHTTPHeaderField: "Authorization")
+    
+    URLSession.shared.dataTask(with: request) { data, _, error in
+        if let error = error {
+            print("Error fetching image: \(error.localizedDescription)")
+            completion(nil)
+            return
+        }
+        
+        guard let data = data else {
+            print("No data received from Pexels API")
+            completion(nil)
+            return
+        }
+        
+        do {
+            let decodedResponse = try JSONDecoder().decode(PexelsResponse.self, from: data)
+            if let firstPhoto = decodedResponse.photos.first {
+                let photo = PexelsPhoto(
+                    imageUrl: firstPhoto.src.medium,
+                    authorName: firstPhoto.photographer,
+                    authorUrl: firstPhoto.photographer_url
+                )
+                completion(photo)
+            } else {
+                print("No photos found in response")
+                completion(nil)
+            }
+        } catch {
+            print("Failed to decode response from Pexels API: \(error)")
+            completion(nil)
+        }
+    }.resume()
 }

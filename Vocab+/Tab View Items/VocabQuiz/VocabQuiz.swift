@@ -26,7 +26,6 @@ fileprivate let emptyWord = Word(word: "",
 
 
 struct VocabQuiz: View {
-    
     //Alert
     @State private var showAlertMessage = false
     
@@ -83,21 +82,18 @@ struct VocabQuiz: View {
                         alertTitle = "Definitions Not Found"
                         alertMessage = "You need to have atleast one word in your favorite list with a definition"
                     } else {
-                        beginQuiz = true
                         //Choose a favorite word
                         favoriteWordChosen = chooseRandomFavoriteWord()
                         //Obtains 3 random words and a random word from favorite and places it into answerChoices
                         fillWords()
                         
-                        
                         //Obtain definition and hints
                         chooseRandomDefinitionAndHints()
-                        
-                        
+                        beginQuiz = true
+
                         //Start Timer
                         
                         startTimer()
-                        
                     }
                     
                 }) {
@@ -358,6 +354,16 @@ struct VocabQuiz: View {
             }
             favoriteWordChosen.pointsUntilLearned = favoriteWordChosen.pointsUntilLearned - pointsToEarn
             print(currentUser.learnedWords!.count)
+        }
+        
+        //Add stats
+        currentUser.quizzesTaken = currentUser.quizzesTaken + 1
+        currentUser.quizzesPoints.append(pointsToEarn)
+        currentUser.experience = currentUser.experience + pointsToEarn
+        if(currentUser.experience >= 100 * currentUser.level) {
+            currentUser.level += 1
+            currentUser.experience = 0
+            print("User Gained 1 level")
         }
         
         //Reset all values

@@ -15,12 +15,6 @@ struct MainView: View {
     var body: some View {
         TabView {
             // TODO: When we implement profiles, the WOD should be able to get the current user's name without us passing it in
-            //TEMP
-            Profile()
-                .tabItem {
-                    Label("Profile View", systemImage: "hammer.fill")
-                }
-            //
             WordOfTheDay(firstName: getUsersName())
                 .tabItem {
                     Label("WOTD", systemImage: "sun.max")

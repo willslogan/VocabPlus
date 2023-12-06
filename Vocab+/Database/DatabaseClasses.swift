@@ -56,21 +56,54 @@ final class Definition: Hashable {
     }
 }
 
+//@Model
+//final class User {
+//    var firstName: String
+//    var lastName: String
+//    var profileImageName: String
+//    var level: Int
+//    var experience: Int
+//    var quizzesTaken: Int
+//    var quizzesPoints: [Int]
+//    
+//    @Relationship(deleteRule: .nullify) var learnedWords: [Word]?
+//    @Relationship(deleteRule: .nullify) var favoriteWords: [Word]?
+//    
+//    init(firstName: String, lastName: String, profileImageName: String, level: Int, experience: Int, quizzesTaken: Int, quizzesPoints: [Int], learnedWords: [Word]? = nil, favoriteWords: [Word]? = nil) {
+//        self.firstName = firstName
+//        self.lastName = lastName
+//        self.profileImageName = profileImageName
+//        self.level = level
+//        self.experience = experience
+//        self.quizzesTaken = quizzesTaken
+//        self.quizzesPoints = quizzesPoints
+//        self.learnedWords = learnedWords
+//        self.favoriteWords = favoriteWords
+//    }
+//    
+//}
+
 @Model
 final class User {
     var firstName: String
     var lastName: String
     var profileImageName: String
     var level: Int
+    var experience: Int
+    var quizzesTaken: Int
+    var quizzesPoints: [Int]
     
     @Relationship(deleteRule: .nullify) var learnedWords: [Word]?
     @Relationship(deleteRule: .nullify) var favoriteWords: [Word]?
     
-    init(firstName: String, lastName: String, profileImageName: String, level: Int, learnedWords: [Word], favoriteWords: [Word]) {
+    init(firstName: String, lastName: String, profileImageName: String, level: Int, experience: Int, quizzesTaken: Int, quizzesPoints: [Int], learnedWords: [Word], favoriteWords: [Word]) {
         self.firstName = firstName
         self.lastName = lastName
         self.profileImageName = profileImageName
         self.level = level
+        self.experience = experience
+        self.quizzesTaken = quizzesTaken
+        self.quizzesPoints = quizzesPoints
         self.learnedWords = learnedWords
         self.favoriteWords = favoriteWords
     }

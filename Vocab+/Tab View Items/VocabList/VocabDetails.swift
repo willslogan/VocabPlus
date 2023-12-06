@@ -29,11 +29,8 @@ struct VocabDetails: View {
                     }
                 }
                 Section(header: Text("Image")) {
-                    if let photo = pexelsPhoto {
-                        GetImageFromUrl(stringUrl: photo.imageUrl, maxWidth: 300)
-                            .frame(width: 300, height: 100, alignment: .center)
-                            .background(Color.white)
-                            .border(Color.black, width: 2)
+                    if !word.imageUrl.isEmpty {
+                        GetImageFromUrl(stringUrl: word.imageUrl, maxWidth: 300)
                         
                         Button(action: { showingAuthorAlert.toggle() }) {
                             Image(systemName: "info.circle")
@@ -43,8 +40,7 @@ struct VocabDetails: View {
                         .alert(isPresented: $showingAuthorAlert) {
                             authorAlert
                         }
-                    }
-                    else {
+                    } else {
                         Text("Sorry!\nNo image associated with\n\(word.word)")
                             .multilineTextAlignment(.center)
                             .frame(width: 300, height: 100, alignment: .center)
