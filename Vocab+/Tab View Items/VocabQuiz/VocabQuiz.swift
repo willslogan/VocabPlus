@@ -35,7 +35,12 @@ struct VocabQuiz: View {
     @State private var answerChoices = ["", "", "", ""]
     @State private var beginQuiz = false
     @State private var answerHasBeenChosen = false
+    @State private var hintRequsted = false
     @State private var hints = ["", "", ""]
+    @State private var hintSelectedIndex = 0
+    @State private var favoriteWordChosenDefinition = ""
+    @State private var pointsToEarn = 50
+    @State private var answerChosen = -1
     
     //Timer Objects
     @State private var timer = Timer.publish(every: .infinity, on: .main, in: .common).autoconnect()
@@ -47,7 +52,7 @@ struct VocabQuiz: View {
     let listOfQuizCategories = ["synonyms", "part of speech", "definition", "example"]
     var body: some View {
         VStack (alignment: .center){
-            Text("Quiz Type")
+            Text("Quiz Me!")
                 .font(.largeTitle)
                 .padding(2)
 
@@ -73,6 +78,10 @@ struct VocabQuiz: View {
                         alertTitle = "No Words in Favorite List"
                         alertMessage = "You need to have atleast one word in your favorite list"
                         
+                    } else if checkIfAllWordListDefinitionsNil() {
+                        showAlertMessage = true
+                        alertTitle = "Definitions Not Found"
+                        alertMessage = "You need to have atleast one word in your favorite list with a definition"
                     } else {
                         beginQuiz = true
                         //Choose a favorite word
@@ -80,8 +89,10 @@ struct VocabQuiz: View {
                         //Obtains 3 random words and a random word from favorite and places it into answerChoices
                         fillWords()
                         
-                        //Obtain Hints
-                        populateHints()
+                        
+                        //Obtain definition and hints
+                        chooseRandomDefinitionAndHints()
+                        
                         
                         //Start Timer
                         
@@ -100,6 +111,7 @@ struct VocabQuiz: View {
                 }
                 Spacer()
             } else { //The Actual quiz
+                
                 //Place Timer On the screen
                 VStack {
                     HStack {
@@ -128,96 +140,153 @@ struct VocabQuiz: View {
                             if imageIndex < 1 {
                                 endGame()
                             }
+                            if pointsToEarn > 3 {
+                                pointsToEarn -= 3
+                            } else {
+                                pointsToEarn = 0
+                            }
                         }
                 }
-                //***********************
-                //NEEDS TO BE IMPLEMENTED
-                //***********************
                 
-                //Place Definition On the Screen
-                
-                //***********************
-                //NEEDS TO BE IMPLEMENTED
-                //***********************
-                
+                //Place definition On ths screen
+                Text("Which word has this definition:")
+                    .padding()
+                Text(favoriteWordChosenDefinition)
+                    .padding(.horizontal, 10)
+                    .multilineTextAlignment(.leading)
                 
                 //Place Hints on the screen and logic
+                if hintRequsted {
+                    Text("HINT")
+                        .padding(.top)
+                        .font(.headline)
+                    Text(hints[hintSelectedIndex])
+                        .frame(width: 300)
+                        .padding()
+                        .overlay {
+                            Rectangle()
+                                .stroke(lineWidth: 2)
+                        }
+                }
                 
-                //***********************
-                //NEEDS TO BE IMPLEMENTED
-                //***********************
+                
                 
                 //place answer objects on the screen
                 VStack {
                     Spacer()
+                    //Points left
+                    Text("Points: \(pointsToEarn)")
+                        .frame(width: 100)
+                        .padding(10)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 30).stroke(Color(red: 0/255, green: 0/255, blue: 139/255), lineWidth: 3)
+                        }
                     //Button 1
                     Button(action: {
-                        // if correct answer change to green otherwise red
-                        //***********************
-                        //NEEDS TO BE IMPLEMENTED
-                        //***********************
-                        
-                        endGame()
+                        answerChosen = 1
+                        stopTimer()
+                        //Ends the game after 3 seconds
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            endGame()
+                        }
                     }) {
                         Text(answerChoices[0])
                             .frame(width: 300, height: 50)
                             .foregroundColor(.black)
                             .font(.system(size: 20))
-                            .background(.black.opacity(0.1))
+                            .background(colorChoice(buttonPressed: 1))
                             .padding(2.5)
                             .cornerRadius(15)
                     }
                     //Button 2
                     Button(action: {
-                        // if correct answer change to green otherwise red
-                        //***********************
-                        //NEEDS TO BE IMPLEMENTED
-                        //***********************
-                        
-                        endGame()
+                        answerChosen = 2
+                        stopTimer()
+                        //Ends the game after 3 seconds
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            endGame()
+                        }
                     }) {
                         Text(answerChoices[1])
                             .frame(width: 300, height: 50)
                             .foregroundColor(.black)
                             .font(.system(size: 20))
-                            .background(.black.opacity(0.1))
+                            .background(colorChoice(buttonPressed: 2))
                             .padding(2.5)
                             .cornerRadius(15)
                     }
                     //Button 3
                     Button(action: {
-                        // if correct answer change to green otherwise red
-                        //***********************
-                        //NEEDS TO BE IMPLEMENTED
-                        //***********************
-                        
-                        endGame()
+                        answerChosen = 3
+                        stopTimer()
+                        //Ends the game after 3 seconds
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            endGame()
+                        }
                     }) {
                         Text(answerChoices[2])
                             .frame(width: 300, height: 50)
                             .foregroundColor(.black)
                             .font(.system(size: 20))
-                            .background(.black.opacity(0.1))
+                            .background(colorChoice(buttonPressed: 3))
                             .padding(2.5)
                             .cornerRadius(15)
                     }
                     //Button 4
                     Button(action: {
-                        // if correct answer change to green otherwise red
-                        //***********************
-                        //NEEDS TO BE IMPLEMENTED
-                        //***********************
-                        
-                        endGame()
+                        answerChosen = 4
+                        stopTimer()
+                        //Ends the game after 3 seconds
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            endGame()
+                        }
                     }) {
                         Text(answerChoices[3])
                             .frame(width: 300, height: 50)
                             .foregroundColor(.black)
                             .font(.system(size: 20))
-                            .background(.black.opacity(0.1))
+                            .background(colorChoice(buttonPressed: 4))
                             .padding(2.5)
                             .cornerRadius(15)
                     }
+                }
+                
+                //Request Hint Button
+                HStack {
+                    Button(action: {
+                        if !hintRequsted {
+                            hintRequsted = true
+                            if pointsToEarn > 5 {
+                                pointsToEarn -= 5
+                            } else {
+                                pointsToEarn = 0
+                            }
+                        } else {
+                            if hintSelectedIndex < hints.count - 1 {
+                                hintSelectedIndex += 1
+                                if pointsToEarn > 5 {
+                                    pointsToEarn -= 5
+                                } else {
+                                    pointsToEarn = 0
+                                }
+                            } else {
+                                showAlertMessage = true
+                                alertTitle = "No more hints left"
+                                alertMessage = "You have no more remaining hints"
+                            }
+                        }
+                        
+                        
+                    }){
+                        Image(systemName: "questionmark.circle")
+                            .imageScale(.medium)
+                    }
+                    if hintRequsted {
+                        Text("Hints Remaining: \(2 - hintSelectedIndex)")
+                    } else {
+                        Text("Hints Remaining: 3")
+                    }
+                    
                 }
                 
                 
@@ -241,31 +310,76 @@ struct VocabQuiz: View {
         
         for i in 0..<answerChoices.count {
             if answerChoices[i].isEmpty {
-                //answerChoices[i] = getRandomWordFromApiStringOnly()
-                answerChoices[i] = "Answer \(i+1)"
+                answerChoices[i] = getRandomWordFromApiStringOnly()
+                //answerChoices[i] = "Answer \(i+1)"
             }
         }
         
     }
     
-    func populateHints() {
-        //***********************
-        //NEEDS TO BE IMPLEMENTED
-        //***********************
+    func populateHints(chosenDefinition: Definition) {
+        var synonymsInString = ""
+        for i in 0..<favoriteWordChosen.synonyms.count {
+            synonymsInString.append("\(favoriteWordChosen.synonyms[i]), ")
+        }
+        
+        if !synonymsInString.isEmpty {
+            synonymsInString = String(synonymsInString.dropLast(2))
+        } else {
+            synonymsInString = "Sorry no synonyms found"
+        }
+        
+        hints[0] = "Part of speech:\n\(chosenDefinition.partOfSpeech)"
+        hints[1] = "Synonyms:\n\(synonymsInString)"
+        hints[2] = "Example:\n\(chosenDefinition.example.replacingOccurrences(of: favoriteWordChosen.word.lowercased(), with: "_____"))"
     }
     
     func endGame() {
-        // calculate score
-        
-        // stop timer
-        stopTimer()
-        // make all the words in chosenAnswers array empty
         // display how many points are left/needed
-        //***********************
-        //NEEDS TO BE IMPLEMENTED
-        //***********************
-        imageIndex = 20
+        //case 1 no points earned
+        if answerChosen == -1 || answerChoices[answerChosen - 1] != favoriteWordChosen.word {
+            showAlertMessage = true
+            alertTitle = "Oops!"
+            alertMessage = "You chose incorrectly but you'll get right next time :)"
+        } else if (favoriteWordChosen.pointsUntilLearned  - pointsToEarn) > 0 { //case 2 word earned points
+            showAlertMessage = true
+            alertTitle = "Nice!"
+            alertMessage = "You just earned \(pointsToEarn) points on this word!\nYou have \(favoriteWordChosen.pointsUntilLearned - pointsToEarn) points left to learn this word"
+            
+            favoriteWordChosen.pointsUntilLearned = favoriteWordChosen.pointsUntilLearned - pointsToEarn
+            
+        } else { //case 3 word learned
+            
+            showAlertMessage = true
+            alertTitle = "Congrats!"
+            alertMessage = "You have officially learned this word!\nIt has now been added to your learned words list"
+            if !currentUser.learnedWords!.contains(favoriteWordChosen) {
+                currentUser.learnedWords!.append(favoriteWordChosen)
+            }
+            favoriteWordChosen.pointsUntilLearned = favoriteWordChosen.pointsUntilLearned - pointsToEarn
+            print(currentUser.learnedWords!.count)
+        }
+        
+        //Reset all values
+        
+        //Quiz Set up
+        favoriteWordChosen = emptyWord
+        answerChoices = ["", "", "", ""]
         beginQuiz = false
+        answerHasBeenChosen = false
+        hintRequsted = false
+        hints = ["", "", ""]
+        hintSelectedIndex = 0
+        favoriteWordChosenDefinition = ""
+        pointsToEarn = 50
+        answerChosen = -1
+        
+        //Timer Objects
+        timer = Timer.publish(every: .infinity, on: .main, in: .common).autoconnect()
+        timerImages = Timer.publish(every: .infinity, on: .main, in: .common).autoconnect()
+        imageIndex = 20
+        timeLeft = 60
+        
         
     }
     
@@ -279,12 +393,46 @@ struct VocabQuiz: View {
         timer.upstream.connect().cancel()
     }
     
+    func chooseRandomFavoriteWord() -> Word {
+        let favoriteWordsList = currentUser.favoriteWords!
+        var random = Int.random(in: 0..<favoriteWordsList.count)
+        while favoriteWordsList[random].definitions == nil {
+            random = Int.random(in: 0..<favoriteWordsList.count)
+        }
+        
+        return favoriteWordsList[random]
+    }
+    
+    func checkIfAllWordListDefinitionsNil() -> Bool {
+        let favoriteWordsList = currentUser.favoriteWords!
+        for i in 0..<favoriteWordsList.count {
+            if favoriteWordsList[i].definitions != nil {
+                return false
+            }
+        }
+        return true
+    }
+    
+    //Determines the color for a button depending one whether and was chosen and whether the answer was right
+    func colorChoice(buttonPressed: Int) -> Color {
+        if answerChosen != -1 {
+            if favoriteWordChosen.word == answerChoices[buttonPressed-1] {
+                return Color.green.opacity(0.3)
+            } else {
+                return Color.red.opacity(0.3)
+            }
+        }
+        return Color.black.opacity(0.1)
+    }
+    
+    func chooseRandomDefinitionAndHints(){
+        let random = Int.random(in: 0..<favoriteWordChosen.definitions!.count)
+        favoriteWordChosenDefinition = favoriteWordChosen.definitions![random].definition
+        populateHints(chosenDefinition: favoriteWordChosen.definitions![random])
+    }
+    
     
 }
 
-func chooseRandomFavoriteWord() -> Word {
-    let favoriteWordsList = currentUser.favoriteWords!
-    let random = Int.random(in: 0..<favoriteWordsList.count)
-    return favoriteWordsList[random]
-}
+
 

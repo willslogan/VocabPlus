@@ -82,7 +82,7 @@ public func createVocabPlusDB() {
                                imageAuthor: aWordStruct.imageAuthor,
                                imageAuthorUrl: aWordStruct.imageAuthorUrl,
                                synonyms: aWordStruct.synonyms,
-                               pointsUntilLearned: 10, 
+                               pointsUntilLearned: 100, 
                                definitions: definitions)
 
             // Insert it into the database context

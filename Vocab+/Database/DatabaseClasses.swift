@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 @Model
-final class Word: Hashable {
+final class Word: Hashable, Equatable {
     var word: String
     var audioUrl: String
     var imageUrl: String
@@ -21,6 +21,10 @@ final class Word: Hashable {
     // If Word is deleted, cascade that deletion for all definitions too
     @Relationship(deleteRule: .cascade) var definitions: [Definition]?
     // One-to-Many Relationship: ONE Word can belong to MANY Definitions
+    
+    static func == (lhs: Word, rhs: Word) -> Bool {
+        return lhs.word == rhs.word
+    }
     
     init(word: String, audioUrl: String, imageUrl: String, imageAuthor: String, imageAuthorUrl: String, synonyms: [String], pointsUntilLearned: Int, definitions: [Definition]? = nil) {
         self.word = word
