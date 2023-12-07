@@ -31,10 +31,10 @@ struct MainView: View {
                 .tabItem {
                     Label("Search Word", systemImage: "magnifyingglass")
                 }
-//            RandomWord()
-//                .tabItem {
-//                    Label("Random Word", systemImage: "shuffle")
-//                }
+            RandomWord()
+                .tabItem {
+                    Label("Random Word", systemImage: "shuffle")
+                }
             
             
         }

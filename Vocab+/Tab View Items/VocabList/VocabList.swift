@@ -46,7 +46,8 @@ struct VocabList: View {
                     else {
                         List {
                             ForEach(currentUser.learnedWords!, id: \.self) { word in
-                                NavigationLink(destination: VocabDetails(word: word)) {
+                                let wordAudioPlayer = createPlayer(word: word)
+                                NavigationLink(destination: VocabDetails(word: word, audioPlayer: wordAudioPlayer)) {
                                     VocabItem(word: word)
                                         .alert(isPresented: $showConfirmation) {
                                             Alert(title: Text("Delete Confirmation"),
@@ -122,6 +123,4 @@ struct VocabList: View {
         }
         
     }
-    
-    
 }
