@@ -13,7 +13,8 @@
                 "partOfSpeech": "verb",
                 "example": "The room was illuminated by a bright lamp."
             }
-        ]
+        ],
+        "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/illuminate-au.mp3",
     },
     {
         "word": "Ascend",
@@ -29,7 +30,8 @@
                 "partOfSpeech": "verb",
                 "example": "He ascended the mountain to reach the summit."
             }
-        ]
+        ],
+        "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/ascend-us.mp3",
     },
     {
         "word": "Harmony",
@@ -45,7 +47,8 @@
                 "partOfSpeech": "noun",
                 "example": "The choir sang in perfect harmony."
             }
-        ]
+        ],
+        "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/harmony-us.mp3",
     },
     {
         "word": "Navigate",
@@ -61,7 +64,8 @@
                 "partOfSpeech": "verb",
                 "example": "The captain navigated the ship through the narrow channel."
             }
-        ]
+        ],
+        "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/navigate-us.mp3",
     },
     {
         "word": "Whisper",
@@ -77,7 +81,8 @@
                 "partOfSpeech": "verb",
                 "example": "She whispered a secret in my ear."
             }
-        ]
+        ],
+        "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/whisper-us.mp3",
     },
     {
         "word": "Blossom",
@@ -93,7 +98,8 @@
                 "partOfSpeech": "verb",
                 "example": "Her artistic talents blossomed early."
             }
-        ]
+        ],
+        "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/blossom-au.mp3",
     },
     {
         "word": "Glisten",
@@ -109,7 +115,8 @@
                 "partOfSpeech": "verb",
                 "example": "The grass glistened in the morning dew."
             }
-        ]
+        ],
+        "audioUrl": "",
     },
     {
         "word": "Quest",
@@ -125,7 +132,8 @@
                 "partOfSpeech": "noun",
                 "example": "The adventurers set out on a quest for the lost treasure."
             }
-        ]
+        ],
+        "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/quest-us.mp3",
     },
     {
         "word": "Zest",
@@ -141,7 +149,8 @@
                 "partOfSpeech": "noun",
                 "example": "She tackled life with zest and excitement."
             }
-        ]
+        ],
+        "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/zest-us.mp3",
     },
     {
         "word": "Jubilant",
@@ -157,6 +166,7 @@
                 "partOfSpeech": "adjective",
                 "example": "The crowd was jubilant when the team won."
             }
-        ]
+        ],
+        "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/jubilant-us.mp3",
     }
 ]

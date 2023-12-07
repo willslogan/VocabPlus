@@ -25,14 +25,14 @@ let wordnikApiHeaders = [
 // ************************
 // Currently Not being used
 // ************************
-//let linguaRobotApiHeaders = [
-//        "accept": "application/json",
-//        "cache-control": "no-cache",
-//        "X-RapidAPI-Key": "96ab1aa338mshdcd4ce184c23e06p167659jsn0e94ce040ac3",
-//        "X-RapidAPI-Host": "lingua-robot.p.rapidapi.com",
-//        "connection": "keep-alive",
-//        "host": "api.wordnik.com"
-//    ]
+let linguaRobotApiHeaders = [
+        "accept": "application/json",
+        "cache-control": "no-cache",
+        "X-RapidAPI-Key": "96ab1aa338mshdcd4ce184c23e06p167659jsn0e94ce040ac3",
+        "X-RapidAPI-Host": "lingua-robot.p.rapidapi.com",
+        "connection": "keep-alive",
+        "host": "api.wordnik.com"
+    ]
 
 
 /*
@@ -144,17 +144,17 @@ private func getDefinitionsFromApi(searchTerm: String) -> [DefinitionStruct] {
  Function to retreive audio file url as a string from wordnik api
  */
 public func getAudioFileFromApi(searchTerm: String) -> String {
-    let apiUrlString = "https://api.wordnik.com/v4/word.json/\(searchTerm)/audio?useCanonical=false&limit=1&api_key=\(wordnikApiKey)"
-    
+    let apiUrlString = "https://lingua-robot.p.rapidapi.com/language/v1/entries/en/\(searchTerm.lowercased())"
     var audioFileUrl = ""
-    
+
     var jsonDataFromApi: Data
-    
-    let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: wordnikApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
+
+    let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: linguaRobotApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
     
     if let jsonData = jsonDataFetchedFromApi {
         jsonDataFromApi = jsonData
     } else {
+        print("Ended up failing initialy")
         return audioFileUrl
     }
     
@@ -162,21 +162,75 @@ public func getAudioFileFromApi(searchTerm: String) -> String {
         let jsonResponse = try JSONSerialization.jsonObject(with: jsonDataFromApi,
                                                             options: JSONSerialization.ReadingOptions.mutableContainers)
         
-        if let pronounciationList = jsonResponse as? [Any] {
-            for aPronounciation in pronounciationList {
-                if let pronounciationInfo = aPronounciation as? [String: Any] {
-                    if let pronounciationFileUrl = pronounciationInfo["fileUrl"] as? String {
-                        audioFileUrl = pronounciationFileUrl
+        if let linguaResponse = jsonResponse as? [String: Any] {
+            //print("Converted to dictionary")
+            if let entriesList = linguaResponse["entries"] as? [Any] {
+                //print("Converted to array")
+                for aItem in entriesList {
+                    if let entryInfo = aItem as? [String: Any] {
+                        //print("Converted to dictionary again")
+                        if let pronounciationList = entryInfo["pronunciations"] as? [Any] {
+                            //print("Converted to array again")
+                            for aPronounciationItem in pronounciationList {
+                                if let pronounciationInfo = aPronounciationItem as? [String: Any] {
+                                    //print("Converted to dictionary x3")
+                                    if let audioInfo = pronounciationInfo["audio"] as? [String: Any] {
+                                        //print("Converted to dictionary x4")
+                                        if let urlString = audioInfo["url"] as? String {
+                                            print("\(searchTerm)")
+                                            print("Here is the url: \(urlString)")
+                                            audioFileUrl = urlString
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                            break
+                        }
                     }
                 }
             }
         }
-        
     } catch {
+        print("Ended up in catch")
         return audioFileUrl
     }
-    
     return audioFileUrl
+//    let apiUrlString = "https://api.wordnik.com/v4/word.json/\(searchTerm.lowercased())/audio?useCanonical=false&limit=1&api_key=\(wordnikApiKey)"
+//    print(apiUrlString)
+//    
+//    var audioFileUrl = ""
+//    
+//    var jsonDataFromApi: Data
+//    
+//    let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: wordnikApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
+//    
+//    if let jsonData = jsonDataFetchedFromApi {
+//        jsonDataFromApi = jsonData
+//    } else {
+//        return audioFileUrl
+//    }
+//    
+//    do {
+//        let jsonResponse = try JSONSerialization.jsonObject(with: jsonDataFromApi,
+//                                                            options: JSONSerialization.ReadingOptions.mutableContainers)
+//        
+//        if let pronounciationList = jsonResponse as? [Any] {
+//            for aPronounciation in pronounciationList {
+//                if let pronounciationInfo = aPronounciation as? [String: Any] {
+//                    if let pronounciationFileUrl = pronounciationInfo["fileUrl"] as? String {
+//                        audioFileUrl = pronounciationFileUrl
+//                        break
+//                    }
+//                }
+//            }
+//        }
+//        
+//    } catch {
+//        return audioFileUrl
+//    }
+//    
+//    return audioFileUrl
 }
 
 /*

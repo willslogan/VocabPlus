@@ -8,6 +8,7 @@
 
 import SwiftUI
 import SwiftData
+import AVFoundation
 
 struct VocabList: View {
     
@@ -62,8 +63,9 @@ struct VocabList: View {
                     }
                 } else {
                     List {
-                        ForEach(wordList, id: \.self) { word in
-                            NavigationLink(destination: VocabDetails(word: word)) {
+                        ForEach(currentWords, id: \.self) { word in
+                            let wordAudioPlayer = createPlayer(word: word)
+                            NavigationLink(destination: VocabDetails(word: word, audioPlayer: wordAudioPlayer)) {
                                 VocabItem(word: word)
                                     .alert(isPresented: $showConfirmation) {
                                         Alert(title: Text("Delete Confirmation"),
@@ -110,4 +112,16 @@ struct VocabList: View {
             }
         }
     }
+    
+    func createPlayer(word: Word) -> AVPlayer {
+        if let url = URL(string: word.audioUrl) {
+            let audioPlayer = AVPlayer(url: url)
+            return audioPlayer
+        } else {
+            return AVPlayer()
+        }
+        
+    }
+    
+    
 }
