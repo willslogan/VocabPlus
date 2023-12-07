@@ -33,7 +33,6 @@
 		2D32CB252B167154007FBFB8 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D32CB242B167154007FBFB8 /* Profile.swift */; };
 		D3B8AF0B2B1545EA00D24283 /* VocabItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B8AF0A2B1545EA00D24283 /* VocabItem.swift */; };
 		D3B8AF0D2B1545F100D24283 /* VocabDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B8AF0C2B1545F100D24283 /* VocabDetails.swift */; };
-		D3B8AF0F2B158E1600D24283 /* SearchWordnikApiByKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B8AF0E2B158E1600D24283 /* SearchWordnikApiByKeyword.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,7 +64,6 @@
 		2D32CB242B167154007FBFB8 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		D3B8AF0A2B1545EA00D24283 /* VocabItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabItem.swift; sourceTree = "<group>"; };
 		D3B8AF0C2B1545F100D24283 /* VocabDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabDetails.swift; sourceTree = "<group>"; };
-		D3B8AF0E2B158E1600D24283 /* SearchWordnikApiByKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordnikApiByKeyword.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,7 +122,6 @@
 			children = (
 				2D32CB032B0C05F7007FBFB8 /* GetJsonDataFromApi.swift */,
 				2D32CB052B0C09D4007FBFB8 /* ApiDataFetch.swift */,
-				D3B8AF0E2B158E1600D24283 /* SearchWordnikApiByKeyword.swift */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -303,7 +300,6 @@
 				D3B8AF0D2B1545F100D24283 /* VocabDetails.swift in Sources */,
 				D3B8AF0B2B1545EA00D24283 /* VocabItem.swift in Sources */,
 				1234C9C92B14530600719411 /* GetImageFromUrl.swift in Sources */,
-				D3B8AF0F2B158E1600D24283 /* SearchWordnikApiByKeyword.swift in Sources */,
 				2D32CB102B0D55AD007FBFB8 /* RandomWord.swift in Sources */,
 				2D32CB062B0C09D4007FBFB8 /* ApiDataFetch.swift in Sources */,
 				2D32CB122B12AD59007FBFB8 /* Globals.swift in Sources */,

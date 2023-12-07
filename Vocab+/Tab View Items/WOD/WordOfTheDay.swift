@@ -126,7 +126,6 @@ struct WordOfTheDay: View {
                 .toolbarTitleDisplayMode(.inline)
                 .onAppear {
                     fetchWordOfTheDay()
-//                    // Note: image already displays a not found message without this feature
                     if let pexelsPhoto = fetchImageFromPexels(word: wordOfTheDay) {
                         // Use the fetched PexelsPhoto
                         self.photo = pexelsPhoto

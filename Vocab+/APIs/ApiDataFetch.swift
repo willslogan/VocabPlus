@@ -21,19 +21,14 @@ let wordnikApiHeaders = [
     "host": "api.wordnik.com"
 ]
 
-
-// ************************
-// Currently Not being used
-// ************************
 let linguaRobotApiHeaders = [
-        "accept": "application/json",
-        "cache-control": "no-cache",
-        "X-RapidAPI-Key": "96ab1aa338mshdcd4ce184c23e06p167659jsn0e94ce040ac3",
-        "X-RapidAPI-Host": "lingua-robot.p.rapidapi.com",
-        "connection": "keep-alive",
-        "host": "api.wordnik.com"
-    ]
-
+    "accept": "application/json",
+    "cache-control": "no-cache",
+    "X-RapidAPI-Key": "96ab1aa338mshdcd4ce184c23e06p167659jsn0e94ce040ac3",
+    "X-RapidAPI-Host": "lingua-robot.p.rapidapi.com",
+    "connection": "keep-alive",
+    "host": "api.wordnik.com"
+]
 
 /*
  This function first makes multiple API calls to build a WordStruct object
@@ -196,41 +191,6 @@ public func getAudioFileFromApi(searchTerm: String) -> String {
         return audioFileUrl
     }
     return audioFileUrl
-//    let apiUrlString = "https://api.wordnik.com/v4/word.json/\(searchTerm.lowercased())/audio?useCanonical=false&limit=1&api_key=\(wordnikApiKey)"
-//    print(apiUrlString)
-//    
-//    var audioFileUrl = ""
-//    
-//    var jsonDataFromApi: Data
-//    
-//    let jsonDataFetchedFromApi = getJsonDataFromApi(apiHeaders: wordnikApiHeaders, apiUrl: apiUrlString, timeout: 20.0)
-//    
-//    if let jsonData = jsonDataFetchedFromApi {
-//        jsonDataFromApi = jsonData
-//    } else {
-//        return audioFileUrl
-//    }
-//    
-//    do {
-//        let jsonResponse = try JSONSerialization.jsonObject(with: jsonDataFromApi,
-//                                                            options: JSONSerialization.ReadingOptions.mutableContainers)
-//        
-//        if let pronounciationList = jsonResponse as? [Any] {
-//            for aPronounciation in pronounciationList {
-//                if let pronounciationInfo = aPronounciation as? [String: Any] {
-//                    if let pronounciationFileUrl = pronounciationInfo["fileUrl"] as? String {
-//                        audioFileUrl = pronounciationFileUrl
-//                        break
-//                    }
-//                }
-//            }
-//        }
-//        
-//    } catch {
-//        return audioFileUrl
-//    }
-//    
-//    return audioFileUrl
 }
 
 /*
@@ -461,6 +421,9 @@ func fetchImageFromPexels(word: String) -> PexelsPhoto? {
     return toReturn
 }
 
+/*
+ Function to *only* get the word as a string from wordnik - no extra word data and api calls
+ */
 public func getRandomWordFromApiStringOnly() async -> String {
     var jsonDataFromApi: Data
     
