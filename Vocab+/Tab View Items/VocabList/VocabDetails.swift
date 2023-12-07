@@ -7,13 +7,18 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 
 struct VocabDetails: View {
     // Input Parameter
     let word: Word
+    let audioPlayer: AVPlayer
+    
+    @State private var audioRate: Float = 0.0
     @State private var pexelsPhoto: PexelsPhoto?
     @State private var showingAuthorAlert = false
+    @State private var timerRate = Timer.publish(every: .infinity, on: .main, in: .common).autoconnect()
     
     var body: some View {
         NavigationStack {
@@ -48,7 +53,33 @@ struct VocabDetails: View {
                             .border(Color.black, width: 2)
                     }
                 }
-                
+                Section(header: Text("Pronounciation")) {
+                    HStack {
+                        if urlOfCurrentlyPlayingInPlayer(player: audioPlayer) != nil {
+                            Button(action: {
+                                startTimer()
+                                if audioRate > 0 {
+                                    audioPlayer.pause()
+                                } else {
+                                    audioPlayer.seek(to: CMTime.zero)
+                                    audioPlayer.play()
+                                }
+                            }) {
+                                Image(systemName: audioRate > 0 ? "pause.fill" : "play.fill")
+                                    .imageScale(.medium)
+                                    .font(Font.title.weight(.regular))
+                                    .foregroundColor(.blue)
+                                    .onReceive(timerRate) { _ in
+                                        audioRate = audioPlayer.rate
+                                    }
+                            }
+                            
+                            Text("How to pronounce: \(word.word)")
+                        } else {
+                            Text("Sorry no audio to play")
+                        }
+                    }
+                }
                 Section(header: Text("Synonyms")) {
                     Text(synonymsArrayToString(synonyms: word.synonyms))
                 }
@@ -60,6 +91,12 @@ struct VocabDetails: View {
             .font(.system(size: 14))
             .navigationTitle(word.word)
             .toolbarTitleDisplayMode(.inline)
+            
+            .onDisappear() {
+                audioPlayer.pause()
+                audioPlayer.seek(to: CMTime.zero)
+                stopTimer()
+            }
         } // End of navigation stack
     }   // End of body var
     
@@ -88,5 +125,23 @@ struct VocabDetails: View {
         toReturn = toReturn.replacingOccurrences(of: "</er>", with: "")
         return toReturn
     }
+    
+    func startTimer() {
+        timerRate = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
+    }
+    
+    func stopTimer() {
+        timerRate.upstream.connect().cancel()
+    }
+    
+    //This Code was found online here:
+    //https://stackoverflow.com/questions/1605846/avaudioplayer-with-external-url-to-m4p
+    
+    func urlOfCurrentlyPlayingInPlayer(player : AVPlayer) -> URL? {
+        return ((player.currentItem?.asset) as? AVURLAsset)?.url
+    }
+    
 }
+
+
 

@@ -8,6 +8,7 @@
 
 import SwiftUI
 import SwiftData
+import AVFoundation
 
 struct VocabList: View {
     
@@ -30,17 +31,19 @@ struct VocabList: View {
                 .padding()
                 
                 if selectedListType == 0 && (currentUser.learnedWords?.isEmpty ?? true) {
-                    Form {Section {
-                        Text("You currently do not have any learned words! Visit the Vocab Quiz tab to learn new words.")
-                            .font(.system(size: 14))
-                            .padding()
-                    }
+                    Form {
+                        Section {
+                            Text("You currently do not have any learned words! Visit the Vocab Quiz tab to learn new words.")
+                                .font(.system(size: 14))
+                                .padding()
+                        }
                     }
                     Spacer()
                 } else {
                     List {
                         ForEach(currentWords, id: \.self) { word in
-                            NavigationLink(destination: VocabDetails(word: word)) {
+                            let wordAudioPlayer = createPlayer(word: word)
+                            NavigationLink(destination: VocabDetails(word: word, audioPlayer: wordAudioPlayer)) {
                                 VocabItem(word: word)
                                     .alert(isPresented: $showConfirmation) {
                                         Alert(title: Text("Delete Confirmation"),
@@ -87,4 +90,16 @@ struct VocabList: View {
             }
         }
     }
+    
+    func createPlayer(word: Word) -> AVPlayer {
+        if let url = URL(string: word.audioUrl) {
+            let audioPlayer = AVPlayer(url: url)
+            return audioPlayer
+        } else {
+            return AVPlayer()
+        }
+        
+    }
+    
+    
 }

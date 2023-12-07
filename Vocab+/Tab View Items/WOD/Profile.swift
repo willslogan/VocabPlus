@@ -222,7 +222,7 @@ func populateQuizList(currUser: User) -> [Quiz] {
         
     }
     
-    print(quizList.count)
+    
     return quizList
 }
 

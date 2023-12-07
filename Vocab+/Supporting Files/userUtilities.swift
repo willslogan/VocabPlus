@@ -50,7 +50,6 @@ func userHasBeenCreated() -> Bool {
     }
     
     if usersList.count == 1 {
-        print("Gets To First Time User")
         return false
     }
     
