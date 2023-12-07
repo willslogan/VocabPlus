@@ -64,7 +64,7 @@ struct VocabList: View {
                     }
                 } else {
                     List {
-                        ForEach(currentWords, id: \.self) { word in
+                        ForEach(wordList, id: \.self) { word in
                             let wordAudioPlayer = createPlayer(word: word)
                             NavigationLink(destination: VocabDetails(word: word, audioPlayer: wordAudioPlayer)) {
                                 VocabItem(word: word)

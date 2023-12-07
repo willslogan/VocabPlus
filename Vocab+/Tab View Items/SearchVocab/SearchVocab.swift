@@ -149,40 +149,45 @@ struct SearchVocab: View {
             alertTitle = "Error!"
             alertMessage = "Selected word already exists in the database as a favorite"
             showAlertMessage = true
-            return
-        }
-        // Convert each DefinitionStruct to your Definition class
-        let definitionsArray = foundWord.definitions.map { definitionStruct -> Definition in
-            return Definition(definition: definitionStruct.definition,
-                              partOfSpeech: definitionStruct.partOfSpeech,
-                              example: definitionStruct.example)
-        }
-        
-        // Initialize the new Word object with definitions
-        let newWord = Word(word: foundWord.word,
-                           audioUrl: foundWord.audioUrl,
-                           imageUrl: foundWord.imageUrl,
-                           imageAuthor: foundWord.imageAuthor,
-                           imageAuthorUrl: foundWord.imageAuthorUrl,
-                           synonyms: foundWord.synonyms,
-                           pointsUntilLearned: foundWord.pointsUntilLearned,
-                           definitions: definitionsArray)
-        print(wordList)
-        if wordList.contains(newWord) {
-            alertTitle = "Error!"
-            alertMessage = "Selected word already exists in your favorite list"
-            showAlertMessage = true
         }
         else {
-            // Save changes to the database
-            modelContext.insert(newWord)
-            // Update UI
-            alertTitle = "Word Added!"
-            alertMessage = "Selected word is added to the favorite list"
-            showAlertMessage = true
+            // Convert each DefinitionStruct to your Definition class
+            let definitionsArray = foundWord.definitions.map { definitionStruct -> Definition in
+                Definition(definition: definitionStruct.definition,
+                                  partOfSpeech: definitionStruct.partOfSpeech,
+                                  example: definitionStruct.example)
+            }
+            
+            // Initialize the new Word object with definitions
+            let newWord = Word(word: foundWord.word,
+                               audioUrl: foundWord.audioUrl,
+                               imageUrl: foundWord.imageUrl,
+                               imageAuthor: foundWord.imageAuthor,
+                               imageAuthorUrl: foundWord.imageAuthorUrl,
+                               synonyms: foundWord.synonyms,
+                               pointsUntilLearned: foundWord.pointsUntilLearned,
+                               definitions: definitionsArray)
+            print(wordList)
+            if wordList.contains(newWord) {
+                alertTitle = "Error!"
+                alertMessage = "Selected word already exists in your favorite list"
+                showAlertMessage = true
+            }
+            else {
+                // Save changes to the database
+                modelContext.insert(newWord)
+                do {
+                    try modelContext.save()
+                } catch {
+                    fatalError("Unable to save database changes: \(error)")
+                }
+                // Update UI
+                alertTitle = "Word Added!"
+                alertMessage = "Selected word is added to the favorite list"
+                showAlertMessage = true
+            }
+            print(wordList)
         }
-        print(wordList)
-
     }
     func inputDataValidated() -> Bool {
         
