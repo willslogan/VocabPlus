@@ -106,7 +106,7 @@ struct WordOfTheDay: View {
                                 Text("Wordnik API")
                             }
                         }
-                        .padding()
+
                     }
                     if let url = URL(string: "https://www.pexels.com/api/documentation/") {
                         Link(destination: url) {
@@ -118,7 +118,18 @@ struct WordOfTheDay: View {
                                 Text("Pexels API")
                             }
                         }
-                        .padding(.bottom, 100)
+                        .padding(.bottom, 40)
+                    }
+                    if let url = URL(string: "https://linguarobot.docs.apiary.io/#") {
+                        Link(destination: url) {
+                            HStack {
+                                Image("lingua")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                Text("Lingua Robot API")
+                            }
+                        }
                     }
                 }
                 .padding()
