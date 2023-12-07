@@ -13,6 +13,8 @@ import AVFoundation
 struct VocabList: View {
     
     @Environment(\.modelContext) private var modelContext
+    @Query(FetchDescriptor<Word>(sortBy: [SortDescriptor(\Word.word, order: .forward)])) private var wordList: [Word]
+    
     private var currentUser = obtainUser()
     @State private var selectedListType = 0  // 0 for learnedWords, 1 for favoriteWords
     
@@ -30,15 +32,35 @@ struct VocabList: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
                 
-                if selectedListType == 0 && (currentUser.learnedWords?.isEmpty ?? true) {
-                    Form {
-                        Section {
+                if selectedListType == 0 {
+                    if (currentUser.learnedWords?.isEmpty ?? true) {
+                        Form {
+                            Section {
                             Text("You currently do not have any learned words! Visit the Vocab Quiz tab to learn new words.")
                                 .font(.system(size: 14))
                                 .padding()
+                            }
+                        }
+                        Spacer()
+                    }
+                    else {
+                        List {
+                            ForEach(currentUser.learnedWords!, id: \.self) { word in
+                                NavigationLink(destination: VocabDetails(word: word)) {
+                                    VocabItem(word: word)
+                                        .alert(isPresented: $showConfirmation) {
+                                            Alert(title: Text("Delete Confirmation"),
+                                                  message: Text("Are you sure to permanently remove this word from your favorites?"),
+                                                  primaryButton: .destructive(Text("Delete")) {
+                                                deleteWord(word)
+                                            }, secondaryButton: .cancel()
+                                            )
+                                        }
+                                }
+                            }
+                            .onDelete(perform: delete)
                         }
                     }
-                    Spacer()
                 } else {
                     List {
                         ForEach(currentWords, id: \.self) { word in

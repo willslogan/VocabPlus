@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SwiftData
 
 fileprivate let currentUser = obtainUser()
 
@@ -93,12 +92,9 @@ struct VocabQuiz: View {
                             beginQuiz = true
                             
                             //Start Timer
-                            
                             startTimer()
                         }
                         }
-                    
-                    
                 }) {
                     if (isLoading) {
                         Text("Loading...")

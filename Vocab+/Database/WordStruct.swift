@@ -9,12 +9,13 @@ import SwiftUI
 
 struct WordStruct: Decodable {
     var word: String
-    var definitions: [DefinitionStruct] // List of definitions associated with the word
     var audioUrl: String
     var imageUrl: String
     var imageAuthor: String
     var imageAuthorUrl: String
     var synonyms: [String]
+    var pointsUntilLearned: Int
+    var definitions: [DefinitionStruct]
 }
 
 struct DefinitionStruct: Decodable, Hashable {

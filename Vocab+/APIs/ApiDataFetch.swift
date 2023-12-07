@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-var foundWord = WordStruct(word: "", definitions: [], audioUrl: "", imageUrl: "", imageAuthor: "", imageAuthorUrl: "", synonyms: [])
-
+var foundWord = WordStruct(word: "", audioUrl: "", imageUrl: "", imageAuthor: "", imageAuthorUrl: "", synonyms: ["String"], pointsUntilLearned: 0, definitions: [defs])
+var defs = DefinitionStruct(definition: "", partOfSpeech: "", example: "")
 let wordnikApiKey = "h92eq8jsnaitg1hid9navzros55w8o43n77lcbide02qh88jz"
 
 let pexelsApiKey = "FTASW5mja3KwydYI7MCmGLVUFYcNKg0ygLdiHiXOyGGLAlyzL5aLjG9B"
@@ -70,7 +70,7 @@ public func getFoundWordFromApi(searchTerm: String) {
 
 private func setFoundWord(word: String, definitions: [DefinitionStruct], audioUrl: String, imageUrl: String, imageAuthor: String, imageAuthorUrl: String, synonyms: [String]) {
     print(imageUrl)
-    foundWord = WordStruct(word: word, definitions: definitions, audioUrl: audioUrl, imageUrl: imageUrl, imageAuthor: imageAuthor, imageAuthorUrl: imageAuthorUrl, synonyms: synonyms)
+    foundWord = WordStruct(word: word, audioUrl: audioUrl, imageUrl: imageUrl, imageAuthor: imageAuthor, imageAuthorUrl: imageAuthorUrl, synonyms: synonyms, pointsUntilLearned: 0, definitions: definitions)
 }
 
 /*
@@ -383,13 +383,7 @@ func getRandomWordFromApi() -> WordStruct? {
         let synonyms = getSynonymsFromApi(searchTerm: randomWord)
         
         //Create Word Struct
-        var randomWordToReturn = WordStruct(word: randomWord,
-                                            definitions: definitions,
-                                            audioUrl: audioUrl,
-                                            imageUrl: "",
-                                            imageAuthor: "",
-                                            imageAuthorUrl: "",
-                                            synonyms: synonyms)
+        var randomWordToReturn = WordStruct(word: randomWord, audioUrl: audioUrl, imageUrl: "", imageAuthor: "", imageAuthorUrl: "", synonyms: synonyms, pointsUntilLearned: 0, definitions: definitions)
         
         // Retrieve pexels image
         if let pexelsPhoto = fetchImageFromPexels(word: randomWord) {
@@ -499,14 +493,12 @@ public func getRandomWordFromApiStringOnly() async -> String {
                 randomWord = firstLetter + restOfWord
             }
         }
-        
         if randomWord == "" {
             return ""
         }
     } catch {
         return randomWord
     }
-    
     return randomWord
 }
 
@@ -528,50 +520,4 @@ struct PexelsPhoto {
     var imageUrl: String
     var authorName: String
     var authorUrl: String
-}
-
-func fetchImageFromPexels1(word: String, completion: @escaping (PexelsPhoto?) -> Void) {
-    let query = word.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-    let urlString = "https://api.pexels.com/v1/search?query=\(query)&per_page=1"
-    
-    guard let url = URL(string: urlString) else {
-        print("Invalid URL")
-        completion(nil)
-        return
-    }
-    
-    var request = URLRequest(url: url)
-    request.addValue(pexelsApiKey, forHTTPHeaderField: "Authorization")
-    
-    URLSession.shared.dataTask(with: request) { data, _, error in
-        if let error = error {
-            print("Error fetching image: \(error.localizedDescription)")
-            completion(nil)
-            return
-        }
-        
-        guard let data = data else {
-            print("No data received from Pexels API")
-            completion(nil)
-            return
-        }
-        
-        do {
-            let decodedResponse = try JSONDecoder().decode(PexelsResponse.self, from: data)
-            if let firstPhoto = decodedResponse.photos.first {
-                let photo = PexelsPhoto(
-                    imageUrl: firstPhoto.src.medium,
-                    authorName: firstPhoto.photographer,
-                    authorUrl: firstPhoto.photographer_url
-                )
-                completion(photo)
-            } else {
-                print("No photos found in response")
-                completion(nil)
-            }
-        } catch {
-            print("Failed to decode response from Pexels API: \(error)")
-            completion(nil)
-        }
-    }.resume()
 }

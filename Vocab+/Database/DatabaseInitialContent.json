@@ -1,6 +1,12 @@
 [
     {
         "word": "Illuminate",
+        "audioUrl": "https://example.com/illuminate.mp3",
+        "imageUrl": "https://images.pexels.com/photos/19201315/pexels-photo-19201315.jpeg",
+        "imageAuthor": "Joe Fikar",
+        "imageAuthorUrl": "https://www.pexels.com/@joe-fikar-799933673",
+        "synonyms": ["light up", "brighten", "enlighten"],
+        "pointsUntilLearned": 0,
         "definitions": [
             {
                 "definition": "Light up something",
@@ -9,13 +15,15 @@
             }
         ],
         "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/illuminate-au.mp3",
-        "imageUrl": "https://images.pexels.com/photos/19201315/pexels-photo-19201315.jpeg",
-        "imageAuthor": "Joe Fikar",
-        "imageAuthorUrl": "https://www.pexels.com/@joe-fikar-799933673",
-        "synonyms": ["light up", "brighten", "enlighten"]
     },
     {
         "word": "Ascend",
+        "audioUrl": "https://example.com/ascend.mp3",
+        "imageUrl": "https://images.pexels.com/photos/5383501/pexels-photo-5383501.jpeg",
+        "imageAuthor": "Allan Mas",
+        "imageAuthorUrl": "https://www.pexels.com/@allan-mas",
+        "synonyms": ["rise", "climb", "soar"],
+        "pointsUntilLearned": 0,
         "definitions": [
             {
                 "definition": "Go up or climb",
@@ -24,13 +32,15 @@
             }
         ],
         "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/ascend-us.mp3",
-        "imageUrl": "https://images.pexels.com/photos/5383501/pexels-photo-5383501.jpeg",
-        "imageAuthor": "Allan Mas",
-        "imageAuthorUrl": "https://www.pexels.com/@allan-mas",
-        "synonyms": ["rise", "climb", "soar"]
     },
     {
         "word": "Harmony",
+        "audioUrl": "https://example.com/harmony.mp3",
+        "imageUrl": "https://images.pexels.com/photos/312839/pexels-photo-312839.jpeg",
+        "imageAuthor": "Nandhu Kumar",
+        "imageAuthorUrl": "https://www.pexels.com/@nandhukumar",
+        "synonyms": ["accord", "concord", "synergy"],
+        "pointsUntilLearned": 0,
         "definitions": [
             {
                 "definition": "The combination of simultaneously sounded musical notes to produce a pleasing effect",
@@ -39,13 +49,15 @@
             }
         ],
         "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/harmony-us.mp3",
-        "imageUrl": "https://images.pexels.com/photos/312839/pexels-photo-312839.jpeg",
-        "imageAuthor": "Nandhu Kumar",
-        "imageAuthorUrl": "https://www.pexels.com/@nandhukumar",
-        "synonyms": ["accord", "concord", "synergy"]
     },
     {
         "word": "Navigate",
+        "audioUrl": "https://example.com/navigate.mp3",
+        "imageUrl": "https://images.pexels.com/photos/3832684/pexels-photo-3832684.jpeg",
+        "imageAuthor": "Joshua Woroniecki",
+        "imageAuthorUrl": "https://www.pexels.com/@joshuaworoniecki",
+        "synonyms": ["pilot", "steer", "direct"],
+        "pointsUntilLearned": 0,
         "definitions": [
             {
                 "definition": "Plan and direct the route or course of a ship, aircraft, or other form of transportation",
@@ -54,13 +66,15 @@
             }
         ],
         "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/navigate-us.mp3",
-        "imageUrl": "https://images.pexels.com/photos/3832684/pexels-photo-3832684.jpeg",
-        "imageAuthor": "Joshua Woroniecki",
-        "imageAuthorUrl": "https://www.pexels.com/@joshuaworoniecki",
-        "synonyms": ["pilot", "steer", "direct"]
     },
     {
         "word": "Whisper",
+        "audioUrl": "https://example.com/whisper.mp3",
+        "imageUrl": "https://images.pexels.com/photos/3754294/pexels-photo-3754294.jpeg",
+        "imageAuthor": "Ba Tik",
+        "imageAuthorUrl": "https://www.pexels.com/@ba-tik",
+        "synonyms": ["murmur", "mutter", "speak softly"],
+        "pointsUntilLearned": 0,
         "definitions": [
             {
                 "definition": "Speak very softly using one's breath without one's vocal cords",
@@ -69,13 +83,15 @@
             }
         ],
         "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/whisper-us.mp3",
-        "imageUrl": "https://images.pexels.com/photos/3754294/pexels-photo-3754294.jpeg",
-        "imageAuthor": "Ba Tik",
-        "imageAuthorUrl": "https://www.pexels.com/@ba-tik",
-        "synonyms": ["murmur", "mutter", "speak softly"]
     },
     {
         "word": "Blossom",
+        "audioUrl": "https://example.com/blossom.mp3",
+        "imageUrl": "https://images.pexels.com/photos/1686877/pexels-photo-1686877.jpeg",
+        "imageAuthor": "Guilherme Rossi",
+        "imageAuthorUrl": "https://www.pexels.com/@guiirossi",
+        "synonyms": ["flower", "bloom", "thrive"],
+        "pointsUntilLearned": 0,
         "definitions": [
             {
                 "definition": "Mature or develop in a promising or healthy way",
@@ -84,13 +100,15 @@
             }
         ],
         "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/blossom-au.mp3",
-        "imageUrl": "https://images.pexels.com/photos/1686877/pexels-photo-1686877.jpeg",
-        "imageAuthor": "Guilherme Rossi",
-        "imageAuthorUrl": "https://www.pexels.com/@guiirossi",
-        "synonyms": ["flower", "bloom", "thrive"]
     },
     {
         "word": "Glisten",
+        "audioUrl": "https://example.com/glisten.mp3",
+        "imageUrl": "https://images.pexels.com/photos/1042152/pexels-photo-1042152.jpeg",
+        "imageAuthor": "ATUL MAURYA",
+        "imageAuthorUrl": "https://www.pexels.com/@atul11",
+        "synonyms": ["glitter", "gleam", "sparkle"],
+        "pointsUntilLearned": 0,
         "definitions": [
             {
                 "definition": "Shine with a sparkling light",
@@ -99,13 +117,15 @@
             }
         ],
         "audioUrl": "",
-        "imageUrl": "https://images.pexels.com/photos/1042152/pexels-photo-1042152.jpeg",
-        "imageAuthor": "ATUL MAURYA",
-        "imageAuthorUrl": "https://www.pexels.com/@atul11",
-        "synonyms": ["glitter", "gleam", "sparkle"]
     },
     {
         "word": "Quest",
+        "audioUrl": "https://example.com/quest.mp3",
+        "imageUrl": "https://images.pexels.com/photos/705177/words-letters-scrabble-text-705177.jpeg",
+        "imageAuthor": "Skitterphoto",
+        "imageAuthorUrl": "https://www.pexels.com/@skitterphoto",
+        "synonyms": ["search", "hunt", "journey"],
+        "pointsUntilLearned": 0,
         "definitions": [
             {
                 "definition": "A long or arduous search for something",
@@ -114,13 +134,15 @@
             }
         ],
         "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/quest-us.mp3",
-        "imageUrl": "https://images.pexels.com/photos/705177/words-letters-scrabble-text-705177.jpeg",
-        "imageAuthor": "Skitterphoto",
-        "imageAuthorUrl": "https://www.pexels.com/@skitterphoto",
-        "synonyms": ["search", "hunt", "journey"]
     },
     {
         "word": "Zest",
+        "audioUrl": "https://example.com/zest.mp3",
+        "imageUrl": "https://images.pexels.com/photos/4667081/pexels-photo-4667081.jpeg",
+        "imageAuthor": "cottonbro studio",
+        "imageAuthorUrl": "https://www.pexels.com/@cottonbro",
+        "synonyms": ["enthusiasm", "eagerness", "vigor"],
+        "pointsUntilLearned": 0,
         "definitions": [
             {
                 "definition": "Great enthusiasm and energy",
@@ -129,13 +151,15 @@
             }
         ],
         "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/zest-us.mp3",
-        "imageUrl": "https://images.pexels.com/photos/4667081/pexels-photo-4667081.jpeg",
-        "imageAuthor": "cottonbro studio",
-        "imageAuthorUrl": "https://www.pexels.com/@cottonbro",
-        "synonyms": ["enthusiasm", "eagerness", "vigor"]
     },
     {
         "word": "Jubilant",
+        "audioUrl": "https://example.com/jubilant.mp3",
+        "imageUrl": "https://images.pexels.com/photos/3778966/pexels-photo-3778966.jpeg",
+        "imageAuthor": "Andrea Piacquadio",
+        "imageAuthorUrl": "https://www.pexels.com/@olly",
+        "synonyms": ["elated", "joyful", "exultant"],
+        "pointsUntilLearned": 0,
         "definitions": [
             {
                 "definition": "Feeling or expressing great happiness and triumph",
@@ -144,9 +168,5 @@
             }
         ],
         "audioUrl": "https://api.linguarobot.io/media/pronunciations/en/jubilant-us.mp3",
-        "imageUrl": "https://images.pexels.com/photos/3778966/pexels-photo-3778966.jpeg",
-        "imageAuthor": "Andrea Piacquadio",
-        "imageAuthorUrl": "https://www.pexels.com/@olly",
-        "synonyms": ["elated", "joyful", "exultant"]
     }
 ]
